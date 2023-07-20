@@ -1,49 +1,65 @@
-use clap::Parser;
+use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use std::net::IpAddr;
 
 #[derive(Parser)]
 #[command(version)]
-struct Args {
-    #[arg(long)]
-    nixos_path: PathBuf,
+struct Cli {
+    #[command(subcommand)]
+    command: Option<Commands>,
+}
 
-    #[arg(long)]
-    system_path: PathBuf,
+#[derive(Subcommand)]
+enum Commands {
+    /// Create a new nixos-container.
+    Create {
+        #[arg(long)]
+        nixos_path: PathBuf,
 
-    #[arg(long)]
-    config: String,
+        #[arg(long)]
+        system_path: PathBuf,
 
-    #[arg(long)]
-    config_file: PathBuf,
+        #[arg(long)]
+        config: String,
 
-    // TODO: flakeref
-    #[arg(long)]
-    flake: String,
+        #[arg(long)]
+        config_file: PathBuf,
 
-    #[arg(long)]
-    ensure_unique_name: bool,
+        // TODO: flakeref
+        #[arg(long)]
+        flake: String,
 
-    #[arg(long)]
-    auto_start: bool,
+        #[arg(long)]
+        ensure_unique_name: bool,
 
-    // TODO: iface
-    #[arg(long)]
-    bridge: String,
+        #[arg(long)]
+        auto_start: bool,
 
-    // TODO: port
-    #[arg(long)]
-    port: String,
+        // TODO: iface
+        #[arg(long)]
+        bridge: String,
 
-    #[arg(long)]
-    host_address: IpAddr,
+        // TODO: port
+        #[arg(long)]
+        port: String,
 
-    #[arg(long)]
-    local_address: IpAddr,
+        #[arg(long)]
+        host_address: IpAddr,
+
+        #[arg(long)]
+        local_address: IpAddr,
+    }
 }
 
 fn main() {
-    let args = Args::parse();
+    let cli = Cli::parse();
 
-    println!("{}", args.host_address)
+    match &cli.command {
+        Some(Commands::Create { auto_start, .. }) => {
+            if *auto_start {
+                println!("auto_start");
+            }
+        }
+        None => {}
+    }
 }
