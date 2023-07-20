@@ -1,32 +1,36 @@
 use clap::Parser;
+use std::path::PathBuf;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
     #[arg(long)]
-    nixos_path: String,
+    nixos_path: PathBuf,
 
     #[arg(long)]
-    system_path: String,
+    system_path: PathBuf,
 
     #[arg(long)]
     config: String,
 
     #[arg(long)]
-    config_file: String,
+    config_file: PathBuf,
 
+    // TODO: flakeref
     #[arg(long)]
     flake: String,
 
     #[arg(long)]
-    ensure_unique_name: String,
+    ensure_unique_name: bool,
 
     #[arg(long)]
-    auto_start: String,
+    auto_start: bool,
 
+    // TODO: iface
     #[arg(long)]
     bridge: String,
 
+    // TODO: port
     #[arg(long)]
     port: String,
 
@@ -40,5 +44,5 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    println!("{}", args.nixos_path)
+    println!("{}", args.host_address)
 }
