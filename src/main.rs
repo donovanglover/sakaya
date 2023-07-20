@@ -20,6 +20,8 @@ enum Commands {
 
     /// Create a new container.
     Create {
+        container_name: String,
+
         #[arg(long)]
         nixos_path: PathBuf,
 
@@ -58,22 +60,34 @@ enum Commands {
     },
 
     /// Destroy an existing container.
-    Destroy {},
+    Destroy {
+        container_name: String
+    },
 
     /// Start an existing container.
-    Start {},
+    Start {
+        container_name: String
+    },
 
     /// Stop an existing container.
-    Stop {},
+    Stop {
+        container_name: String
+    },
 
     /// Terminate a container.
-    Terminate {},
+    Terminate {
+        container_name: String
+    },
 
     /// Get the status of a container.
-    Status {},
+    Status {
+        container_name: String
+    },
 
     /// Update a container.
-    Update {},
+    Update {
+        container_name: String
+    },
 
     /// Login to a container.
     Login {
@@ -81,16 +95,24 @@ enum Commands {
     },
 
     /// Login as root to a container.
-    RootLogin {},
+    RootLogin {
+        container_name: String
+    },
 
     /// Run a command from a container.
-    Run {},
+    Run {
+        container_name: String
+    },
 
     /// Show the IP address of a container.
-    ShowIp {},
+    ShowIp {
+        container_name: String
+    },
 
     /// Show the host key of a container.
-    ShowHostKey {},
+    ShowHostKey {
+        container_name: String
+    },
 }
 
 fn main() {
