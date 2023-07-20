@@ -3,17 +3,42 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    #[arg(short, long)]
-    name: String,
+    #[arg(long)]
+    nixos_path: String,
 
-    #[arg(short, long, default_value_t = 1)]
-    count: u8,
+    #[arg(long)]
+    system_path: String,
+
+    #[arg(long)]
+    config: String,
+
+    #[arg(long)]
+    config_file: String,
+
+    #[arg(long)]
+    flake: String,
+
+    #[arg(long)]
+    ensure_unique_name: String,
+
+    #[arg(long)]
+    auto_start: String,
+
+    #[arg(long)]
+    bridge: String,
+
+    #[arg(long)]
+    port: String,
+
+    #[arg(long)]
+    host_address: String,
+
+    #[arg(long)]
+    local_address: String,
 }
 
 fn main() {
     let args = Args::parse();
 
-    for _ in 0..args.count {
-        println!("Hello {}!", args.name)
-    }
+    println!("{}", args.nixos_path)
 }
