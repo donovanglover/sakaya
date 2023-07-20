@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use std::net::IpAddr;
+use std::process::Command;
 
 const STATE_DIRECTORY: &str = "/var/lib/nixos-containers";
 const CONFIG_DIRECTORY: &str = "/etc/nixos-containers";
@@ -75,7 +76,9 @@ enum Commands {
     Update {},
 
     /// Login to a container.
-    Login {},
+    Login {
+        container_name: String
+    },
 
     /// Login as root to a container.
     RootLogin {},
@@ -114,7 +117,11 @@ fn main() {
 
         Some(Commands::Update { .. }) => {}
 
-        Some(Commands::Login { .. }) => {}
+        Some(Commands::Login { container_name }) => {
+            let _ = Command::new("machinectl")
+                .args(["login", "--", container_name])
+                .spawn();
+        }
 
         Some(Commands::RootLogin { .. }) => {}
 
