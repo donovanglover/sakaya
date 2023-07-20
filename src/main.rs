@@ -1,5 +1,6 @@
 use clap::Parser;
 use std::path::PathBuf;
+use std::net::IpAddr;
 
 #[derive(Parser)]
 #[command(version)]
@@ -35,10 +36,10 @@ struct Args {
     port: String,
 
     #[arg(long)]
-    host_address: String,
+    host_address: IpAddr,
 
     #[arg(long)]
-    local_address: String,
+    local_address: IpAddr,
 }
 
 fn main() {
