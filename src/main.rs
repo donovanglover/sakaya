@@ -129,9 +129,17 @@ fn main() {
 
         Some(Commands::Destroy { .. }) => {}
 
-        Some(Commands::Start { .. }) => {}
+        Some(Commands::Start { container_name }) => {
+            let _ = Command::new("machinectl")
+                .args(["start", container_name])
+                .spawn();
+        }
 
-        Some(Commands::Stop { .. }) => {}
+        Some(Commands::Stop { container_name }) => {
+            let _ = Command::new("machinectl")
+                .args(["stop", container_name])
+                .spawn();
+        }
 
         Some(Commands::Terminate { .. }) => {}
 
