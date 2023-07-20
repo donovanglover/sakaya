@@ -1,8 +1,8 @@
 use clap::Parser;
 use std::path::PathBuf;
 
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
+#[derive(Parser)]
+#[command(version)]
 struct Args {
     #[arg(long)]
     nixos_path: PathBuf,
