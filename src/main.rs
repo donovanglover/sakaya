@@ -2,6 +2,9 @@ use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use std::net::IpAddr;
 
+const STATE_DIRECTORY: &str = "/var/lib/nixos-containers";
+const CONFIG_DIRECTORY: &str = "/etc/nixos-containers";
+
 #[derive(Parser)]
 #[command(version)]
 struct Cli {
