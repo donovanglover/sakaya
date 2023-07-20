@@ -1,3 +1,3 @@
-# nixos-container
+# rust-container
 
-`nixos-container`, but written in Rust.
+An easier way to manage declarative containers.

@@ -1,5 +1,5 @@
 [package]
-name = "nixos-container"
+name = "rust-container"
 version = "0.1.0"
 edition = "2021"
 
