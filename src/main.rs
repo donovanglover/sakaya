@@ -18,52 +18,6 @@ enum Commands {
     /// List all containers.
     List {},
 
-    /// Create a new container.
-    Create {
-        container_name: String,
-
-        #[arg(long)]
-        nixos_path: PathBuf,
-
-        #[arg(long)]
-        system_path: PathBuf,
-
-        #[arg(long)]
-        config: String,
-
-        #[arg(long)]
-        config_file: PathBuf,
-
-        // TODO: flakeref
-        #[arg(long)]
-        flake: String,
-
-        #[arg(long)]
-        ensure_unique_name: bool,
-
-        #[arg(long)]
-        auto_start: bool,
-
-        // TODO: iface
-        #[arg(long)]
-        bridge: String,
-
-        // TODO: port
-        #[arg(long)]
-        port: String,
-
-        #[arg(long)]
-        host_address: IpAddr,
-
-        #[arg(long)]
-        local_address: IpAddr,
-    },
-
-    /// Destroy an existing container.
-    Destroy {
-        container_name: String
-    },
-
     /// Start an existing container.
     Start {
         container_name: String
@@ -94,23 +48,8 @@ enum Commands {
         container_name: String
     },
 
-    /// Login as root to a container.
-    RootLogin {
-        container_name: String
-    },
-
     /// Run a command from a container.
     Run {
-        container_name: String
-    },
-
-    /// Show the IP address of a container.
-    ShowIp {
-        container_name: String
-    },
-
-    /// Show the host key of a container.
-    ShowHostKey {
         container_name: String
     },
 }
@@ -119,15 +58,11 @@ fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
-        Some(Commands::List { .. }) => {}
-
-        Some(Commands::Create { auto_start, .. }) => {
-            if *auto_start {
-                println!("auto_start");
-            }
+        Some(Commands::List {}) => {
+            let _ = Command::new("nixos-container")
+                .arg("list")
+                .spawn();
         }
-
-        Some(Commands::Destroy { .. }) => {}
 
         Some(Commands::Start { container_name }) => {
             let _ = Command::new("machinectl")
@@ -141,9 +76,17 @@ fn main() {
                 .spawn();
         }
 
-        Some(Commands::Terminate { .. }) => {}
+        Some(Commands::Terminate { container_name }) => {
+            let _ = Command::new("machinectl")
+                .args(["terminate", container_name])
+                .spawn();
+        }
 
-        Some(Commands::Status { .. }) => {}
+        Some(Commands::Status { container_name }) => {
+            let _ = Command::new("machinectl")
+                .args(["status", container_name])
+                .spawn();
+        }
 
         Some(Commands::Update { .. }) => {}
 
@@ -153,13 +96,8 @@ fn main() {
                 .spawn();
         }
 
-        Some(Commands::RootLogin { .. }) => {}
 
         Some(Commands::Run { .. }) => {}
-
-        Some(Commands::ShowIp { .. }) => {}
-
-        Some(Commands::ShowHostKey { .. }) => {}
 
         None => {}
     }
