@@ -7,24 +7,15 @@
   };
 
   outputs = { self, nixpkgs, utils }: utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system: {
-    packages.rsc-client = nixpkgs.legacyPackages.${system}.rustPlatform.buildRustPackage {
-      pname = "rsc-client";
+    packages.rsc = nixpkgs.legacyPackages.${system}.rustPlatform.buildRustPackage {
+      pname = "rsc";
       version = "0.1.0";
-      src = ./client;
+      src = ./.;
       cargoLock = {
-        lockFile = ./client/Cargo.lock;
+        lockFile = ./Cargo.lock;
       };
     };
 
-    packages.rsc-server = nixpkgs.legacyPackages.${system}.rustPlatform.buildRustPackage {
-      pname = "rsc-server";
-      version = "0.1.0";
-      src = ./server;
-      cargoLock = {
-        lockFile = ./server/Cargo.lock;
-      };
-    };
-
-    defaultPackage = self.packages.${system}.rsc-client;
+    defaultPackage = self.packages.${system}.rsc;
   });
 }
