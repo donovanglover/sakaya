@@ -7,8 +7,8 @@
   };
 
   outputs = { self, nixpkgs, utils }: utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system: {
-    packages.rsc = nixpkgs.legacyPackages.${system}.rustPlatform.buildRustPackage {
-      pname = "rsc";
+    packages.sakaya = nixpkgs.legacyPackages.${system}.rustPlatform.buildRustPackage {
+      pname = "sakaya";
       version = "0.1.0";
       src = ./.;
       cargoLock = {
@@ -16,6 +16,6 @@
       };
     };
 
-    defaultPackage = self.packages.${system}.rsc;
+    defaultPackage = self.packages.${system}.sakaya;
   });
 }
