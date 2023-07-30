@@ -10,12 +10,25 @@ fn get() -> String {
 #[derive(Deserialize)]
 #[serde(crate = "rocket::serde")]
 struct MyCommand<'r> {
-    path: &'r str
+    path: &'r str,
+    wine: &'r str
 }
 
 #[post("/", data = "<data>")]
 fn post(data: Json<MyCommand<'_>>) -> String {
-    format!("{}", data.path)
+    let mut wine_prefix: String = "WINEPREFIX=".to_owned();
+    wine_prefix.push_str(data.wine);
+
+    let output = Command::new("/usr/bin/env")
+        .args([
+            wine_prefix.as_str(),
+            "wine",
+            data.path
+        ])
+        .output()
+        .expect("Failed to execute command");
+
+    format!("{:?}", output)
 }
 
 #[launch]
