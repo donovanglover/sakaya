@@ -1,4 +1,4 @@
-# server
+# sakaya-server
 
 This is the server that runs inside of the container.
 
