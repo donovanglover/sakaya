@@ -42,7 +42,7 @@ fn rocket() -> _ {
         .output()
         .expect("Failed to detect");
 
-    if String::from_utf8_lossy(&virt.stdout) != "kvm" {
+    if String::from_utf8_lossy(&virt.stdout) != "systemd-nspawn" {
         println!("WARNING: sakaya-server was NOT executed inside of a systemd-nspawn container.");
     }
 
