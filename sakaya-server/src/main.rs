@@ -20,7 +20,6 @@ fn get() -> String {
 }
 
 #[derive(Deserialize)]
-#[serde(crate = "rocket::serde")]
 struct MyCommand {
     path: String,
     wine: String

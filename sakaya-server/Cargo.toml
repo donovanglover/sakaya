@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 rocket = { version = "=0.5.0-rc.3", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
