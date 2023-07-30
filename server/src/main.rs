@@ -1,4 +1,5 @@
 use rocket::{get, post, launch, routes};
+use rocket::serde::{Deserialize, json::Json};
 use std::process::Command;
 
 #[get("/")]
@@ -6,9 +7,15 @@ fn get() -> String {
     format!("Hello!")
 }
 
+#[derive(Deserialize)]
+#[serde(crate = "rocket::serde")]
+struct MyCommand<'r> {
+    path: &'r str
+}
+
 #[post("/", data = "<data>")]
-fn post(data: &str) -> String {
-    format!("{}", data)
+fn post(data: Json<MyCommand<'_>>) -> String {
+    format!("{}", data.path)
 }
 
 #[launch]
