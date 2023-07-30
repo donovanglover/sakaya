@@ -21,15 +21,15 @@ fn get() -> String {
 
 #[derive(Deserialize)]
 #[serde(crate = "rocket::serde")]
-struct MyCommand<'r> {
+struct MyCommand {
     path: String,
-    wine: &'r str
+    wine: String
 }
 
 #[post("/", data = "<data>")]
-fn post(data: Json<MyCommand<'_>>) -> String {
+fn post(data: Json<MyCommand>) -> String {
     let output = Command::new("wine")
-        .env("WINEPREFIX", data.wine)
+        .env("WINEPREFIX", &data.wine)
         .arg(&data.path)
         .output()
         .expect("Failed to execute command");
