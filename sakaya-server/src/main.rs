@@ -2,6 +2,7 @@ use rocket::{get, post, launch, routes};
 use rocket::serde::{Deserialize, json::Json};
 use std::process::Command;
 use std::str;
+use std::net::{IpAddr, Ipv4Addr};
 
 #[get("/")]
 fn get() -> String {
@@ -42,11 +43,17 @@ fn rocket() -> _ {
         .output()
         .expect("Failed to detect");
 
+    let mut host_ip_from_container = IpAddr::V4(Ipv4Addr::new(192, 168, 100, 49));
+
     if String::from_utf8_lossy(&virt.stdout) != "systemd-nspawn" {
         println!("WARNING: sakaya-server was NOT executed inside of a systemd-nspawn container.");
+        host_ip_from_container = IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1));
     }
 
-    rocket::build().mount("/", routes![
+    let figment = rocket::Config::figment()
+        .merge(("address", host_ip_from_container));
+
+    rocket::custom(figment).mount("/", routes![
         get,
         post
     ])
