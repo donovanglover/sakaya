@@ -27,15 +27,9 @@ struct MyCommand<'r> {
 
 #[post("/", data = "<data>")]
 fn post(data: Json<MyCommand<'_>>) -> String {
-    let mut wine_prefix: String = "WINEPREFIX=".to_owned();
-    wine_prefix.push_str(data.wine);
-
-    let output = Command::new("/usr/bin/env")
-        .args([
-            wine_prefix.as_str(),
-            "wine",
-            data.path
-        ])
+    let output = Command::new("wine")
+        .env("WINEPREFIX", data.wine)
+        .arg(data.path)
         .output()
         .expect("Failed to execute command");
 
