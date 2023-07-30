@@ -1,10 +1,21 @@
 use rocket::{get, post, launch, routes};
 use rocket::serde::{Deserialize, json::Json};
 use std::process::Command;
+use std::str;
 
 #[get("/")]
 fn get() -> String {
-    format!("Hello!")
+    let output = Command::new("/usr/bin/env")
+        .arg("ps")
+        .output()
+        .expect("Failed to execute command");
+
+    let result = match str::from_utf8(&output.stdout).ok() {
+        Some(string) => string,
+        None => ""
+    };
+
+    format!("{:?}", result)
 }
 
 #[derive(Deserialize)]
