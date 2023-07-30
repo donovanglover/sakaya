@@ -1,4 +1,4 @@
-#[macro_use] extern crate rocket;
+use rocket::{get, post, launch, routes};
 
 #[get("/")]
 fn get() -> String {
