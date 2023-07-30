@@ -51,6 +51,7 @@ fn rocket() -> _ {
     }
 
     let figment = rocket::Config::figment()
+        .merge(("port", 39493))
         .merge(("address", host_ip_from_container));
 
     rocket::custom(figment).mount("/", routes![
