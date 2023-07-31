@@ -23,6 +23,15 @@ fn make_icon(input_path: &str, output_icon: &str) {
             .expect("failed to execute process");
 }
 
+fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
+    let mut output: String = "[Desktop Entry]".to_owned() + "\n";
+    output.push_str("Type=Application\n");
+    output.push_str(&("Name=".to_owned() + file_name + "\n"));
+    output.push_str(&("Exec=sakaya ".to_owned() + full_path + "\n"));
+
+    let _ = fs::write(output_location, output);
+}
+
 fn main() {
     let cli = Cli::parse();
 
@@ -56,8 +65,10 @@ fn main() {
             let home_result = home.to_str().unwrap();
 
             let icon_path = &(home_result.to_owned() + "/.local/share/icons/" + file_name_str + ".png");
+            let desktop_file_path = &(home_result.to_owned() + "/.local/share/applications/" + file_name_str + ".desktop");
 
             make_icon(&full_path_str, &icon_path);
+            make_desktop_file(&desktop_file_path, &file_name_str, &full_path_str);
 
             let _ = Notification::new()
                 .summary("酒屋")
