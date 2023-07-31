@@ -11,10 +11,7 @@ fn get() -> String {
         .output()
         .expect("Failed to execute command");
 
-    let result = match str::from_utf8(&output.stdout).ok() {
-        Some(string) => string,
-        None => ""
-    };
+    let result = str::from_utf8(&output.stdout).ok().unwrap_or("");
 
     format!("{:?}", result)
 }
