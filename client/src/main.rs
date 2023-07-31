@@ -14,11 +14,6 @@ enum Commands {
     New {
         container_name: String
     },
-
-    /// Show a list of processes running in a container.
-    Ps {
-        container_name: String
-    },
 }
 
 fn main() {
@@ -35,10 +30,6 @@ fn main() {
             }
 
             let _ = Command::new("machinectl").args(["shell", "user@wine", "/usr/bin/env", "sakaya-server"]).output().expect("Failed to start a user shell with sakaya-server");
-        }
-
-        Some(Commands::Ps { container_name }) => {
-            let _ = Command::new("machinectl").args(["status", container_name, "--no-pager"]).spawn().expect("Failed to get machinectl status");
         }
 
         None => {}
