@@ -46,6 +46,7 @@ fn main() {
                 .summary("酒屋")
                 .body(&starting_string)
                 .icon(file_name_str)
+                .timeout(3000)
                 .show();
 
             let client = ClientBuilder::new().timeout(None).build().unwrap();
