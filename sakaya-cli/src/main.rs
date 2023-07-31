@@ -1,6 +1,7 @@
 use clap::Parser;
 use std::collections::HashMap;
 use std::path::Path;
+use std::process::Command;
 use reqwest::blocking::ClientBuilder;
 use notify_rust::Notification;
 use std::fs;
@@ -12,6 +13,14 @@ use home::home_dir;
 struct Cli {
     /// Path to the executable to run.
     executable: String,
+}
+
+fn make_icon(input_path: &str, output_icon: &str) {
+    Command::new("icoextract")
+            .arg(input_path)
+            .arg(output_icon)
+            .output()
+            .expect("failed to execute process");
 }
 
 fn main() {
@@ -46,10 +55,14 @@ fn main() {
             let home = home_dir().unwrap();
             let home_result = home.to_str().unwrap();
 
+            let icon_path = &(home_result.to_owned() + "/.local/share/icons/" + file_name_str + ".png");
+
+            make_icon(&full_path_str, &icon_path);
+
             let _ = Notification::new()
                 .summary("酒屋")
                 .body(&starting_string)
-                .icon(&(home_result.to_owned() + "/.local/share/icons/" + file_name_str + ".png"))
+                .icon(icon_path)
                 .timeout(3000)
                 .show();
 
