@@ -4,6 +4,7 @@ use std::path::Path;
 use reqwest::blocking::ClientBuilder;
 use notify_rust::Notification;
 use std::fs;
+use home::home_dir;
 
 #[derive(Parser)]
 #[command(version)]
@@ -42,10 +43,13 @@ fn main() {
             starting_string.push_str(file_name_str);
             starting_string.push_str("...");
 
+            let home = home_dir().unwrap();
+            let home_result = home.to_str().unwrap();
+
             let _ = Notification::new()
                 .summary("酒屋")
                 .body(&starting_string)
-                .icon(file_name_str)
+                .icon(&(home_result.to_owned() + "/.local/share/icons/" + file_name_str + ".png"))
                 .timeout(3000)
                 .show();
 
