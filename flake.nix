@@ -10,10 +10,20 @@
     packages.sakaya = nixpkgs.legacyPackages.${system}.rustPlatform.buildRustPackage {
       pname = "sakaya";
       version = "0.1.0";
+
       src = ./.;
+
       cargoLock = {
         lockFile = ./Cargo.lock;
       };
+
+      buildInputs = with nixpkgs.legacyPackages.${system}; [
+        openssl
+      ];
+
+      nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
+        pkg-config
+      ];
     };
 
     defaultPackage = self.packages.${system}.sakaya;
