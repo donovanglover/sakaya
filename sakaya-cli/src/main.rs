@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use std::path::Path;
 use reqwest::blocking::ClientBuilder;
 use notify_rust::Notification;
+use std::fs;
 
 #[derive(Parser)]
 #[command(version)]
@@ -50,7 +51,13 @@ fn main() {
             let client = ClientBuilder::new().timeout(None).build().unwrap();
             let result = client.post("http://192.168.100.49:39493").json(&map).send().expect("Couldn't request sakaya-server").text();
 
-            println!("{:?}", result)
+            let mut log_file: String = "/tmp/sakaya-".to_owned();
+            log_file.push_str(file_name_str);
+            log_file.push_str(".log");
+
+            let _ = fs::write(&log_file, result.unwrap());
+
+            println!("Log file available at {}", log_file)
         } else {
             // TODO: Get rid of else statements
             println!("File is NOT in path")
