@@ -1045,6 +1045,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ad4cc8da4ef723ed60bced201181d83791ad433213d8c24efffda1eec85d741"
 
 [[package]]
+name = "sakaya"
+version = "0.1.0"
+
+[[package]]
 name = "sakaya-client"
 version = "0.1.0"
 dependencies = [
