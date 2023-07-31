@@ -22,5 +22,7 @@ fn main() {
     let mut user: String = "user@".to_owned();
     user.push_str(&cli.container);
 
+    println!("Starting sakaya-server in container {}...", &cli.container);
+
     let _ = Command::new("machinectl").args(["shell", user.as_str(), "/usr/bin/env", "sakaya-server"]).output().expect("Failed to start a user shell with sakaya-server");
 }
