@@ -67,8 +67,8 @@ fn main() {
             let icon_path = &(home_result.to_owned() + "/.local/share/icons/" + file_name_str + ".png");
             let desktop_file_path = &(home_result.to_owned() + "/.local/share/applications/" + file_name_str + ".desktop");
 
-            make_icon(&full_path_str, &icon_path);
-            make_desktop_file(&desktop_file_path, &file_name_str, &full_path_str);
+            make_icon(full_path_str, icon_path);
+            make_desktop_file(desktop_file_path, file_name_str, full_path_str);
 
             let _ = Notification::new()
                 .summary("酒屋")
