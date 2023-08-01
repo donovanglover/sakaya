@@ -21,6 +21,7 @@
         openssl
         gtk4
         (pkgs.callPackage ./nix/gtk4-layer-shell.nix { })
+        libadwaita
       ];
 
       nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
