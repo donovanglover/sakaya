@@ -37,9 +37,8 @@ fn activate(application: &gtk::Application) {
     // Set up a widget
     let label = gtk::Label::new(Some(""));
     label.set_markup("<span font_desc=\"20.0\">GTK Layer Shell example!</span>");
-    window.add(&label);
-    window.set_border_width(12);
-    window.show_all()
+    window.set_child(Some(&label));
+    window.set_visible(true)
 }
 
 fn main() {
