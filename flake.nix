@@ -19,6 +19,10 @@
 
       buildInputs = with nixpkgs.legacyPackages.${system}; [
         openssl
+        glib
+        gtk3
+        gtk-layer-shell
+        atk
       ];
 
       nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
