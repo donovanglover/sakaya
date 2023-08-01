@@ -4,7 +4,7 @@
 use libadwaita as adw;
 
 use adw::prelude::*;
-use adw::{ActionRow, ApplicationWindow, HeaderBar};
+use adw::{ActionRow, ApplicationWindow};
 use gtk::{Application, Box, ListBox, Orientation};
 
 fn main() {
@@ -39,12 +39,6 @@ fn main() {
 
         // Combine the content in a box
         let content = Box::new(Orientation::Vertical, 0);
-        // Adwaitas' ApplicationWindow does not include a HeaderBar
-        content.append(
-            &HeaderBar::builder()
-                .title_widget(&adw::WindowTitle::new("First App", ""))
-                .build(),
-        );
         content.append(&list);
 
         let window = ApplicationWindow::builder()
