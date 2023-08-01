@@ -29,6 +29,6 @@
       ];
     };
 
-    defaultPackage = self.packages.${system}.sakaya;
+    packages.default = self.packages.${system}.sakaya;
   });
 }
