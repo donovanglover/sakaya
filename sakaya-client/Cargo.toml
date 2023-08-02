@@ -1,7 +1,0 @@
-[package]
-name = "sakaya-client"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-clap = { version = "4.3.17", features = ["derive"] }

@@ -2221,13 +2221,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sakaya-client"
-version = "0.1.0"
-dependencies = [
- "clap",
-]
-
-[[package]]
 name = "sakaya-gui"
 version = "0.1.0"
 dependencies = [
