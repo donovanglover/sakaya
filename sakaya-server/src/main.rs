@@ -1,12 +1,12 @@
+use rocket::serde::{json::Json, Deserialize};
 use rocket::{post, routes};
-use rocket::serde::{Deserialize, json::Json};
-use std::process::Command;
 use std::net::{IpAddr, Ipv4Addr};
+use std::process::Command;
 
 #[derive(Deserialize)]
 struct MyCommand {
     path: String,
-    wine: String
+    wine: String,
 }
 
 #[post("/", data = "<data>")]
@@ -28,7 +28,8 @@ async fn main() {
         .merge(("port", 39493))
         .merge(("address", host_ip_from_container));
 
-    let _ = rocket::custom(figment).mount("/", routes![
-        post
-    ]).launch().await;
+    let _ = rocket::custom(figment)
+        .mount("/", routes![post])
+        .launch()
+        .await;
 }

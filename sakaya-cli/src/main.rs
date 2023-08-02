@@ -1,11 +1,11 @@
 use clap::Parser;
+use home::home_dir;
+use notify_rust::Notification;
+use reqwest::blocking::ClientBuilder;
 use std::collections::HashMap;
+use std::fs;
 use std::path::Path;
 use std::process::Command;
-use reqwest::blocking::ClientBuilder;
-use notify_rust::Notification;
-use std::fs;
-use home::home_dir;
 
 #[derive(Parser)]
 #[command(version)]
@@ -17,10 +17,10 @@ struct Cli {
 
 fn make_icon(input_path: &str, output_icon: &str) {
     Command::new("icoextract")
-            .arg(input_path)
-            .arg(output_icon)
-            .output()
-            .expect("failed to execute process");
+        .arg(input_path)
+        .arg(output_icon)
+        .output()
+        .expect("failed to execute process");
 }
 
 fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
@@ -41,7 +41,12 @@ fn main() {
         map.insert("wine", "");
         map.insert("path", "winecfg");
         let client = ClientBuilder::new().timeout(None).build().unwrap();
-        let result = client.post("http://192.168.100.49:39493").json(&map).send().expect("Couldn't request sakaya-server").text();
+        let result = client
+            .post("http://192.168.100.49:39493")
+            .json(&map)
+            .send()
+            .expect("Couldn't request sakaya-server")
+            .text();
 
         let log_file: String = "/tmp/sakaya-winecfg.log".to_owned();
 
@@ -58,7 +63,7 @@ fn main() {
 
         let file_name_str = match full_path.file_name() {
             Some(file_name) => file_name.to_str().expect("Couldn't convert to str"),
-            None => ""
+            None => "",
         };
 
         // TODO: Don't hardcode this?
@@ -79,8 +84,12 @@ fn main() {
             let home = home_dir().unwrap();
             let home_result = home.to_str().unwrap();
 
-            let icon_path = &(home_result.to_owned() + "/.local/share/icons/" + file_name_str + ".png");
-            let desktop_file_path = &(home_result.to_owned() + "/.local/share/applications/" + file_name_str + ".desktop");
+            let icon_path =
+                &(home_result.to_owned() + "/.local/share/icons/" + file_name_str + ".png");
+            let desktop_file_path = &(home_result.to_owned()
+                + "/.local/share/applications/"
+                + file_name_str
+                + ".desktop");
 
             make_icon(full_path_str, icon_path);
             make_desktop_file(desktop_file_path, file_name_str, full_path_str);
@@ -93,7 +102,12 @@ fn main() {
                 .show();
 
             let client = ClientBuilder::new().timeout(None).build().unwrap();
-            let result = client.post("http://192.168.100.49:39493").json(&map).send().expect("Couldn't request sakaya-server").text();
+            let result = client
+                .post("http://192.168.100.49:39493")
+                .json(&map)
+                .send()
+                .expect("Couldn't request sakaya-server")
+                .text();
 
             let mut log_file: String = "/tmp/sakaya-".to_owned();
             log_file.push_str(file_name_str);
