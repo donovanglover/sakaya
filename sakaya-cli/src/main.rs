@@ -38,7 +38,7 @@ fn main() {
     // TOOD: DRY
     if &cli.executable == "winecfg" {
         let mut map = HashMap::new();
-        map.insert("wine", "");
+        map.insert("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark");
         map.insert("path", "winecfg");
         let client = ClientBuilder::new().timeout(None).build().unwrap();
         let result = client
@@ -74,7 +74,7 @@ fn main() {
             println!("Running {} as {}...", path_str, container_path);
 
             let mut map = HashMap::new();
-            map.insert("wine", "");
+            map.insert("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark");
             map.insert("path", &container_path);
 
             let mut starting_string: String = "Starting ".to_owned();
