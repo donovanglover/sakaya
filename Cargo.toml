@@ -1,6 +1,5 @@
 [workspace]
 members = [
   "sakaya-cli",
-  "sakaya-gui",
   "sakaya-server",
 ]
