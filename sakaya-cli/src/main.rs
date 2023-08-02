@@ -35,6 +35,21 @@ fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
 fn main() {
     let cli = Cli::parse();
 
+    // TOOD: DRY
+    if &cli.executable == "winecfg" {
+        let mut map = HashMap::new();
+        map.insert("wine", "");
+        map.insert("path", "winecfg");
+        let client = ClientBuilder::new().timeout(None).build().unwrap();
+        let result = client.post("http://192.168.100.49:39493").json(&map).send().expect("Couldn't request sakaya-server").text();
+
+        let log_file: String = "/tmp/sakaya-winecfg.log".to_owned();
+
+        let _ = fs::write(&log_file, result.unwrap());
+
+        println!("Log file available at {}", log_file)
+    }
+
     let path = Path::new(&cli.executable);
 
     if path.exists() {
