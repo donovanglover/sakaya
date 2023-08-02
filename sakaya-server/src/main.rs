@@ -1,7 +1,6 @@
 use rocket::{post, launch, routes};
 use rocket::serde::{Deserialize, json::Json};
 use std::process::Command;
-use std::str;
 use std::net::{IpAddr, Ipv4Addr};
 
 #[derive(Deserialize)]
