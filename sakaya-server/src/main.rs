@@ -1,4 +1,4 @@
-use rocket::{post, launch, routes};
+use rocket::{post, routes};
 use rocket::serde::{Deserialize, json::Json};
 use std::process::Command;
 use std::net::{IpAddr, Ipv4Addr};
@@ -20,15 +20,15 @@ fn post(data: Json<MyCommand>) -> String {
     format!("{:?}", output)
 }
 
-#[launch]
-fn rocket() -> _ {
+#[rocket::main]
+async fn main() {
     let host_ip_from_container = IpAddr::V4(Ipv4Addr::new(192, 168, 100, 49));
 
     let figment = rocket::Config::figment()
         .merge(("port", 39493))
         .merge(("address", host_ip_from_container));
 
-    rocket::custom(figment).mount("/", routes![
+    let _ = rocket::custom(figment).mount("/", routes![
         post
-    ])
+    ]).launch().await;
 }
