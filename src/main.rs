@@ -1,6 +1,5 @@
 use clap::Parser;
 use home::home_dir;
-use notify_rust::Notification;
 use reqwest::blocking::ClientBuilder;
 use std::collections::HashMap;
 use std::fs;
@@ -83,13 +82,7 @@ async fn main() {
 
         client::make_icon(full_path_str, icon_path);
         client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
-
-        let _ = Notification::new()
-            .summary("酒屋")
-            .body(&starting_string)
-            .icon(icon_path)
-            .timeout(3000)
-            .show();
+        client::notify(&starting_string, icon_path);
 
         let client = ClientBuilder::new().timeout(None).build().unwrap();
         let result = client
