@@ -8,10 +8,7 @@ use std::path::Path;
 use std::process::Command;
 
 mod cli;
-use cli::Cli;
-
 mod server;
-use server::rocket;
 
 fn make_icon(input_path: &str, output_icon: &str) {
     Command::new("icoextract")
@@ -33,12 +30,12 @@ fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
 
 #[rocket::main]
 async fn main() {
-    let cli = Cli::parse();
+    let cli = cli::Cli::parse();
 
     let is_container = fs::read("/run/systemd/container").is_ok();
 
     if is_container {
-        rocket().await;
+        server::rocket().await;
         return
     }
 
