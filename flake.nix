@@ -19,8 +19,6 @@
 
       buildInputs = with nixpkgs.legacyPackages.${system}; [
         openssl
-        gtk4
-        libadwaita
       ];
 
       nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
