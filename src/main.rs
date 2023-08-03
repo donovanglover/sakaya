@@ -66,10 +66,6 @@ async fn main() {
         map.insert("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark");
         map.insert("path", &container_path);
 
-        let mut starting_string: String = "Starting ".to_owned();
-        starting_string.push_str(file_name_str);
-        starting_string.push_str("...");
-
         let home = home_dir().unwrap();
         let home_result = home.to_str().unwrap();
 
@@ -82,7 +78,7 @@ async fn main() {
 
         client::make_icon(full_path_str, icon_path);
         client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
-        client::notify(&starting_string, Some(icon_path));
+        client::notify(&["Starting ", file_name_str, "..."].join(""), Some(icon_path));
 
         let client = ClientBuilder::new().timeout(None).build().unwrap();
         let result = client
