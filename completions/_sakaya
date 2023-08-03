@@ -1,0 +1,36 @@
+#compdef sakaya
+
+autoload -U is-at-least
+
+_sakaya() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+'::executable -- Path to the executable to run:' \
+&& ret=0
+}
+
+(( $+functions[_sakaya_commands] )) ||
+_sakaya_commands() {
+    local commands; commands=()
+    _describe -t commands 'sakaya commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_sakaya" ]; then
+    _sakaya "$@"
+else
+    compdef _sakaya sakaya
+fi
