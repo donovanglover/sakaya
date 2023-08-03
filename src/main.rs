@@ -19,12 +19,10 @@ async fn main() {
 
     // TOOD: DRY
     if &cli.executable == "winecfg" {
-        let map = HashMap::from([
+        client::log("winecfg", &client::request(&HashMap::from([
             ("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark"),
             ("path", "winecfg"),
-        ]);
-
-        client::log("winecfg", &client::request(&map));
+        ])));
         client::notify("Closed winecfg.", None);
     }
 
@@ -47,11 +45,6 @@ async fn main() {
     if full_path_str.contains("/home/user/containers/wine") {
         let container_path = full_path_str.replace("/home/user/containers/wine", "/mnt");
 
-        let map = HashMap::from([
-            ("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark"),
-            ("path", &container_path),
-        ]);
-
         let _home = home_dir().unwrap();
         let home = _home.to_str().unwrap();
 
@@ -61,7 +54,10 @@ async fn main() {
         client::make_icon(full_path_str, icon_path);
         client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
         client::notify(&format!("Starting {file_name_str}..."), Some(icon_path));
-        client::log(file_name_str, &client::request(&map));
+        client::log(file_name_str, &client::request(&HashMap::from([
+            ("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark"),
+            ("path", &container_path),
+        ])));
         client::notify(&format!("Closed {file_name_str}."), Some(icon_path));
     }
 }
