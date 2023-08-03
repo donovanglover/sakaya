@@ -46,9 +46,6 @@ async fn main() {
     // TODO: Don't hardcode this?
     if full_path_str.contains("/home/user/containers/wine") {
         let container_path = full_path_str.replace("/home/user/containers/wine", "/mnt");
-        let path_str = path.to_str().expect("Couldn't convert to str");
-
-        println!("Running {path_str} as {container_path}...");
 
         let mut map = HashMap::new();
         map.insert("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark");
