@@ -23,7 +23,15 @@
 
       nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
         pkg-config
+        installShellFiles
       ];
+
+      postInstall = ''
+        installShellCompletion --cmd sakaya \
+          --bash <(cat completions/sakaya.bash) \
+          --fish <(cat completions/sakaya.fish) \
+          --zsh <(cat completions/_sakaya)
+      '';
     };
 
     packages.default = self.packages.${system}.sakaya;
