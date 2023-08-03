@@ -1,8 +1,8 @@
 use clap::Parser;
 use home::home_dir;
 use std::collections::HashMap;
-use std::fs;
 use std::path::Path;
+use sakaya::is_container;
 
 mod cli;
 mod server;
@@ -12,9 +12,7 @@ mod client;
 async fn main() {
     let cli = cli::Cli::parse();
 
-    let is_container = fs::read("/run/systemd/container").is_ok();
-
-    if is_container {
+    if is_container() {
         server::rocket().await;
         return
     }
