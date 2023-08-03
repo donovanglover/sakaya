@@ -1,6 +1,8 @@
 use std::process::Command;
 use std::fs;
 use notify_rust::Notification;
+use reqwest::blocking::ClientBuilder;
+use std::collections::HashMap;
 
 pub fn make_icon(input_path: &str, output_icon: &str) {
     Command::new("icoextract")
@@ -35,4 +37,14 @@ pub fn log(application_name: &str, output: &str) {
     fs::write(log_file, output).unwrap();
 
     println!("Log file available at {log_file}")
+}
+
+pub fn request(map: &HashMap<&str, &str>) {
+    let client = ClientBuilder::new().timeout(None).build().unwrap();
+    let result = client
+        .post("http://192.168.100.49:39493")
+        .json(&map)
+        .send()
+        .expect("Couldn't request sakaya-server")
+        .text();
 }

@@ -79,16 +79,8 @@ async fn main() {
         client::make_icon(full_path_str, icon_path);
         client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
         client::notify(&format!("Starting {file_name_str}..."), Some(icon_path));
+        client::request(&map);
 
-        let client = ClientBuilder::new().timeout(None).build().unwrap();
-        let result = client
-            .post("http://192.168.100.49:39493")
-            .json(&map)
-            .send()
-            .expect("Couldn't request sakaya-server")
-            .text();
-
-        client::log(file_name_str, &result.unwrap())
-
+        // client::log(file_name_str, &result.unwrap())
     }
 }
