@@ -22,6 +22,7 @@ pub fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str
 }
 
 pub fn notify(body: &str, mut icon: Option<&str>) {
+    println!("{body}");
     Notification::new()
         .summary("酒屋")
         .body(body)
