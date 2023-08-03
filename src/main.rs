@@ -10,6 +10,9 @@ use rocket::serde::{json::Json, Deserialize};
 use rocket::{post, routes};
 use std::net::{IpAddr, Ipv4Addr};
 
+use cli::Cli;
+mod cli;
+
 #[derive(Deserialize)]
 struct MyCommand {
     path: String,
@@ -38,14 +41,6 @@ async fn rocket() {
         .mount("/", routes![post])
         .launch()
         .await;
-}
-
-#[derive(Parser)]
-#[command(version)]
-struct Cli {
-    /// Path to the executable to run.
-    #[arg(default_value = "")]
-    executable: String,
 }
 
 fn make_icon(input_path: &str, output_icon: &str) {
