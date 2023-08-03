@@ -1,6 +1,6 @@
 [package]
 name = "sakaya"
-description = "Run native wine applications inside declarative systemd-nspawn containers"
+description = "Run native wine applications inside declarative systemd-nspawn containers."
 version = "0.1.0"
 authors = ["Donovan Glover"]
 repository = "https://github.com/donovanglover/sakaya"
