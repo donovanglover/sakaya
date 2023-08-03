@@ -1752,12 +1752,6 @@ dependencies = [
  "home",
  "notify-rust",
  "reqwest",
-]
-
-[[package]]
-name = "sakaya-server"
-version = "0.1.0"
-dependencies = [
  "rocket",
  "serde",
 ]
