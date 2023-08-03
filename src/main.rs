@@ -8,7 +8,7 @@ use std::path::Path;
 
 mod cli;
 mod server;
-mod writer;
+mod client;
 
 #[rocket::main]
 async fn main() {
@@ -81,8 +81,8 @@ async fn main() {
             + file_name_str
             + ".desktop");
 
-        writer::make_icon(full_path_str, icon_path);
-        writer::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
+        client::make_icon(full_path_str, icon_path);
+        client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
 
         let _ = Notification::new()
             .summary("酒屋")
