@@ -42,9 +42,9 @@ async fn rocket() {
 
 #[derive(Parser)]
 #[command(version)]
-#[command(arg_required_else_help = true)]
 struct Cli {
     /// Path to the executable to run.
+    #[arg(default_value = "")]
     executable: String,
 }
 
