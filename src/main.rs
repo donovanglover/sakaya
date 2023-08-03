@@ -6,42 +6,12 @@ use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 use std::process::Command;
-use rocket::serde::{json::Json, Deserialize};
-use rocket::{post, routes};
-use std::net::{IpAddr, Ipv4Addr};
 
-use cli::Cli;
 mod cli;
+use cli::Cli;
 
-#[derive(Deserialize)]
-struct MyCommand {
-    path: String,
-    wine: String,
-}
-
-#[post("/", data = "<data>")]
-fn post(data: Json<MyCommand>) -> String {
-    let output = Command::new("wine")
-        .env("WINEPREFIX", &data.wine)
-        .arg(&data.path)
-        .output()
-        .expect("Failed to execute command");
-
-    format!("{:?}", output)
-}
-
-async fn rocket() {
-    let host_ip_from_container = IpAddr::V4(Ipv4Addr::new(192, 168, 100, 49));
-
-    let figment = rocket::Config::figment()
-        .merge(("port", 39493))
-        .merge(("address", host_ip_from_container));
-
-    let _ = rocket::custom(figment)
-        .mount("/", routes![post])
-        .launch()
-        .await;
-}
+mod server;
+use server::rocket;
 
 fn make_icon(input_path: &str, output_icon: &str) {
     Command::new("icoextract")
