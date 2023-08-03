@@ -27,6 +27,8 @@
       ];
 
       postInstall = ''
+        installManPage man/sakaya.1
+
         installShellCompletion --cmd sakaya \
           --bash <(cat completions/sakaya.bash) \
           --fish <(cat completions/sakaya.fish) \
