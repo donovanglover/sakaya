@@ -21,9 +21,10 @@ async fn main() {
 
     // TOOD: DRY
     if &cli.executable == "winecfg" {
-        let mut map = HashMap::new();
-        map.insert("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark");
-        map.insert("path", "winecfg");
+        let map = HashMap::from([
+            ("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark"),
+            ("path", "winecfg"),
+        ]);
 
         client::log("winecfg", &client::request(&map));
         client::notify("Closed winecfg.", None);
