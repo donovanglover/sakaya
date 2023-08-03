@@ -5,28 +5,10 @@ use reqwest::blocking::ClientBuilder;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
-use std::process::Command;
 
 mod cli;
 mod server;
-
-fn make_icon(input_path: &str, output_icon: &str) {
-    Command::new("icoextract")
-        .arg(input_path)
-        .arg(output_icon)
-        .output()
-        .expect("failed to execute process");
-}
-
-fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
-    let mut output: String = "[Desktop Entry]".to_owned() + "\n";
-    output.push_str("Type=Application\n");
-    output.push_str(&("Name=".to_owned() + file_name + "\n"));
-    output.push_str(&("Exec=sakaya \"".to_owned() + full_path + "\"\n"));
-
-    let _ = fs::write(output_location, output);
-}
-
+mod writer;
 
 #[rocket::main]
 async fn main() {
@@ -99,8 +81,8 @@ async fn main() {
             + file_name_str
             + ".desktop");
 
-        make_icon(full_path_str, icon_path);
-        make_desktop_file(desktop_file_path, file_name_str, full_path_str);
+        writer::make_icon(full_path_str, icon_path);
+        writer::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
 
         let _ = Notification::new()
             .summary("酒屋")
