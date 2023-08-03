@@ -39,12 +39,15 @@ pub fn log(application_name: &str, output: &str) {
     println!("Log file available at {log_file}")
 }
 
-pub fn request(map: &HashMap<&str, &str>) {
-    let client = ClientBuilder::new().timeout(None).build().unwrap();
-    let result = client
+pub fn request(map: &HashMap<&str, &str>) -> String {
+    ClientBuilder::new()
+        .timeout(None)
+        .build()
+        .unwrap()
         .post("http://192.168.100.49:39493")
         .json(&map)
         .send()
         .expect("Couldn't request sakaya-server")
-        .text();
+        .text()
+        .unwrap()
 }

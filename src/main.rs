@@ -79,8 +79,6 @@ async fn main() {
         client::make_icon(full_path_str, icon_path);
         client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
         client::notify(&format!("Starting {file_name_str}..."), Some(icon_path));
-        client::request(&map);
-
-        // client::log(file_name_str, &result.unwrap())
+        client::log(file_name_str, &client::request(&map))
     }
 }
