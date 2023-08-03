@@ -37,7 +37,7 @@ async fn main() {
 
         let _ = fs::write(&log_file, result.unwrap());
 
-        println!("Log file available at {}", log_file)
+        println!("Log file available at {log_file}")
     }
 
     let path = Path::new(&cli.executable);
@@ -60,7 +60,7 @@ async fn main() {
         let container_path = full_path_str.replace("/home/user/containers/wine", "/mnt");
         let path_str = path.to_str().expect("Couldn't convert to str");
 
-        println!("Running {} as {}...", path_str, container_path);
+        println!("Running {path_str} as {container_path}...");
 
         let mut map = HashMap::new();
         map.insert("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark");
@@ -94,6 +94,6 @@ async fn main() {
 
         let _ = fs::write(&log_file, result.unwrap());
 
-        println!("Log file available at {}", log_file)
+        println!("Log file available at {log_file}")
     }
 }
