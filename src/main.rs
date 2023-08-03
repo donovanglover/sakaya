@@ -1,6 +1,5 @@
 use clap::Parser;
 use home::home_dir;
-use reqwest::blocking::ClientBuilder;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
@@ -25,19 +24,9 @@ async fn main() {
         let mut map = HashMap::new();
         map.insert("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark");
         map.insert("path", "winecfg");
-        let client = ClientBuilder::new().timeout(None).build().unwrap();
-        let result = client
-            .post("http://192.168.100.49:39493")
-            .json(&map)
-            .send()
-            .expect("Couldn't request sakaya-server")
-            .text();
 
-        let log_file: String = "/tmp/sakaya-winecfg.log".to_owned();
-
-        let _ = fs::write(&log_file, result.unwrap());
-
-        println!("Log file available at {log_file}")
+        client::log("winecfg", &client::request(&map));
+        client::notify("Closed winecfg.", None);
     }
 
     let path = Path::new(&cli.executable);
