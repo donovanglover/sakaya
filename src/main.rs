@@ -68,8 +68,14 @@ fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
 
 #[rocket::main]
 async fn main() {
-    // rocket().await;
     let cli = Cli::parse();
+
+    let is_container = fs::read("/run/systemd/container").is_ok();
+
+    if is_container {
+        rocket().await;
+        return
+    }
 
     // TOOD: DRY
     if &cli.executable == "winecfg" {
