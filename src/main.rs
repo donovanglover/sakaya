@@ -6,6 +6,39 @@ use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 use std::process::Command;
+use rocket::serde::{json::Json, Deserialize};
+use rocket::{post, routes};
+use std::net::{IpAddr, Ipv4Addr};
+
+#[derive(Deserialize)]
+struct MyCommand {
+    path: String,
+    wine: String,
+}
+
+#[post("/", data = "<data>")]
+fn post(data: Json<MyCommand>) -> String {
+    let output = Command::new("wine")
+        .env("WINEPREFIX", &data.wine)
+        .arg(&data.path)
+        .output()
+        .expect("Failed to execute command");
+
+    format!("{:?}", output)
+}
+
+async fn rocket() {
+    let host_ip_from_container = IpAddr::V4(Ipv4Addr::new(192, 168, 100, 49));
+
+    let figment = rocket::Config::figment()
+        .merge(("port", 39493))
+        .merge(("address", host_ip_from_container));
+
+    let _ = rocket::custom(figment)
+        .mount("/", routes![post])
+        .launch()
+        .await;
+}
 
 #[derive(Parser)]
 #[command(version)]
@@ -32,7 +65,10 @@ fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
     let _ = fs::write(output_location, output);
 }
 
-fn main() {
+
+#[rocket::main]
+async fn main() {
+    // rocket().await;
     let cli = Cli::parse();
 
     // TOOD: DRY
