@@ -36,7 +36,7 @@ async fn main() {
     }
 
     let full_path = path.canonicalize().unwrap();
-    let full_path_str = full_path.to_str().expect("Couldn't convert to str");
+    let full_path_str = full_path.to_str().unwrap();
 
     let file_name_str = match full_path.file_name() {
         Some(file_name) => file_name.to_str().expect("Couldn't convert to str"),
@@ -47,19 +47,16 @@ async fn main() {
     if full_path_str.contains("/home/user/containers/wine") {
         let container_path = full_path_str.replace("/home/user/containers/wine", "/mnt");
 
-        let mut map = HashMap::new();
-        map.insert("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark");
-        map.insert("path", &container_path);
+        let map = HashMap::from([
+            ("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark"),
+            ("path", &container_path),
+        ]);
 
-        let home = home_dir().unwrap();
-        let home_result = home.to_str().unwrap();
+        let _home = home_dir().unwrap();
+        let home = _home.to_str().unwrap();
 
-        let icon_path =
-            &(home_result.to_owned() + "/.local/share/icons/" + file_name_str + ".png");
-        let desktop_file_path = &(home_result.to_owned()
-            + "/.local/share/applications/"
-            + file_name_str
-            + ".desktop");
+        let icon_path = &format!("{home}/.local/share/icons/{file_name_str}.png");
+        let desktop_file_path = &format!("{home}/.local/share/applications/{file_name_str}.desktop");
 
         client::make_icon(full_path_str, icon_path);
         client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
