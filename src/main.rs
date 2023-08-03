@@ -88,12 +88,7 @@ async fn main() {
             .expect("Couldn't request sakaya-server")
             .text();
 
-        let mut log_file: String = "/tmp/sakaya-".to_owned();
-        log_file.push_str(file_name_str);
-        log_file.push_str(".log");
+        client::log(file_name_str, &result.unwrap())
 
-        let _ = fs::write(&log_file, result.unwrap());
-
-        println!("Log file available at {log_file}")
     }
 }

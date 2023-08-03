@@ -28,3 +28,11 @@ pub fn notify(body: &str, mut icon: Option<&str>) {
         .show()
         .unwrap();
 }
+
+pub fn log(application_name: &str, output: &str) {
+    let log_file = &format!("/tmp/sakaya-{application_name}.log");
+
+    fs::write(log_file, output).unwrap();
+
+    println!("Log file available at {log_file}")
+}
