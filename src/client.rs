@@ -19,11 +19,11 @@ pub fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str
     let _ = fs::write(output_location, output);
 }
 
-pub fn notify(body: &str, icon: &str) {
+pub fn notify(body: &str, mut icon: Option<&str>) {
     let _ = Notification::new()
         .summary("酒屋")
         .body(body)
-        .icon(icon)
+        .icon(icon.get_or_insert(""))
         .timeout(3000)
         .show();
 }

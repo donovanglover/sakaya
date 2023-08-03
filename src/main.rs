@@ -82,7 +82,7 @@ async fn main() {
 
         client::make_icon(full_path_str, icon_path);
         client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
-        client::notify(&starting_string, icon_path);
+        client::notify(&starting_string, Some(icon_path));
 
         let client = ClientBuilder::new().timeout(None).build().unwrap();
         let result = client
