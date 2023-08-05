@@ -37,7 +37,7 @@ async fn main() {
     let full_path_str = full_path.to_str().unwrap();
 
     let file_name_str = match full_path.file_name() {
-        Some(file_name) => file_name.to_str().expect("Couldn't convert to str"),
+        Some(file_name) => file_name.to_str().unwrap(),
         None => "",
     };
 

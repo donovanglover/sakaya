@@ -9,7 +9,7 @@ pub fn make_icon(input_path: &str, output_icon: &str) {
         .arg(input_path)
         .arg(output_icon)
         .output()
-        .expect("failed to execute process");
+        .unwrap();
 }
 
 pub fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
