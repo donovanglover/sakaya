@@ -2,7 +2,7 @@
 name = "sakaya"
 description = "Run native wine applications inside declarative systemd-nspawn containers."
 version = "0.1.0"
-authors = ["Donovan Glover"]
+authors = ["Copyright (C) 2023 Donovan Glover <https://donovan.is/>"]
 repository = "https://github.com/donovanglover/sakaya"
 license = "MIT"
 edition = "2021"
