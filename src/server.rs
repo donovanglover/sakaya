@@ -3,12 +3,14 @@ use rocket::{post, routes};
 use std::net::{IpAddr, Ipv4Addr};
 use std::process::Command;
 
+/// The data structure for requests
 #[derive(Deserialize)]
 struct MyCommand {
     path: String,
     wine: String,
 }
 
+/// Handles starting an application when prompted
 #[post("/", data = "<data>")]
 fn post(data: Json<MyCommand>) -> String {
     let output = Command::new("wine")
@@ -20,6 +22,7 @@ fn post(data: Json<MyCommand>) -> String {
     format!("{:?}", output)
 }
 
+/// Starts a server to wait for requests to start applications
 pub async fn rocket() {
     let host_ip_from_container = IpAddr::V4(Ipv4Addr::new(192, 168, 100, 49));
 
