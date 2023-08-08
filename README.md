@@ -1,8 +1,8 @@
 # sakaya
 
-Run native wine applications inside declarative systemd-nspawn containers.
+Run native wine applications inside declarative systemd-nspawn containers. `sakaya` functions as a replacement for `wine` on the host. Works well with NixOS.
 
-## Installation
+## Setup
 
 ### Step 1: Add sakaya to your flake inputs
 
@@ -14,9 +14,11 @@ Run native wine applications inside declarative systemd-nspawn containers.
 }
 ```
 
-### Step 2: Create a declarative systemd-nspawn container with sakaya
+### Step 2: Create a nixos-container with sakaya
 
-See [`sakaya.nix`](https://github.com/donovanglover/nix-config/blob/master/containers/sakaya.nix) in my nix-config for an example.
+> TODO: NOTE: This part is non-trivial and should be simplified for end-users later.
+
+See [`wine.nix`](https://github.com/donovanglover/nix-config/blob/master/containers/wine.nix) in my nix-config for an example.
 
 ### Step 3: Add sakaya to systemPackages
 
@@ -32,16 +34,14 @@ See [`sakaya.nix`](https://github.com/donovanglover/nix-config/blob/master/conta
 
 ## Usage
 
-The point of sakaya is to make it easy to run wine applications inside of declarative systemd-nspawn containers. It functions like a replacement for `wine` on the host.
+> LATER: Implement this
 
-### Run program.exe in a 32-bit wine prefix:
+You can open applications like normal and they'll open with sakaya. Use `~/.config/sakaya/config.toml` to change whether an application should use a 32 or 64-bit prefix, which container it should run in, etc.
 
 ```fish
 sakaya program.exe
 ```
 
-### Run program.exe in a 64-bit wine prefix:
+## Todo
 
-```fish
-sakaya --64 program.exe
-```
+- [ ] Notify user if sakaya fails to start an executable
