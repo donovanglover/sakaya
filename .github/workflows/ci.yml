@@ -5,19 +5,19 @@ on:
   pull_request:
 
 jobs:
-  "nix flake check":
+  nix-flake-check:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: cachix/install-nix-action@v22
     - run: nix flake check
-  "nix build":
+  nix-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: cachix/install-nix-action@v22
     - run: nix build
-  "cargo build && cargo test":
+  cargo-build-and-test:
     name: build and test
     runs-on: ubuntu-latest
     strategy:
