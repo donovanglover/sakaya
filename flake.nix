@@ -1,5 +1,5 @@
 {
-  description = "A declarative systemd-nspawn container manager written in Rust";
+  description = "Run native wine applications inside declarative systemd-nspawn containers";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
