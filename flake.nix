@@ -17,12 +17,7 @@
         lockFile = ./Cargo.lock;
       };
 
-      buildInputs = with nixpkgs.legacyPackages.${system}; [
-        openssl
-      ];
-
       nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
-        pkg-config
         installShellFiles
       ];
 
