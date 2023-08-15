@@ -8,22 +8,17 @@ pub fn is_container() -> bool {
 }
 
 /// Given an .exe file, return the first .ico file inside it
-pub fn get_first_ico_file(input_bin: &str) {
+pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
     let map = FileMap::open(input_bin).expect("Error opening the binary");
     let file = PeFile::from_bytes(&map).expect("Error parsing the binary");
     let resources = file.resources().expect("Error binary does not have resources");
 
-    for (name, group) in resources.icons().filter_map(Result::ok) {
+    for (_, group) in resources.icons().filter_map(Result::ok) {
         let mut contents = Vec::new();
         group.write(&mut contents).unwrap();
 
-        let buf: Cursor<Vec<u8>> = Cursor::new(contents);
-        let icondir = ico::IconDir::read(buf).unwrap();
-        let image = icondir.entries()[3].decode().unwrap();
-        let out_file = fs::File::create(format!("{name}.png")).unwrap();
-
-        image.write_png(out_file).unwrap();
-
-        return;
+        return Some(Cursor::new(contents));
     }
+
+    None
 }
