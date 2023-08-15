@@ -14,7 +14,6 @@ ico = "0.3.0"
 notify-rust = "4.8.0"
 pelite = "0.10.0"
 reqwest = { version = "0.11.18", features = ["json", "blocking"], default-features = false }
-rocket = { version = "=0.5.0-rc.3", features = ["json"] }
 serde = { version = "1.0", features = ["derive"] }
 toml = "0.7.6"
 
