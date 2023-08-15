@@ -1,9 +1,15 @@
 use std::net::{TcpListener, TcpStream};
 use std::io::prelude::*;
 use std::io::BufReader;
+use std::process::Command;
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    server("127.0.0.1:7878")
+}
+
+/// Simple HTTP server that opens files based on GET requests
+fn server(address: &str) {
+    let listener = TcpListener::bind(address).unwrap();
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
@@ -12,17 +18,33 @@ fn main() {
     }
 }
 
+/// Opens the given file and returns 200, otherwise 404
 fn handle_connection(mut stream: TcpStream) {
-    let buf_reader = BufReader::new(&mut stream);
-    let http_request: Vec<_> = buf_reader
-        .lines()
-        .map(|result| result.unwrap())
-        .take_while(|line| !line.is_empty())
-        .collect();
+    let request_line = BufReader::new(&mut stream).lines().next().unwrap().unwrap();
+    let request_line: Vec<&str> = request_line.split(' ').collect();
 
-    let response = "HTTP/1.1 200 OK\r\n\r\n";
+    if let Some(request) = request_line.get(1) {
+        open(request);
+        out(stream, "HTTP/1.1 200 OK", "");
+    }
+
+    // out(stream, "HTTP/1.1 404 NOT FOUND", "");
+}
+
+/// Handles outputting to the requester
+fn out(mut stream: TcpStream, status: &str, contents: &str) {
+    let length = contents.len();
+    let response = format!("{status}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
     stream.write_all(response.as_bytes()).unwrap();
+}
 
-    println!("Request: {:#?}", http_request);
+fn open(request: &str) {
+    let output = Command::new("wine")
+        // .env("WINEPREFIX", &data.wine)
+        .arg(request)
+        .output()
+        .expect("Failed to execute command");
+
+    println!("{:?}", output);
 }
