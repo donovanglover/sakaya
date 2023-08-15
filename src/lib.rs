@@ -17,5 +17,7 @@ pub fn get_ico_files(input_bin: &str) {
 
         group.write(&mut contents).unwrap();
         fs::write(format!("{name}.ico"), contents).unwrap();
+
+        return;
     }
 }
