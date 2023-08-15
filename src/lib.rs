@@ -1,4 +1,5 @@
 use std::fs;
+use std::io::Cursor;
 use pelite::{FileMap, PeFile};
 
 /// Checks if we're inside a container
@@ -16,10 +17,8 @@ pub fn get_ico_files(input_bin: &str) {
         let mut contents = Vec::new();
         group.write(&mut contents).unwrap();
 
-        fs::write(format!("{name}.ico"), contents).unwrap();
-
-        let file = fs::File::open(format!("{name}.ico")).unwrap();
-        let icondir = ico::IconDir::read(file).unwrap();
+        let buf: Cursor<Vec<u8>> = Cursor::new(contents);
+        let icondir = ico::IconDir::read(buf).unwrap();
         let image = icondir.entries()[3].decode().unwrap();
         let out_file = fs::File::create(format!("{name}.png")).unwrap();
 
