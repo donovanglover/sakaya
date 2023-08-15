@@ -14,9 +14,16 @@ pub fn get_ico_files(input_bin: &str) {
 
     for (name, group) in resources.icons().filter_map(Result::ok) {
         let mut contents = Vec::new();
-
         group.write(&mut contents).unwrap();
+
         fs::write(format!("{name}.ico"), contents).unwrap();
+
+        let file = fs::File::open(format!("{name}.ico")).unwrap();
+        let icondir = ico::IconDir::read(file).unwrap();
+        let image = icondir.entries()[3].decode().unwrap();
+        let out_file = fs::File::create(format!("{name}.png")).unwrap();
+
+        image.write_png(out_file).unwrap();
 
         return;
     }
