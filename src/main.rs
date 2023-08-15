@@ -7,8 +7,7 @@ use sakaya::is_container;
 mod cli;
 mod client;
 
-#[rocket::main]
-async fn main() {
+fn main() {
     let cli = cli::Cli::parse();
 
     if is_container() {
