@@ -44,4 +44,8 @@ sakaya program.exe
 
 ## Todo
 
+- [ ] Reduce compile times
 - [ ] Notify user if sakaya fails to start an executable
+- [ ] Choose 32/64-bit automatically based on `IMAGE_FILE_32BIT_MACHINE` in the file headers
+- [ ] Automatically run winetricks based on dll imports?
+- [ ] Get .ico and convert to .png? Handle abrupt end of files?
