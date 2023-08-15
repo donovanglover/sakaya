@@ -11,7 +11,6 @@ edition = "2021"
 clap = { version = "4.3.19", features = ["derive"] }
 home = "0.5.5"
 ico = "0.3.0"
-notify-rust = "4.8.0"
 pelite = "0.10.0"
 serde = { version = "1.0", features = ["derive"] }
 toml = "0.7.6"
