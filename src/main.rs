@@ -5,7 +5,6 @@ use std::path::Path;
 use sakaya::is_container;
 
 mod cli;
-mod server;
 mod client;
 
 #[rocket::main]
@@ -13,7 +12,6 @@ async fn main() {
     let cli = cli::Cli::parse();
 
     if is_container() {
-        server::rocket().await;
         return
     }
 
