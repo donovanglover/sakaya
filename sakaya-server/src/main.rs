@@ -2,6 +2,7 @@ use std::net::{TcpListener, TcpStream};
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::process::Command;
+use std::thread;
 
 fn main() {
     server("127.0.0.1:7878")
@@ -14,7 +15,9 @@ fn server(address: &str) {
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
-        handle_connection(stream)
+        thread::spawn(|| {
+            handle_connection(stream);
+        });
     }
 }
 
