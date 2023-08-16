@@ -76,7 +76,7 @@ pub fn request(path: &str) -> Result<(), minreq::Error> {
 }
 
 /// Simple HTTP server that opens files based on GET requests
-fn server(address: &str) {
+pub fn server(address: &str) {
     let listener = TcpListener::bind(address).unwrap();
 
     for stream in listener.incoming() {
