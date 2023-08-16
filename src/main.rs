@@ -1,7 +1,7 @@
 use clap::Parser;
 use home::home_dir;
-use std::path::Path;
 use sakaya::*;
+use std::path::Path;
 
 mod cli;
 
@@ -12,7 +12,7 @@ fn main() {
         server("127.0.0.1:7878");
         // server("192.168.100.49:39493");
 
-        return
+        return;
     }
 
     // TOOD: DRY
@@ -25,7 +25,7 @@ fn main() {
 
     if !path.exists() {
         println!("File is NOT in path");
-        return
+        return;
     }
 
     let full_path = path.canonicalize().unwrap();
@@ -44,7 +44,8 @@ fn main() {
         let home = _home.to_str().unwrap();
 
         let icon_path = &format!("{home}/.local/share/icons/{file_name_str}.png");
-        let desktop_file_path = &format!("{home}/.local/share/applications/{file_name_str}.desktop");
+        let desktop_file_path =
+            &format!("{home}/.local/share/applications/{file_name_str}.desktop");
 
         make_icon(full_path_str, icon_path);
         make_desktop_file(desktop_file_path, file_name_str, full_path_str);

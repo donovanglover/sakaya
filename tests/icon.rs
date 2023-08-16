@@ -1,10 +1,13 @@
-use sakaya::get_first_ico_file;
 use sakaya::convert_largest_square_image_in_ico_to_png;
+use sakaya::get_first_ico_file;
 
 #[test]
 fn gets_ico_from_osu_exe() {
     // https://m1.ppy.sh/r/osu!install.exe
-    assert!(get_first_ico_file("osu!install.exe").is_some(), "osu!install.exe returns an ico group");
+    assert!(
+        get_first_ico_file("osu!install.exe").is_some(),
+        "osu!install.exe returns an ico group"
+    );
 }
 
 #[test]
