@@ -25,14 +25,7 @@ pub fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str
 pub fn notify(body: &str, mut icon: Option<&str>) {
     println!("{body}");
     Command::new("dunstify")
-        .args([
-            "--icon",
-            icon.get_or_insert("sakaya"),
-            "--timeout",
-            "3000",
-            "酒屋",
-            body
-        ])
+        .args(["--icon", icon.get_or_insert("sakaya"), "--timeout", "3000", "酒屋", body])
         .output()
         .unwrap();
 }
