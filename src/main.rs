@@ -1,4 +1,5 @@
 use clap::Parser;
+use cli::Cli;
 use home::home_dir;
 use sakaya::*;
 use std::path::Path;
@@ -6,7 +7,7 @@ use std::path::Path;
 mod cli;
 
 fn main() {
-    let cli = cli::Cli::parse();
+    let cli = Cli::parse();
 
     if is_container() {
         server("127.0.0.1:7878");
