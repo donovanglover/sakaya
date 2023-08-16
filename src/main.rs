@@ -1,10 +1,9 @@
 use clap::Parser;
 use home::home_dir;
 use std::path::Path;
-use sakaya::is_container;
+use sakaya::*;
 
 mod cli;
-mod client;
 
 fn main() {
     let cli = cli::Cli::parse();
@@ -15,8 +14,8 @@ fn main() {
 
     // TOOD: DRY
     if &cli.executable == "winecfg" {
-        client::request("winecfg").unwrap();
-        client::notify("Closed winecfg.", None);
+        request("winecfg").unwrap();
+        notify("Closed winecfg.", None);
     }
 
     let path = Path::new(&cli.executable);
@@ -44,10 +43,10 @@ fn main() {
         let icon_path = &format!("{home}/.local/share/icons/{file_name_str}.png");
         let desktop_file_path = &format!("{home}/.local/share/applications/{file_name_str}.desktop");
 
-        client::make_icon(full_path_str, icon_path);
-        client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
-        client::notify(&format!("Starting {file_name_str}..."), Some(icon_path));
-        client::request(&container_path).unwrap();
-        client::notify(&format!("Closed {file_name_str}."), Some(icon_path));
+        make_icon(full_path_str, icon_path);
+        make_desktop_file(desktop_file_path, file_name_str, full_path_str);
+        notify(&format!("Starting {file_name_str}..."), Some(icon_path));
+        request(&container_path).unwrap();
+        notify(&format!("Closed {file_name_str}."), Some(icon_path));
     }
 }
