@@ -5,6 +5,7 @@ use std::io::prelude::*;
 use std::io::BufReader;
 use std::io::Cursor;
 use std::net::{TcpListener, TcpStream};
+use std::net::SocketAddrV4;
 use std::path::Path;
 use std::process::Command;
 use std::thread;
@@ -81,7 +82,7 @@ pub fn request(path: &str) -> Result<(), minreq::Error> {
 }
 
 /// Simple HTTP server that opens files based on GET requests
-pub fn server(address: &str) {
+pub fn start_server(address: SocketAddrV4) {
     let listener = TcpListener::bind(address).unwrap();
 
     for stream in listener.incoming() {
@@ -124,7 +125,7 @@ fn open(request: &str) {
     println!("{:?}", output);
 }
 
-pub fn client(path: &str) {
+pub fn start_client(address: SocketAddrV4, path: &str) {
     let path = Path::new(path);
 
     if !path.exists() {

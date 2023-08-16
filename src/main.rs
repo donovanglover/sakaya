@@ -4,13 +4,16 @@ use sakaya::*;
 
 mod cli;
 
+/// The main function is in charge of either starting a `sakaya-server` or
+/// starting a `sakaya-client` that connects to a `sakaya-server`.
+///
+/// It does this by
 fn main() {
-    let cli = Cli::parse();
+    let Cli { address, server, .. } = Cli::parse();
 
-    if is_container() {
-        server("127.0.0.1:7878");
-        // server("192.168.100.49:39493");
+    if server {
+        start_server(address);
     } else {
-        client(&cli.executable)
+        start_client(address, "test");
     }
 }
