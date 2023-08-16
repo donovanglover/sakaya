@@ -1,6 +1,5 @@
 use clap::Parser;
 use home::home_dir;
-use std::collections::HashMap;
 use std::path::Path;
 use sakaya::is_container;
 
@@ -16,10 +15,7 @@ fn main() {
 
     // TOOD: DRY
     if &cli.executable == "winecfg" {
-        client::request(&HashMap::from([
-            ("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark"),
-            ("path", "winecfg"),
-        ])).unwrap();
+        client::request("winecfg").unwrap();
         client::notify("Closed winecfg.", None);
     }
 
@@ -51,10 +47,7 @@ fn main() {
         client::make_icon(full_path_str, icon_path);
         client::make_desktop_file(desktop_file_path, file_name_str, full_path_str);
         client::notify(&format!("Starting {file_name_str}..."), Some(icon_path));
-        client::request(&HashMap::from([
-            ("wine", "/mnt/.winevn-win32-wow-dotnet40-breeze-dark"),
-            ("path", &container_path),
-        ])).unwrap();
+        client::request(&container_path).unwrap();
         client::notify(&format!("Closed {file_name_str}."), Some(icon_path));
     }
 }
