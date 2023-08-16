@@ -1,4 +1,3 @@
-use minreq;
 use pelite::{FileMap, PeFile};
 use std::fs;
 use std::io::prelude::*;
