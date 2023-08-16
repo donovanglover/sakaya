@@ -11,6 +11,7 @@ edition = "2021"
 clap = { version = "4.3.19", features = ["derive"] }
 home = "0.5.5"
 ico = "0.3.0"
+minreq = "2.8.1"
 pelite = "0.10.0"
 toml = "0.7.6"
 
