@@ -1,6 +1,5 @@
 use std::process::Command;
 use std::fs;
-use notify_rust::Notification;
 use minreq;
 use std::collections::HashMap;
 
@@ -26,12 +25,16 @@ pub fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str
 /// Notifies the user of an event
 pub fn notify(body: &str, mut icon: Option<&str>) {
     println!("{body}");
-    Notification::new()
-        .summary("酒屋")
-        .body(body)
-        .icon(icon.get_or_insert(""))
-        .timeout(3000)
-        .show()
+    Command::new("dunstify")
+        .args([
+            "--icon",
+            icon.get_or_insert("sakaya"),
+            "--timeout",
+            "3000",
+            "酒屋",
+            body
+        ])
+        .output()
         .unwrap();
 }
 
