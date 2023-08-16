@@ -10,6 +10,7 @@ Run native wine applications inside declarative systemd-nspawn containers. `saka
 {
   inputs = {
     sakaya.url = "github:donovanglover/sakaya";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 }
 ```
