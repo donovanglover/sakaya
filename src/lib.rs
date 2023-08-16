@@ -21,7 +21,7 @@ pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
         .resources()
         .expect("Error binary does not have resources");
 
-    for (_, group) in resources.icons().filter_map(Result::ok) {
+    if let Some((_, group)) = resources.icons().find_map(Result::ok) {
         let mut contents = Vec::new();
         group.write(&mut contents).unwrap();
 
