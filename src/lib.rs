@@ -34,7 +34,7 @@ pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
 pub fn convert_largest_square_image_in_ico_to_png(buf: Cursor<Vec<u8>>) {
     let icondir = ico::IconDir::read(buf).unwrap();
     let image = icondir.entries()[3].decode().unwrap();
-    let out_file = fs::File::create(format!("result.png")).unwrap();
+    let out_file = fs::File::create("result.png").unwrap();
 
     image.write_png(out_file).unwrap();
 }
