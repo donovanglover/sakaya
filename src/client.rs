@@ -38,15 +38,6 @@ pub fn notify(body: &str, mut icon: Option<&str>) {
         .unwrap();
 }
 
-/// Saves a log file of the stderr/stdout of an application
-pub fn log(application_name: &str, output: &str) {
-    let log_file = &format!("/tmp/sakaya-{application_name}.log");
-
-    fs::write(log_file, output).unwrap();
-
-    println!("Log file available at {log_file}")
-}
-
 /// Sends a request to start an application inside a container
 pub fn request(map: &HashMap<&str, &str>) -> Result<(), minreq::Error> {
     // http://192.168.100.49:39493
