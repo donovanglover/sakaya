@@ -9,6 +9,9 @@ fn main() {
     let cli = cli::Cli::parse();
 
     if is_container() {
+        server("127.0.0.1:7878");
+        // server("192.168.100.49:39493");
+
         return
     }
 
