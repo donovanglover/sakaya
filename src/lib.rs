@@ -5,6 +5,7 @@ use std::io::Cursor;
 use std::net::SocketAddrV4;
 use std::path::Path;
 use std::process::Command;
+use std::path::PathBuf;
 
 /// Checks if we're inside a container
 pub fn is_container() -> bool {
@@ -90,9 +91,7 @@ pub fn request(path: &str) -> Result<(), minreq::Error> {
     Ok(())
 }
 
-pub fn start_client(address: SocketAddrV4, path: &str) {
-    let path = Path::new(path);
-
+pub fn start_client(address: SocketAddrV4, path: &PathBuf) {
     if !path.exists() {
         println!("File is NOT in path");
         return;
