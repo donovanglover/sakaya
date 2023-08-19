@@ -5,7 +5,7 @@ use sakaya::get_first_ico_file;
 fn gets_ico_from_osu_exe() {
     // https://m1.ppy.sh/r/osu!install.exe
     assert!(
-        get_first_ico_file("osu!install.exe").is_some(),
+        get_first_ico_file("./in-out/osu!install.exe").is_some(),
         "osu!install.exe returns an ico group"
     );
 }
