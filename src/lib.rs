@@ -34,12 +34,12 @@ pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
 }
 
 /// Given an .ico with multiple images, return the largest one that's a square
-pub fn convert_largest_square_image_in_ico_to_png(buf: Cursor<Vec<u8>>) {
+pub fn convert_largest_square_image_in_ico_to_png(buf: Cursor<Vec<u8>>, output_path: &str) -> Result<(), std::io::Error> {
     let icondir = ico::IconDir::read(buf).unwrap();
     let image = icondir.entries()[3].decode().unwrap();
-    let out_file = fs::File::create("result.png").unwrap();
+    let out_file = fs::File::create(output_path).unwrap();
 
-    image.write_png(out_file).unwrap();
+    image.write_png(out_file)
 }
 
 /// Makes an icon for the application with icoextract
