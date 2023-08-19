@@ -42,13 +42,11 @@ pub fn convert_largest_square_image_in_ico_to_png(buf: Cursor<Vec<u8>>, output_p
     image.write_png(out_file)
 }
 
-/// Makes an icon for the application with icoextract
-pub fn make_icon(input_path: &str, output_icon: &str) {
-    Command::new("icoextract")
-        .arg(input_path)
-        .arg(output_icon)
-        .output()
-        .unwrap();
+/// Makes an icon for the application
+pub fn make_icon(input_bin: &str, output_path: &str) {
+    if let Some(icon) = get_first_ico_file(input_bin) {
+        let _ = convert_largest_square_image_in_ico_to_png(icon, output_path);
+    }
 }
 
 /// Makes a desktop file for the application
