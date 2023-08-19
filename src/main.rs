@@ -1,6 +1,7 @@
 use clap::Parser;
 use cli::Cli;
-use sakaya::*;
+use sakaya::start_server;
+use sakaya::start_client;
 
 mod cli;
 
