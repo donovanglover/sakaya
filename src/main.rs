@@ -1,7 +1,7 @@
 use clap::Parser;
 use cli::Cli;
-use sakaya::start_server;
 use sakaya::start_client;
+use sakaya::start_server;
 
 mod cli;
 
@@ -10,6 +10,7 @@ mod cli;
 ///
 /// It does this by
 fn main() {
+    #[rustfmt::skip]
     let Cli { address, server, .. } = Cli::parse();
 
     if server {

@@ -8,7 +8,7 @@ pub struct Cli {
     pub file: Option<String>,
 
     /// Address
-    #[arg(short, long, default_value="192.168.100.49:39493")]
+    #[arg(short, long, default_value = "192.168.100.49:39493")]
     pub address: SocketAddrV4,
 
     /// Start a server instead of a client
