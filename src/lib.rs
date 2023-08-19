@@ -36,7 +36,22 @@ pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
 /// Given an .ico with multiple images, return the largest one that's a square
 pub fn convert_largest_square_image_in_ico_to_png(buf: Cursor<Vec<u8>>, output_path: &str) -> Result<(), std::io::Error> {
     let icondir = ico::IconDir::read(buf).unwrap();
-    let image = icondir.entries()[3].decode().unwrap();
+    let mut largest_size = 0;
+    let mut i = 0;
+    let mut largest_index = 0;
+
+    for image in icondir.entries() {
+        let width = image.width();
+
+        if width == image.height() && width > largest_size {
+            largest_size = width;
+            largest_index = i;
+        }
+
+        i = i + 1;
+    }
+
+    let image = icondir.entries()[largest_index].decode().unwrap();
     let out_file = fs::File::create(output_path).unwrap();
 
     image.write_png(out_file)
