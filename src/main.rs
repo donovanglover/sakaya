@@ -1,12 +1,12 @@
 use clap::Parser;
 use cli::Cli;
-use sakaya::start_client;
 use std::net::IpAddr;
 use std::net::SocketAddrV4;
 use local_ip_address::local_ip;
 
 mod cli;
 mod server;
+mod runner;
 
 /// The main function is in charge of either starting a `sakaya-server` or
 /// starting a `sakaya-client` that connects to a `sakaya-server`.
@@ -23,7 +23,7 @@ fn main() {
             server::start(running_ip);
         } else {
             if let Some(file) = file {
-                start_client(address, &file);
+                runner::exec(address, &file);
             } else {
                 println!("Not a server file was given.");
             }
