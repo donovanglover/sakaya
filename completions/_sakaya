@@ -15,11 +15,15 @@ _sakaya() {
 
     local context curcontext="$curcontext" state line
     _arguments "${_arguments_options[@]}" \
+'-a+[Address]:ADDRESS: ' \
+'--address=[Address]:ADDRESS: ' \
+'-s[Start a server instead of a client]' \
+'--server[Start a server instead of a client]' \
 '-h[Print help]' \
 '--help[Print help]' \
 '-V[Print version]' \
 '--version[Print version]' \
-'::executable -- Path to the executable to run:' \
+'::file -- Path to the executable to run:' \
 && ret=0
 }
 
