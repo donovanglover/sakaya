@@ -8,7 +8,7 @@ mod cli;
 /// The main function is in charge of either starting a `sakaya-server` or
 /// starting a `sakaya-client` that connects to a `sakaya-server`.
 ///
-/// It does this by
+/// It does this by checking if the --server flag was passed.
 fn main() {
     #[rustfmt::skip]
     let Cli { address, server, .. } = Cli::parse();
