@@ -5,8 +5,7 @@ use std::net::SocketAddrV4;
 #[command(author, version, about)]
 pub struct Cli {
     /// Path to the executable to run.
-    #[arg(default_value = "")]
-    pub executable: String,
+    pub file: Option<String>,
 
     /// Address
     #[arg(short, long, default_value="192.168.100.49:39493")]
