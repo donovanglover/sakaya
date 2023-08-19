@@ -84,10 +84,8 @@ pub fn notify(body: &str, mut icon: Option<&str>) {
 
 /// Sends a request to start an application inside a container
 pub fn request(path: &str) -> Result<(), minreq::Error> {
-    // http://192.168.100.49:39493
-    let o = minreq::get(format!("http://127.0.0.1:7878/{path}")).send()?;
-    let s = o.as_str()?;
-    print!("{}", s);
+    let response = minreq::get(format!("http://192.168.100.49:39493/{path}")).send()?;
+    print!("{}", response.as_str()?);
     Ok(())
 }
 
