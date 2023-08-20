@@ -14,10 +14,7 @@ pub fn exec(address: SocketAddrV4, path: &PathBuf) {
 
     let path = path.canonicalize().unwrap();
 
-    let file_name = match path.file_name() {
-        Some(file_name) => file_name.to_str().unwrap(),
-        None => "",
-    };
+    let file_name = path.file_name().unwrap().to_str().unwrap();
 
     let path = path.to_str().unwrap();
 
