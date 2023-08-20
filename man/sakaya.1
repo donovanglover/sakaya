@@ -4,13 +4,16 @@
 .SH NAME
 sakaya \- Run native wine applications inside declarative systemd\-nspawn containers.
 .SH SYNOPSIS
-\fBsakaya\fR [\fB\-a\fR|\fB\-\-address\fR] [\fB\-s\fR|\fB\-\-server\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fB\-V\fR|\fB\-\-version\fR] [\fIFILE\fR] 
+\fBsakaya\fR [\fB\-a\fR|\fB\-\-address\fR] [\fB\-d\fR|\fB\-\-directory\fR] [\fB\-s\fR|\fB\-\-server\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fB\-V\fR|\fB\-\-version\fR] [\fIFILE\fR] 
 .SH DESCRIPTION
 Run native wine applications inside declarative systemd\-nspawn containers.
 .SH OPTIONS
 .TP
 \fB\-a\fR, \fB\-\-address\fR=\fIADDRESS\fR [default: 192.168.100.49:39493]
-Address
+Address of the server to request (client only)
+.TP
+\fB\-d\fR, \fB\-\-directory\fR=\fIDIRECTORY\fR [default: /home/user/containers/wine]
+Host directory mounted to /mnt inside the container (client only)
 .TP
 \fB\-s\fR, \fB\-\-server\fR
 Start a server instead of a client
