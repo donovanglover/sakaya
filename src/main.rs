@@ -1,6 +1,7 @@
 use clap::Parser;
 use cli::Cli;
 use local_ip_address::local_ip;
+use sakaya::is_container;
 use sakaya::notify;
 use std::net::IpAddr;
 use std::net::SocketAddrV4;
@@ -20,7 +21,7 @@ fn main() {
     if let Ok(IpAddr::V4(ip)) = local_ip() {
         let running_ip = SocketAddrV4::new(ip, 39493);
 
-        if server {
+        if server || is_container() {
             notify(&format!("Starting server on {running_ip}..."), None);
             server::start(running_ip);
         } else {
