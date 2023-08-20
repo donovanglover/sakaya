@@ -6,6 +6,46 @@ use std::io::Cursor;
 use std::net::SocketAddrV4;
 use std::path::PathBuf;
 
+pub fn exec(address: SocketAddrV4, path: &PathBuf) {
+    if !path.exists() {
+        println!("File is NOT in path");
+        return;
+    }
+
+    let full_path = path.canonicalize().unwrap();
+    let full_path_str = full_path.to_str().unwrap();
+
+    let file_name_str = match full_path.file_name() {
+        Some(file_name) => file_name.to_str().unwrap(),
+        None => "",
+    };
+
+    // TODO: Don't hardcode this?
+    if full_path_str.contains("/home/user/containers/wine") {
+        let container_path = full_path_str.replace("/home/user/containers/wine", "/mnt");
+
+        let _home = home_dir().unwrap();
+        let home = _home.to_str().unwrap();
+
+        let icon_path = &format!("{home}/.local/share/icons/{file_name_str}.png");
+        let desktop_file_path =
+            &format!("{home}/.local/share/applications/{file_name_str}.desktop");
+
+        make_icon(full_path_str, icon_path);
+        make_desktop_file(desktop_file_path, file_name_str, full_path_str);
+        notify(&format!("Starting {file_name_str}..."), Some(icon_path));
+        request(address, &container_path).unwrap();
+        notify(&format!("Closed {file_name_str}."), Some(icon_path));
+    }
+}
+
+/// Sends a request to start an application inside a container
+pub fn request(address: SocketAddrV4, path: &str) -> Result<(), minreq::Error> {
+    let response = minreq::get(format!("http://{address}/{path}")).send()?;
+    print!("{}", response.as_str()?);
+    Ok(())
+}
+
 /// Given an .exe file, return the first .ico file inside it
 pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
     let map = FileMap::open(input_bin).expect("Error opening the binary");
@@ -66,44 +106,4 @@ pub fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str
     output.push_str(&("Exec=sakaya \"".to_owned() + full_path + "\"\n"));
 
     let _ = fs::write(output_location, output);
-}
-
-/// Sends a request to start an application inside a container
-pub fn request(path: &str) -> Result<(), minreq::Error> {
-    let response = minreq::get(format!("http://192.168.100.49:39493/{path}")).send()?;
-    print!("{}", response.as_str()?);
-    Ok(())
-}
-
-pub fn exec(address: SocketAddrV4, path: &PathBuf) {
-    if !path.exists() {
-        println!("File is NOT in path");
-        return;
-    }
-
-    let full_path = path.canonicalize().unwrap();
-    let full_path_str = full_path.to_str().unwrap();
-
-    let file_name_str = match full_path.file_name() {
-        Some(file_name) => file_name.to_str().unwrap(),
-        None => "",
-    };
-
-    // TODO: Don't hardcode this?
-    if full_path_str.contains("/home/user/containers/wine") {
-        let container_path = full_path_str.replace("/home/user/containers/wine", "/mnt");
-
-        let _home = home_dir().unwrap();
-        let home = _home.to_str().unwrap();
-
-        let icon_path = &format!("{home}/.local/share/icons/{file_name_str}.png");
-        let desktop_file_path =
-            &format!("{home}/.local/share/applications/{file_name_str}.desktop");
-
-        make_icon(full_path_str, icon_path);
-        make_desktop_file(desktop_file_path, file_name_str, full_path_str);
-        notify(&format!("Starting {file_name_str}..."), Some(icon_path));
-        request(&container_path).unwrap();
-        notify(&format!("Closed {file_name_str}."), Some(icon_path));
-    }
 }
