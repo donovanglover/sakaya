@@ -1,9 +1,9 @@
 use std::io::prelude::*;
 use std::io::BufReader;
-use std::net::{TcpListener, TcpStream};
 use std::net::SocketAddrV4;
-use std::thread;
+use std::net::{TcpListener, TcpStream};
 use std::process::Command;
+use std::thread;
 
 /// Simple HTTP server that opens files based on GET requests
 pub fn start(address: SocketAddrV4) {

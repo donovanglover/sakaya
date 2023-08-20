@@ -13,7 +13,9 @@ fn gets_ico_from_osu_exe() {
 #[test]
 fn gets_largest_osu_icon() {
     if let Some(ico) = get_first_ico_file("./in-out/osu!install.exe") {
-        assert!(convert_largest_square_image_in_ico_to_png(ico, "./in-out/osu!install.png").is_ok());
+        assert!(
+            convert_largest_square_image_in_ico_to_png(ico, "./in-out/osu!install.png").is_ok()
+        );
     }
 }
 

@@ -1,10 +1,10 @@
 use home::home_dir;
-use std::fs;
 use pelite::{FileMap, PeFile};
+use sakaya::notify;
+use std::fs;
 use std::io::Cursor;
 use std::net::SocketAddrV4;
 use std::path::PathBuf;
-use sakaya::notify;
 
 /// Given an .exe file, return the first .ico file inside it
 pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
@@ -25,7 +25,10 @@ pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
 }
 
 /// Given an .ico with multiple images, return the largest one that's a square
-pub fn convert_largest_square_image_in_ico_to_png(buf: Cursor<Vec<u8>>, output_path: &str) -> Result<(), std::io::Error> {
+pub fn convert_largest_square_image_in_ico_to_png(
+    buf: Cursor<Vec<u8>>,
+    output_path: &str,
+) -> Result<(), std::io::Error> {
     let icondir = ico::IconDir::read(buf).unwrap();
     let mut largest_size = 0;
     let mut i = 0;

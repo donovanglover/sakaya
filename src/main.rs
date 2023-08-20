@@ -1,12 +1,12 @@
 use clap::Parser;
 use cli::Cli;
+use local_ip_address::local_ip;
 use std::net::IpAddr;
 use std::net::SocketAddrV4;
-use local_ip_address::local_ip;
 
 mod cli;
-mod server;
 mod runner;
+mod server;
 
 /// The main function is in charge of either starting a `sakaya-server` or
 /// starting a `sakaya-client` that connects to a `sakaya-server`.
