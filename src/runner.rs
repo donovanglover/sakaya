@@ -7,6 +7,8 @@ use std::net::SocketAddrV4;
 use std::path::PathBuf;
 use urlencoding::encode;
 
+/// Run an executable inside the container from the host by requesting
+/// the serer on a given socket address
 pub fn exec(address: SocketAddrV4, path: &PathBuf, directory: &str) {
     if !path.exists() {
         notify("Exiting since not a valid file.", None);

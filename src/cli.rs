@@ -8,11 +8,11 @@ pub struct Cli {
     /// Path to the executable to run.
     pub file: Option<PathBuf>,
 
-    /// Address
+    /// Address of the server to request (client only)
     #[arg(short, long, default_value = "192.168.100.49:39493")]
     pub address: SocketAddrV4,
 
-    /// Directory
+    /// Host directory mounted to /mnt inside the container (client only)
     #[arg(short, long, default_value = "/home/user/containers/wine")]
     pub directory: PathBuf,
 
