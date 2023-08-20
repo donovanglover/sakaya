@@ -2,8 +2,9 @@ use std::io::prelude::*;
 use std::io::BufReader;
 use std::net::SocketAddrV4;
 use std::net::{TcpListener, TcpStream};
-use std::process::Command;
+use std::process::{Command, Output};
 use std::thread;
+use urlencoding::decode;
 
 /// Simple HTTP server that opens files based on GET requests
 pub fn start(address: SocketAddrV4) {
@@ -40,11 +41,15 @@ fn out(mut stream: TcpStream, status: &str, contents: &str) {
 }
 
 fn open(request: &str) {
-    let output = Command::new("wine")
-        // .env("WINEPREFIX", &data.wine)
-        .arg(request)
+    let request = decode(request).unwrap();
+
+    println!("{}", request);
+
+    let Output { stdout, stderr, .. } = Command::new("wine")
+        .arg(request.as_ref())
         .output()
         .expect("Failed to execute command");
 
-    println!("{:?}", output);
+    println!("============================================================ stdout:\n{:?}", stdout);
+    println!("============================================================ stderr:\n{:?}", stderr);
 }
