@@ -15,7 +15,7 @@ mod server;
 /// It does this by checking if the --server flag was passed.
 fn main() {
     #[rustfmt::skip]
-    let Cli { address, server, file } = Cli::parse();
+    let Cli { address, server, file, directory } = Cli::parse();
 
     if let Ok(IpAddr::V4(ip)) = local_ip() {
         let running_ip = SocketAddrV4::new(ip, 39493);
@@ -25,7 +25,7 @@ fn main() {
             server::start(running_ip);
         } else {
             if let Some(file) = file {
-                runner::exec(address, &file);
+                runner::exec(address, &file, directory.to_str().unwrap());
             } else {
                 notify("sakaya was called but no file was given.", None);
             }

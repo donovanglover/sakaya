@@ -6,34 +6,29 @@ use std::io::Cursor;
 use std::net::SocketAddrV4;
 use std::path::PathBuf;
 
-pub fn exec(address: SocketAddrV4, path: &PathBuf) {
+pub fn exec(address: SocketAddrV4, path: &PathBuf, directory: &str) {
     if !path.exists() {
         notify("Exiting since not a valid file.", None);
         return;
     }
 
-    let path = path.canonicalize().unwrap();
-
     let file_name = path.file_name().unwrap().to_str().unwrap();
-
+    let path = path.canonicalize().unwrap();
     let path = path.to_str().unwrap();
 
-    // TODO: Don't hardcode this?
-    if path.contains("/home/user/containers/wine") {
-        let container_path = path.replace("/home/user/containers/wine", "/mnt");
+    if path.contains(directory) {
+        let container_path = path.replace(directory, "mnt");
 
         let _home = home_dir().unwrap();
         let home = _home.to_str().unwrap();
 
-        let icon_path = &format!("{home}/.local/share/icons/{file_name}.png");
-        let desktop_file_path =
-            &format!("{home}/.local/share/applications/{file_name}.desktop");
+        let icon = &format!("{home}/.local/share/icons/{file_name}.png");
 
-        make_icon(path, icon_path);
-        make_desktop_file(desktop_file_path, file_name, path);
-        notify(&format!("Starting {file_name}..."), Some(icon_path));
+        make_icon(path, icon);
+        make_desktop_file(&format!("{home}/.local/share/applications/{file_name}.desktop"), file_name, path);
+        notify(&format!("Starting {file_name}..."), Some(icon));
         request(address, &container_path).unwrap();
-        notify(&format!("Closed {file_name}."), Some(icon_path));
+        notify(&format!("Closed {file_name}."), Some(icon));
     }
 }
 
