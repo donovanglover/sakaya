@@ -5,6 +5,7 @@ use std::fs;
 use std::io::Cursor;
 use std::net::SocketAddrV4;
 use std::path::PathBuf;
+use urlencoding::encode;
 
 pub fn exec(address: SocketAddrV4, path: &PathBuf, directory: &str) {
     if !path.exists() {
@@ -29,6 +30,7 @@ pub fn exec(address: SocketAddrV4, path: &PathBuf, directory: &str) {
 
 /// Sends a request to start an application inside a container
 pub fn request(address: SocketAddrV4, path: &str) -> Result<(), minreq::Error> {
+    let path = encode(path);
     let response = minreq::get(format!("http://{address}/{path}")).send()?;
     print!("{}", response.as_str()?);
     Ok(())
