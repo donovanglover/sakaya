@@ -8,34 +8,35 @@ use std::path::PathBuf;
 
 pub fn exec(address: SocketAddrV4, path: &PathBuf) {
     if !path.exists() {
-        println!("File is NOT in path");
+        notify("Exiting since not a valid file.", None);
         return;
     }
 
     let full_path = path.canonicalize().unwrap();
-    let full_path_str = full_path.to_str().unwrap();
 
-    let file_name_str = match full_path.file_name() {
+    let file_name = match full_path.file_name() {
         Some(file_name) => file_name.to_str().unwrap(),
         None => "",
     };
 
+    let full_path = full_path.to_str().unwrap();
+
     // TODO: Don't hardcode this?
-    if full_path_str.contains("/home/user/containers/wine") {
-        let container_path = full_path_str.replace("/home/user/containers/wine", "/mnt");
+    if full_path.contains("/home/user/containers/wine") {
+        let container_path = full_path.replace("/home/user/containers/wine", "/mnt");
 
         let _home = home_dir().unwrap();
         let home = _home.to_str().unwrap();
 
-        let icon_path = &format!("{home}/.local/share/icons/{file_name_str}.png");
+        let icon_path = &format!("{home}/.local/share/icons/{file_name}.png");
         let desktop_file_path =
-            &format!("{home}/.local/share/applications/{file_name_str}.desktop");
+            &format!("{home}/.local/share/applications/{file_name}.desktop");
 
-        make_icon(full_path_str, icon_path);
-        make_desktop_file(desktop_file_path, file_name_str, full_path_str);
-        notify(&format!("Starting {file_name_str}..."), Some(icon_path));
+        make_icon(full_path, icon_path);
+        make_desktop_file(desktop_file_path, file_name, full_path);
+        notify(&format!("Starting {file_name}..."), Some(icon_path));
         request(address, &container_path).unwrap();
-        notify(&format!("Closed {file_name_str}."), Some(icon_path));
+        notify(&format!("Closed {file_name}."), Some(icon_path));
     }
 }
 
