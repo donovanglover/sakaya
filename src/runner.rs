@@ -18,17 +18,12 @@ pub fn exec(address: SocketAddrV4, path: &PathBuf, directory: &str) {
 
     if path.contains(directory) {
         let container_path = path.replace(directory, "mnt");
+        let icon = make_icon(path, file_name);
 
-        let _home = home_dir().unwrap();
-        let home = _home.to_str().unwrap();
-
-        let icon = &format!("{home}/.local/share/icons/{file_name}.png");
-
-        make_icon(path, icon);
-        make_desktop_file(&format!("{home}/.local/share/applications/{file_name}.desktop"), file_name, path);
-        notify(&format!("Starting {file_name}..."), Some(icon));
+        make_desktop_file(file_name, path);
+        notify(&format!("Starting {file_name}..."), Some(&icon));
         request(address, &container_path).unwrap();
-        notify(&format!("Closed {file_name}."), Some(icon));
+        notify(&format!("Closed {file_name}."), Some(&icon));
     }
 }
 
@@ -85,15 +80,28 @@ pub fn convert_largest_square_image_in_ico_to_png(
 }
 
 /// Makes an icon for the application
-pub fn make_icon(input_bin: &str, output_path: &str) {
+pub fn make_icon(input_bin: &str, file_name: &str) -> String {
+    let home = home_dir().unwrap();
+    let home = home.to_str().unwrap();
+
+    let output_path = &format!("{home}/.local/share/icons/{file_name}.png");
+
     if let Some(icon) = get_first_ico_file(input_bin) {
         let _ = convert_largest_square_image_in_ico_to_png(icon, output_path);
     }
+
+    output_path.to_string()
 }
 
 /// Makes a desktop file for the application
-pub fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str) {
+pub fn make_desktop_file(file_name: &str, full_path: &str) {
+    let home = home_dir().unwrap();
+    let home = home.to_str().unwrap();
+
+    let output_location = &format!("{home}/.local/share/applications/{file_name}.desktop");
+
     let mut output: String = "[Desktop Entry]".to_owned() + "\n";
+
     output.push_str("Type=Application\n");
     output.push_str(&("Name=".to_owned() + file_name + "\n"));
     output.push_str(&("Exec=sakaya \"".to_owned() + full_path + "\"\n"));
