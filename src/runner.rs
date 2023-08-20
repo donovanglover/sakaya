@@ -3,8 +3,8 @@ use std::fs;
 use pelite::{FileMap, PeFile};
 use std::io::Cursor;
 use std::net::SocketAddrV4;
-use std::process::Command;
 use std::path::PathBuf;
+use sakaya::notify;
 
 /// Given an .exe file, return the first .ico file inside it
 pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
@@ -63,17 +63,6 @@ pub fn make_desktop_file(output_location: &str, file_name: &str, full_path: &str
     output.push_str(&("Exec=sakaya \"".to_owned() + full_path + "\"\n"));
 
     let _ = fs::write(output_location, output);
-}
-
-/// Notifies the user of an event
-pub fn notify(body: &str, mut icon: Option<&str>) {
-    println!("{body}");
-
-    #[rustfmt::skip]
-    Command::new("dunstify")
-        .args(["--icon", icon.get_or_insert("sakaya"), "--timeout", "3000", "酒屋", body])
-        .output()
-        .unwrap();
 }
 
 /// Sends a request to start an application inside a container
