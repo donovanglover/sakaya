@@ -1,6 +1,7 @@
 use clap::Parser;
 use cli::Cli;
 use local_ip_address::local_ip;
+use sakaya::notify;
 use std::net::IpAddr;
 use std::net::SocketAddrV4;
 
@@ -20,12 +21,13 @@ fn main() {
         let running_ip = SocketAddrV4::new(ip, 39493);
 
         if server {
+            notify(&format!("Starting server on {running_ip}..."), None);
             server::start(running_ip);
         } else {
             if let Some(file) = file {
                 runner::exec(address, &file);
             } else {
-                println!("Not a server file was given.");
+                notify("sakaya was called but no file was given.", None);
             }
         }
     }
