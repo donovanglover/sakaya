@@ -12,18 +12,18 @@ pub fn exec(address: SocketAddrV4, path: &PathBuf) {
         return;
     }
 
-    let full_path = path.canonicalize().unwrap();
+    let path = path.canonicalize().unwrap();
 
-    let file_name = match full_path.file_name() {
+    let file_name = match path.file_name() {
         Some(file_name) => file_name.to_str().unwrap(),
         None => "",
     };
 
-    let full_path = full_path.to_str().unwrap();
+    let path = path.to_str().unwrap();
 
     // TODO: Don't hardcode this?
-    if full_path.contains("/home/user/containers/wine") {
-        let container_path = full_path.replace("/home/user/containers/wine", "/mnt");
+    if path.contains("/home/user/containers/wine") {
+        let container_path = path.replace("/home/user/containers/wine", "/mnt");
 
         let _home = home_dir().unwrap();
         let home = _home.to_str().unwrap();
@@ -32,8 +32,8 @@ pub fn exec(address: SocketAddrV4, path: &PathBuf) {
         let desktop_file_path =
             &format!("{home}/.local/share/applications/{file_name}.desktop");
 
-        make_icon(full_path, icon_path);
-        make_desktop_file(desktop_file_path, file_name, full_path);
+        make_icon(path, icon_path);
+        make_desktop_file(desktop_file_path, file_name, path);
         notify(&format!("Starting {file_name}..."), Some(icon_path));
         request(address, &container_path).unwrap();
         notify(&format!("Closed {file_name}."), Some(icon_path));
