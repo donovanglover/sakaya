@@ -10,8 +10,17 @@ pub fn is_container() -> bool {
 pub fn notify(body: &str, mut icon: Option<&str>) {
     println!("{body}");
 
-    Command::new("dunstify")
-        .args(["--icon", icon.get_or_insert("sakaya"), "--timeout", "3000", "酒屋", body])
-        .output()
-        .unwrap();
+    if !is_container() {
+        Command::new("dunstify")
+            .args([
+                "--icon",
+                icon.get_or_insert("sakaya"),
+                "--timeout",
+                "3000",
+                "酒屋",
+                body,
+            ])
+            .output()
+            .unwrap();
+    }
 }
