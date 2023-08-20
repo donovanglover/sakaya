@@ -25,8 +25,7 @@ fn handle_connection(mut stream: TcpStream) {
     let request_line: Vec<&str> = request_line.split(' ').collect();
 
     if let Some(request) = request_line.get(1) {
-        open(request);
-        out(stream, "HTTP/1.1 200 OK", "");
+        out(stream, "HTTP/1.1 200 OK", &open(request));
     } else {
         out(stream, "HTTP/1.1 404 NOT FOUND", "");
     }
@@ -41,7 +40,7 @@ fn out(mut stream: TcpStream, status: &str, contents: &str) {
 }
 
 /// Open an executable in wine
-fn open(request: &str) {
+fn open(request: &str) -> String {
     let request = decode(request).unwrap();
 
     println!("{}", request);
@@ -49,9 +48,10 @@ fn open(request: &str) {
     let Output { stdout, stderr, .. } = Command::new("wine")
         .arg(request.as_ref())
         .output()
-        .expect("Failed to execute command");
+        .unwrap();
 
-    // TODO: Return this
-    println!("============================================================ stdout:\n{:?}", stdout);
-    println!("============================================================ stderr:\n{:?}", stderr);
+    let output = format!("\n============================================================ stdout:\n{:?}", stdout);
+    let output = output + format!("\n============================================================ stderr:\n{:?}", stderr).as_str();
+
+    output
 }
