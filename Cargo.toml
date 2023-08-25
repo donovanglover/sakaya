@@ -12,7 +12,7 @@ clap = { version = "4.3.19", features = ["derive"] }
 home = "0.5.5"
 ico = "0.3.0"
 local-ip-address = "0.5.4"
-minreq = "2.8.1"
+minreq = "2.9.0"
 pelite = "0.10.0"
 urlencoding = "2.1.3"
 
