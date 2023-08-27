@@ -108,6 +108,7 @@ pub fn make_desktop_file(file_name: &str, full_path: &str) {
 
     output.push_str("Type=Application\n");
     output.push_str(&("Name=".to_owned() + file_name + "\n"));
+    output.push_str(&("Icon=".to_owned() + file_name + "\n"));
     output.push_str(&("Exec=sakaya \"".to_owned() + full_path + "\"\n"));
 
     let _ = fs::write(output_location, output);
