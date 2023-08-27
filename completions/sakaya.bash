@@ -51,4 +51,4 @@ _sakaya() {
     esac
 }
 
-complete -F _sakaya -o bashdefault -o default sakaya
+complete -F _sakaya -o nosort -o bashdefault -o default sakaya
