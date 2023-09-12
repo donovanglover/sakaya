@@ -19,7 +19,7 @@ Run native wine applications inside declarative systemd-nspawn containers. `saka
 
 > TODO: NOTE: This part is non-trivial and should be simplified for end-users later.
 
-See [`wine.nix`](https://github.com/donovanglover/nix-config/blob/master/containers/wine.nix) in my nix-config for an example.
+See [`containers/default.nix`](https://github.com/donovanglover/nix-config/blob/master/containers/default.nix) in my nix-config for an example.
 
 ### Step 3: Add sakaya to `systemPackages`
 
