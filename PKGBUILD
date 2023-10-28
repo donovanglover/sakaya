@@ -22,10 +22,10 @@ package() {
 
   install -Dm755 "target/release/sakaya" "$pkgdir/usr/bin/sakaya"
 
-  install -Dm644 "completions/_sakaya" "$pkgdir/usr/share/zsh/site-functions/_sakaya"
-  install -Dm644 "completions/sakaya.bash" "$pkgdir/usr/share/bash-completion/completions/sakaya"
-  install -Dm644 "completions/sakaya.fish" "$pkgdir/usr/share/fish/vendor_completions.d/sakaya.fish"
-  install -Dm644 "man/sakaya.1" "$pkgdir/usr/share/man/man1/sakaya.1"
+  install -Dm644 "target/completions/_sakaya" "$pkgdir/usr/share/zsh/site-functions/_sakaya"
+  install -Dm644 "target/completions/sakaya.bash" "$pkgdir/usr/share/bash-completion/completions/sakaya"
+  install -Dm644 "target/completions/sakaya.fish" "$pkgdir/usr/share/fish/vendor_completions.d/sakaya.fish"
+  install -Dm644 "target/man/sakaya.1" "$pkgdir/usr/share/man/man1/sakaya.1"
 
   install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
   install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"

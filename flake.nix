@@ -22,12 +22,12 @@
       ];
 
       postInstall = ''
-        installManPage man/sakaya.1
+        installManPage target/man/sakaya.1
 
         installShellCompletion --cmd sakaya \
-          --bash <(cat completions/sakaya.bash) \
-          --fish <(cat completions/sakaya.fish) \
-          --zsh <(cat completions/_sakaya)
+          --bash <(cat target/completions/sakaya.bash) \
+          --fish <(cat target/completions/sakaya.fish) \
+          --zsh <(cat target/completions/_sakaya)
       '';
     };
 
