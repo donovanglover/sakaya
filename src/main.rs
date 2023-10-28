@@ -7,7 +7,7 @@ use std::net::IpAddr;
 use std::net::SocketAddrV4;
 
 mod cli;
-mod runner;
+mod client;
 mod server;
 
 /// The main function is in charge of either starting a `sakaya-server` or
@@ -27,7 +27,7 @@ fn main() {
             server::start(running_ip);
         } else {
             if let Some(file) = file {
-                runner::exec(address, &file, directory.to_str().unwrap());
+                client::exec(address, &file, directory.to_str().unwrap());
             } else {
                 notify("sakaya was called but no file was given.", None);
             }
