@@ -45,10 +45,8 @@ fn open(request: &str) -> String {
 
     println!("{}", request);
 
-    let Output { stdout, stderr, .. } = Command::new("wine")
-        .arg(request.as_ref())
-        .output()
-        .unwrap();
+    let Output { stdout, stderr, .. } =
+        Command::new("wine").arg(request.as_ref()).output().unwrap();
 
     let stdout = String::from_utf8(stdout).unwrap();
     let stderr = String::from_utf8(stderr).unwrap();
