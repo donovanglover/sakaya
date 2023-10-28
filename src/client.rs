@@ -4,7 +4,7 @@ use sakaya::notify;
 use std::fs;
 use std::io::Cursor;
 use std::net::SocketAddrV4;
-use std::path::PathBuf;
+use std::path::Path;
 use urlencoding::encode;
 
 /// https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/Debug/pe-format.md#machine-types
@@ -13,7 +13,7 @@ const IMAGE_FILE_MACHINE_AMD64: u16 = 0x8664;
 
 /// Run an executable inside the container from the host by requesting
 /// the server on a given socket address
-pub fn exec(address: SocketAddrV4, path: &PathBuf, directory: &str) {
+pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
     if !path.exists() {
         notify("Exiting since not a valid file.", None);
         return;
@@ -80,18 +80,15 @@ pub fn convert_largest_square_image_in_ico_to_png(
 ) -> Result<(), std::io::Error> {
     let icondir = ico::IconDir::read(buf).unwrap();
     let mut largest_size = 0;
-    let mut i = 0;
     let mut largest_index = 0;
 
-    for image in icondir.entries() {
+    for (i, image) in icondir.entries().iter().enumerate() {
         let width = image.width();
 
         if width == image.height() && width > largest_size {
             largest_size = width;
             largest_index = i;
         }
-
-        i = i + 1;
     }
 
     let image = icondir.entries()[largest_index].decode().unwrap();

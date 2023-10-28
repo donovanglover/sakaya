@@ -25,12 +25,10 @@ fn main() {
         if server || is_container() {
             notify(&format!("Starting server on {running_ip}..."), None);
             server::start(running_ip);
+        } else if let Some(file) = file {
+            client::exec(address, &file, directory.to_str().unwrap());
         } else {
-            if let Some(file) = file {
-                client::exec(address, &file, directory.to_str().unwrap());
-            } else {
-                notify("sakaya was called but no file was given.", None);
-            }
+            notify("sakaya was called but no file was given.", None);
         }
     }
 }
