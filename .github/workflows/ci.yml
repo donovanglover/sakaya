@@ -1,4 +1,4 @@
-name: cargo
+name: ci
 
 on:
   push:
@@ -11,22 +11,40 @@ env:
 
 jobs:
   build:
+    name: cargo build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: cargo build
   test:
+    name: cargo test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: cargo test
   format:
+    name: cargo fmt --check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: cargo fmt --check
   clippy:
+    name: cargo clippy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: cargo clippy
+  nix_check:
+    name: nix flake check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v22
+    - run: nix flake check
+  nix_build:
+    name: nix build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v22
+    - run: nix build
