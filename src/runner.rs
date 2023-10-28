@@ -7,6 +7,10 @@ use std::net::SocketAddrV4;
 use std::path::PathBuf;
 use urlencoding::encode;
 
+/// https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/Debug/pe-format.md#machine-types
+const IMAGE_FILE_MACHINE_I386: u16 = 0x14C;
+const IMAGE_FILE_MACHINE_AMD64: u16 = 0x8664;
+
 /// Run an executable inside the container from the host by requesting
 /// the server on a given socket address
 pub fn exec(address: SocketAddrV4, path: &PathBuf, directory: &str) {
@@ -54,6 +58,19 @@ pub fn get_first_ico_file(input_bin: &str) -> Option<Cursor<Vec<u8>>> {
     }
 
     None
+}
+
+/// Gets whether the exe is 32 or 64-bit
+pub fn get_target_machine(input_bin: &str) -> u8 {
+    let map = FileMap::open(input_bin).expect("Error opening the binary");
+    let file = PeFile::from_bytes(&map).expect("Error parsing the binary");
+    let target_machine = file.file_header().Machine;
+
+    match target_machine {
+        IMAGE_FILE_MACHINE_I386 => 32,
+        IMAGE_FILE_MACHINE_AMD64 => 64,
+        _ => 0,
+    }
 }
 
 /// Given an .ico with multiple images, return the largest one that's a square
