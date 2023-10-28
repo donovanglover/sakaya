@@ -7,15 +7,13 @@ on:
     branches: [ master ]
 
 jobs:
-  nix-flake-check:
-    name: nix flake check
+  check:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: cachix/install-nix-action@v22
     - run: nix flake check
-  nix-build:
-    name: nix build
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
