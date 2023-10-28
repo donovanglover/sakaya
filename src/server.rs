@@ -53,8 +53,5 @@ fn open(request: &str) -> String {
     let stdout = String::from_utf8(stdout).unwrap();
     let stderr = String::from_utf8(stderr).unwrap();
 
-    let output = format!("\n============================================================ stdout:\n{stdout}");
-    let output = output + format!("\n============================================================ stderr:\n{stderr}").as_str();
-
-    output
+    format!("stdout:\n{stdout}\nstderr:\n{stderr}")
 }
