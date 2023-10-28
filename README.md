@@ -51,3 +51,4 @@ sakaya program.exe
 - [ ] Automatically run winetricks based on dll imports?
 - [x] Get .ico and convert to .png? Handle abrupt end of files?
 - [ ] Write tests
+- [ ] Terminate sakaya if the server/container cannot be reached
