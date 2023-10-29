@@ -60,8 +60,8 @@ Arguments:
 Options:
   -a, --address <ADDRESS>      Address of the server to request [default: 192.168.100.49:39493]
   -d, --directory <DIRECTORY>  Host directory mounted to /mnt inside the container [default: /home/user/containers/wine]
-  -w, --wine32 <WINE32>        $WINE_PREFIX for 32-bit applications (i386) [default: /mnt/wine32]
-  -W, --wine64 <WINE64>        $WINE_PREFIX for 64-bit applications (amd64) [default: /mnt/wine64]
+  -w, --wine32 <WINE32>        $WINEPREFIX for 32-bit applications (i386) [default: /mnt/wine32]
+  -W, --wine64 <WINE64>        $WINEPREFIX for 64-bit applications (amd64) [default: /mnt/wine64]
   -h, --help                   Print help
   -V, --version                Print version
 ```

@@ -25,11 +25,11 @@ pub struct Cli {
     #[arg(short, long, default_value = "/home/user/containers/wine")]
     pub directory: PathBuf,
 
-    /// $WINE_PREFIX for 32-bit applications (i386)
+    /// $WINEPREFIX for 32-bit applications (i386)
     #[arg(short, long, default_value = "/mnt/wine32")]
     pub wine32: String,
 
-    /// $WINE_PREFIX for 64-bit applications (amd64)
+    /// $WINEPREFIX for 64-bit applications (amd64)
     #[arg(short = 'W', long, default_value = "/mnt/wine64")]
     pub wine64: String,
 
