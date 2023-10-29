@@ -36,7 +36,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
             _ => "",
         };
 
-        if wine_prefix == "" {
+        if wine_prefix.is_empty() {
             notify(
                 "Exiting since 32/64-bit could not be determined. Please report this issue.",
                 Some(&icon),
