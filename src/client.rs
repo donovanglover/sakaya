@@ -55,7 +55,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
 pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str) -> Result<(), minreq::Error> {
     let path = encode(path);
     let wine_prefix = encode(wine_prefix);
-    let response = minreq::get(format!("http://{address}/{path}/{wine_prefix}")).send()?;
+    let response = minreq::get(format!("http://{address}/{path}//{wine_prefix}")).send()?;
     print!("{}", response.as_str()?);
     Ok(())
 }
