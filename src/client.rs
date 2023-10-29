@@ -51,10 +51,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
         if request(address, &container_path, wine_prefix).is_ok() {
             notify(&format!("Closed {file_name}."), Some(&icon));
         } else {
-            notify(
-                &format!("Error: sakaya server is not accessible."),
-                Some(&icon),
-            );
+            notify("Error: sakaya server is not accessible.", Some(&icon));
         }
     }
 }
