@@ -35,12 +35,23 @@ See [`containers/default.nix`](https://github.com/donovanglover/nix-config/blob/
 
 ## Usage
 
-> LATER: Implement this
+```man
+Usage: sakaya [OPTIONS] [FILE] [COMMAND]
 
-You can open applications like normal and they'll open with sakaya. Use `~/.config/sakaya/config.toml` to change whether an application should use a 32 or 64-bit prefix, which container it should run in, etc.
+Commands:
+  server  Start a sakaya server instead of a client
+  help    Print this message or the help of the given subcommand(s)
 
-```fish
-sakaya program.exe
+Arguments:
+  [FILE]  Path to the executable to run
+
+Options:
+  -a, --address <ADDRESS>      Address of the server to request [default: 192.168.100.49:39493]
+  -d, --directory <DIRECTORY>  Host directory mounted to /mnt inside the container [default: /home/user/containers/wine]
+  -w, --wine32 <WINE32>        $WINE_PREFIX for 32-bit applications (i386) [default: /mnt/wine32]
+  -W, --wine64 <WINE64>        $WINE_PREFIX for 64-bit applications (amd64) [default: /mnt/wine64]
+  -h, --help                   Print help
+  -V, --version                Print version
 ```
 
 ## Todo
