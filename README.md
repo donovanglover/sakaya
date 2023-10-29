@@ -2,36 +2,48 @@
 
 Run native wine applications inside declarative systemd-nspawn containers. `sakaya` functions as a replacement for `wine` on the host. Works well with NixOS.
 
-## Setup
+## Features
 
-### Step 1: Add sakaya to your flake inputs
+- Start multiple wine applications that can interact with each other inside sandboxed systemd-nspawn containers
+- Automatically open 32/64-bit wine prefixes based on the executable
+- Pass-through `/dri` for native GPU performance inside containers
+- Prevent sandboxed applications from accessing the internet
 
-```nix
-{
-  inputs = {
-    sakaya.url = "github:donovanglover/sakaya";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-}
-```
+## Installation
 
-### Step 2: Create a nixos-container with sakaya
+### [NixOS](https://nixos.wiki/wiki/Overview_of_the_NixOS_Linux_distribution) (Recommended)
 
-> TODO: NOTE: This part is non-trivial and should be simplified for end-users later.
-
-See [`containers/default.nix`](https://github.com/donovanglover/nix-config/blob/master/containers/default.nix) in my nix-config for an example.
-
-### Step 3: Add sakaya to `systemPackages`
+Add [`sakaya`](https://search.nixos.org/packages?channel=unstable&query=sakaya) to your `systemPackages` and rebuild.
 
 ```nix
-{ sakaya, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    sakaya.packages.${pkgs.system}.sakaya
+    sakaya
   ];
 }
 ```
+
+### [Arch Linux](https://archlinux.org/)
+
+```fish
+git clone https://github.com/donovanglover/sakaya && cd sakaya && makepkg -si
+```
+
+### Other distributions
+
+Follow the [install guide](https://www.rust-lang.org/tools/install) for Rust. Then, use cargo to install sakaya.
+
+```fish
+cargo install --git https://github.com/donovanglover/sakaya --tag 0.1.0
+```
+
+### Setup
+
+In order to use sakaya, you must first create a nixos-container running the sakaya server.
+
+See [`containers/default.nix`](https://github.com/donovanglover/nix-config/blob/master/containers/default.nix) in my nix-config for an example.
 
 ## Usage
 
@@ -54,6 +66,10 @@ Options:
   -V, --version                Print version
 ```
 
+## Contributing
+
+sakaya should be bug free, however contributions are welcome. Although NixOS has first-class support, it should be possible to use sakaya with other distributions as well.
+
 ## Todo
 
 - [x] Reduce compile times
@@ -65,4 +81,4 @@ Options:
 - [ ] Terminate sakaya if the server/container cannot be reached
 - [ ] Create NixOS module to automate container creation and configuration?
 - [ ] Automatically register sakaya to executables
-- [ ] Update format of README
+- [x] Update format of README
