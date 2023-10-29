@@ -1,3 +1,5 @@
+use clap::Parser;
+use crate::cli::Cli;
 use home::home_dir;
 use pelite::{FileMap, PeFile};
 use sakaya::notify;
@@ -27,17 +29,30 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
         let container_path = path.replace(directory, "mnt");
         let icon = make_icon(path, file_name);
 
+        let Cli { wine32, wine64, .. } = Cli::parse();
+        let wine_prefix = match get_target_machine(path) {
+            32 => &wine32,
+            64 => &wine64,
+            _ => "",
+        };
+
+        if wine_prefix == "" {
+            notify("Exiting since 32/64-bit could not be determined. Please report this issue.", Some(&icon));
+            return;
+        }
+
         make_desktop_file(file_name, path);
         notify(&format!("Starting {file_name}..."), Some(&icon));
-        request(address, &container_path).unwrap();
+        request(address, &container_path, wine_prefix).unwrap();
         notify(&format!("Closed {file_name}."), Some(&icon));
     }
 }
 
 /// Sends a request to start an application inside a container
-pub fn request(address: SocketAddrV4, path: &str) -> Result<(), minreq::Error> {
+pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str) -> Result<(), minreq::Error> {
     let path = encode(path);
-    let response = minreq::get(format!("http://{address}/{path}")).send()?;
+    let wine_prefix = encode(wine_prefix);
+    let response = minreq::get(format!("http://{address}/{path}/{wine_prefix}")).send()?;
     print!("{}", response.as_str()?);
     Ok(())
 }

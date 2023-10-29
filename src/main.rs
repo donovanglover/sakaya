@@ -18,7 +18,7 @@ mod server;
 /// to starting a `sakaya-server` if ran inside a systemd-nspawn container.
 fn main() {
     #[rustfmt::skip]
-    let Cli { address, command, file, directory } = Cli::parse();
+    let Cli { address, command, file, directory, .. } = Cli::parse();
 
     let server = command == Some(Commands::Server {});
 
