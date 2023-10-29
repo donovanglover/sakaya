@@ -1,5 +1,6 @@
 use clap::Parser;
 use cli::Cli;
+use cli::Commands;
 use local_ip_address::local_ip;
 use sakaya::is_container;
 use sakaya::notify;
@@ -17,7 +18,9 @@ mod server;
 /// to starting a `sakaya-server` if ran inside a systemd-nspawn container.
 fn main() {
     #[rustfmt::skip]
-    let Cli { address, server, file, directory } = Cli::parse();
+    let Cli { address, command, file, directory } = Cli::parse();
+
+    let server = command == Some(Commands::Server {});
 
     if let Ok(IpAddr::V4(ip)) = local_ip() {
         let running_ip = SocketAddrV4::new(ip, 39493);

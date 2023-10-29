@@ -1,5 +1,5 @@
 use clap::builder::styling::{AnsiColor, Effects, Styles};
-use clap::Parser;
+use clap::{Parser, Subcommand};
 use std::net::SocketAddrV4;
 use std::path::PathBuf;
 
@@ -25,7 +25,15 @@ pub struct Cli {
     #[arg(short, long, default_value = "/home/user/containers/wine")]
     pub directory: PathBuf,
 
-    /// Start a server instead of a client
-    #[arg(short, long)]
-    pub server: bool,
+    #[command(subcommand)]
+    pub command: Option<Commands>,
+}
+
+#[derive(Subcommand, PartialEq)]
+pub enum Commands {
+    /// Start a sakaya server instead of a client
+    ///
+    /// You shouldn't need to use this unless you want to start a sakaya server outside
+    /// of a systemd-nspawn container.
+    Server,
 }
