@@ -39,7 +39,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
         if wine_prefix.is_empty() {
             notify(
                 "Exiting since 32/64-bit could not be determined. Please report this issue.",
-                Some(&icon),
+                None,
             );
             return;
         }
@@ -51,7 +51,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
         if request(address, &container_path, wine_prefix).is_ok() {
             notify(&format!("Closed {file_name}."), Some(&icon));
         } else {
-            notify("Error: sakaya server is not accessible.", Some(&icon));
+            notify("Error: sakaya server is not accessible.", None);
         }
     }
 }
