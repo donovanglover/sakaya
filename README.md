@@ -78,7 +78,7 @@ sakaya should be bug free, however contributions are welcome. Although NixOS has
 - [ ] Automatically run winetricks based on dll imports?
 - [x] Get .ico and convert to .png? Handle abrupt end of files?
 - [ ] Write tests
-- [ ] Terminate sakaya if the server/container cannot be reached
+- [x] Terminate sakaya if the server/container cannot be reached
 - [ ] Create NixOS module to automate container creation and configuration?
 - [ ] Automatically register sakaya to executables
 - [x] Update format of README

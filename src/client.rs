@@ -45,9 +45,14 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
         }
 
         make_desktop_file(file_name, path);
+
         notify(&format!("Starting {file_name}..."), Some(&icon));
-        request(address, &container_path, wine_prefix).unwrap();
-        notify(&format!("Closed {file_name}."), Some(&icon));
+
+        if request(address, &container_path, wine_prefix).is_ok() {
+            notify(&format!("Closed {file_name}."), Some(&icon));
+        } else {
+            notify(&format!("Error: sakaya server is not accessible."), Some(&icon));
+        }
     }
 }
 
