@@ -1,5 +1,5 @@
-use clap::Parser;
 use crate::cli::Cli;
+use clap::Parser;
 use home::home_dir;
 use pelite::{FileMap, PeFile};
 use sakaya::notify;
@@ -37,7 +37,10 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
         };
 
         if wine_prefix == "" {
-            notify("Exiting since 32/64-bit could not be determined. Please report this issue.", Some(&icon));
+            notify(
+                "Exiting since 32/64-bit could not be determined. Please report this issue.",
+                Some(&icon),
+            );
             return;
         }
 
