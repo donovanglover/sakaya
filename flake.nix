@@ -7,7 +7,7 @@
   };
 
   outputs = { self, nixpkgs, utils }: utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system: {
-    packages.sakaya = nixpkgs.legacyPackages.${system}.rustPlatform.buildRustPackage {
+    packages.sakaya = with nixpkgs.legacyPackages.${system}; rustPlatform.buildRustPackage {
       pname = "sakaya";
       version = "0.1.0";
 
@@ -17,7 +17,7 @@
         lockFile = ./Cargo.lock;
       };
 
-      nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
+      nativeBuildInputs = [
         installShellFiles
       ];
 
