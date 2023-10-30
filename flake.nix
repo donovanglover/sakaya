@@ -19,6 +19,7 @@
 
       nativeBuildInputs = [
         installShellFiles
+        copyDesktopItems
       ];
 
       postInstall = ''
@@ -29,6 +30,16 @@
           --fish <(cat target/completions/sakaya.fish) \
           --zsh <(cat target/completions/_sakaya)
       '';
+
+      desktopItems = [
+        (makeDesktopItem {
+          name = "sakaya";
+          desktopName = "sakaya";
+          icon = "wine";
+          exec = "sakaya %U";
+          mimeTypes = [ "application/x-ms-dos-executable" ];
+        })
+      ];
     };
 
     packages.default = self.packages.${system}.sakaya;
