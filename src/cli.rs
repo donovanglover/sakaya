@@ -43,5 +43,9 @@ pub enum Commands {
     ///
     /// You shouldn't need to use this unless you want to start a sakaya server outside
     /// of a systemd-nspawn container.
-    Server,
+    Server {
+        /// Port number to use for the sakaya server
+        #[arg(short, long, default_value_t = 34943)]
+        port: u16,
+    },
 }

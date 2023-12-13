@@ -4,8 +4,8 @@ use cli::Commands;
 use local_ip_address::local_ip;
 use sakaya::is_container;
 use sakaya::notify;
-use std::net::IpAddr;
 use std::net::SocketAddrV4;
+use std::net::{IpAddr, Ipv4Addr};
 
 mod cli;
 mod client;
@@ -20,18 +20,25 @@ fn main() {
     #[rustfmt::skip]
     let Cli { address, command, file, directory, .. } = Cli::parse();
 
-    let server = command == Some(Commands::Server {});
-
     if let Ok(IpAddr::V4(ip)) = local_ip() {
-        let running_ip = SocketAddrV4::new(ip, 39493);
+        match &command {
+            Some(Commands::Server { port }) => start_server(ip, *port),
 
-        if server || is_container() {
-            notify(&format!("Starting server on {running_ip}..."), None);
-            server::start(running_ip);
-        } else if let Some(file) = file {
-            client::exec(address, &file, directory.to_str().unwrap());
-        } else {
-            notify("sakaya was called but no file was given.", None);
+            None => {
+                if is_container() {
+                    start_server(ip, 34943)
+                } else if let Some(file) = file {
+                    client::exec(address, &file, directory.to_str().unwrap());
+                } else {
+                    notify("sakaya was called but no file was given.", None);
+                }
+            }
         }
     }
+}
+
+fn start_server(ip: Ipv4Addr, port: u16) {
+    let running_ip = SocketAddrV4::new(ip, port);
+    notify(&format!("Starting server on {running_ip}..."), None);
+    server::start(running_ip);
 }
