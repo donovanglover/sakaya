@@ -25,12 +25,6 @@ Add [`sakaya`](https://search.nixos.org/packages?channel=unstable&query=sakaya) 
 }
 ```
 
-### [Arch Linux](https://archlinux.org/)
-
-```fish
-git clone https://github.com/donovanglover/sakaya && cd sakaya && makepkg -si
-```
-
 ### Other distributions
 
 Follow the [install guide](https://www.rust-lang.org/tools/install) for Rust. Then, use cargo to install sakaya.
