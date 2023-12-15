@@ -1,13 +1,11 @@
 use crate::cli::Cli;
 use clap::Parser;
-use home::home_dir;
 use pelite::{FileMap, PeFile};
 use sakaya::notify;
 use std::fs;
 use std::io::Cursor;
 use std::net::SocketAddrV4;
 use std::path::Path;
-use urlencoding::encode;
 
 /// https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/Debug/pe-format.md#machine-types
 const IMAGE_FILE_MACHINE_I386: u16 = 0x14C;
@@ -58,10 +56,13 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
 
 /// Sends a request to start an application inside a container
 pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str) -> Result<(), minreq::Error> {
-    let path = encode(path);
-    let wine_prefix = encode(wine_prefix);
+    let path = urlencoding::encode(path);
+    let wine_prefix = urlencoding::encode(wine_prefix);
+
     let response = minreq::get(format!("http://{address}/{path}//{wine_prefix}")).send()?;
+
     print!("{}", response.as_str()?);
+
     Ok(())
 }
 
@@ -122,7 +123,7 @@ pub fn convert_largest_square_image_in_ico_to_png(
 
 /// Makes an icon for the application
 pub fn make_icon(input_bin: &str, file_name: &str) -> String {
-    let home = home_dir().unwrap();
+    let home = home::home_dir().unwrap();
     let home = home.to_str().unwrap();
 
     let output_path = &format!("{home}/.local/share/icons/{file_name}.png");
@@ -136,7 +137,7 @@ pub fn make_icon(input_bin: &str, file_name: &str) -> String {
 
 /// Makes a desktop file for the application
 pub fn make_desktop_file(file_name: &str, full_path: &str) {
-    let home = home_dir().unwrap();
+    let home = home::home_dir().unwrap();
     let home = home.to_str().unwrap();
 
     let output_location = &format!("{home}/.local/share/applications/{file_name}.desktop");
