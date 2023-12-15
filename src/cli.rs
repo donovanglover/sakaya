@@ -45,7 +45,7 @@ pub enum Commands {
     /// of a systemd-nspawn container.
     Server {
         /// Port number to use for the sakaya server
-        #[arg(short, long, default_value_t = 34943)]
+        #[arg(short, long, default_value_t = 39493)]
         port: u16,
     },
 }

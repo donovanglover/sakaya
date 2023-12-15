@@ -26,7 +26,7 @@ fn main() {
 
             None => {
                 if is_container() {
-                    start_server(ip, 34943)
+                    start_server(ip, 39493)
                 } else if let Some(file) = file {
                     client::exec(address, &file, directory.to_str().unwrap());
                 } else {
