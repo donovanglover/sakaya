@@ -9,7 +9,7 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.4.7", features = ["derive"] }
-home = "0.5.5"
+home = "0.5.9"
 ico = "0.3.0"
 local-ip-address = "0.5.4"
 minreq = "2.11.0"
