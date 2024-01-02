@@ -11,8 +11,8 @@ assignees: ''
 
 ## Environment
 
-Output of `uname -a`:
-Output of `sakaya -V`:
+- Output of `uname -a`:
+- Output of `sakaya -V`:
 
 ## Expected Behavior
 Tell us what should have happened.
