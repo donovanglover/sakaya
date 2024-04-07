@@ -43,6 +43,8 @@ fn main() {
 
 fn start_server(ip: Ipv4Addr, port: u16) {
     let running_ip = SocketAddrV4::new(ip, port);
+
     notify(&format!("Starting server on {running_ip}..."), None);
-    server::start(running_ip);
+
+    let _ = server::start(running_ip);
 }
