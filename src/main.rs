@@ -28,7 +28,11 @@ fn main() {
                 if is_container() {
                     start_server(ip, 39493)
                 } else if let Some(file) = file {
-                    client::exec(address, &file, directory.to_str().unwrap());
+                    if let Some(directory) = directory.to_str() {
+                        client::exec(address, &file, directory);
+                    } else {
+                        notify("Invalid directory was given.", None)
+                    }
                 } else {
                     notify("sakaya was called but no file was given.", None);
                 }

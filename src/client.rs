@@ -102,7 +102,7 @@ pub fn convert_largest_square_image_in_ico_to_png(
     buf: Cursor<Vec<u8>>,
     output_path: &str,
 ) -> Result<(), std::io::Error> {
-    let icondir = ico::IconDir::read(buf).unwrap();
+    let icondir = ico::IconDir::read(buf)?;
     let mut largest_size = 0;
     let mut largest_index = 0;
 
@@ -115,7 +115,7 @@ pub fn convert_largest_square_image_in_ico_to_png(
         }
     }
 
-    let image = icondir.entries()[largest_index].decode().unwrap();
+    let image = icondir.entries()[largest_index].decode()?;
     let out_file = fs::File::create(output_path).unwrap();
 
     image.write_png(out_file)
