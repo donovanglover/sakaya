@@ -46,7 +46,7 @@ fn out(mut stream: TcpStream, status: &str, contents: &str) {
 /// Open an executable in wine
 fn open(request: &str) -> Result<String, &'static str> {
     let Ok(request) = decode(request) else {
-        return Err("The request was invalid.")
+        return Err("The request was invalid.");
     };
 
     println!("{}", request);
@@ -56,16 +56,17 @@ fn open(request: &str) -> Result<String, &'static str> {
     let Ok(Output { stdout, stderr, .. }) = Command::new("wine")
         .env("WINEPREFIX", split[1])
         .arg(split[0])
-        .output() else {
-            return Err("Error while trying to run the wine command.")
-        };
+        .output()
+    else {
+        return Err("Error while trying to run the wine command.");
+    };
 
     let Ok(stdout) = String::from_utf8(stdout) else {
-        return Err("The program returned invalid stdout.")
+        return Err("The program returned invalid stdout.");
     };
 
     let Ok(stderr) = String::from_utf8(stderr) else {
-        return Err("The program returned invalid stderr.")
+        return Err("The program returned invalid stderr.");
     };
 
     Ok(format!("stdout:\n{stdout}\nstderr:\n{stderr}"))
