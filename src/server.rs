@@ -10,12 +10,10 @@ use urlencoding::decode;
 pub fn start(address: SocketAddrV4) -> Result<(), std::io::Error> {
     let listener = TcpListener::bind(address)?;
 
-    for maybe_stream in listener.incoming() {
-        if let Ok(stream) = maybe_stream {
-            thread::spawn(|| {
-                handle_connection(stream);
-            });
-        }
+    for stream in listener.incoming().flatten() {
+        thread::spawn(|| {
+            handle_connection(stream);
+        });
     }
 
     Ok(())
