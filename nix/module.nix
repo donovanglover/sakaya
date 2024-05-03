@@ -8,31 +8,25 @@ in
 
 {
   options.services.sakaya = {
-    enable = mkEnableOption (mdDoc "sakaya server");
+    enable = mkEnableOption "sakaya server";
 
     package = mkOption {
       type = types.package;
       default = pkgs.sakaya;
       defaultText = literalExpression "pkgs.sakaya";
-      description = mdDoc ''
-        The sakaya package that should be used.
-      '';
+      description = "The sakaya package that should be used.";
     };
 
     openFirewall = mkOption {
       type = types.bool;
       default = false;
-      description = mdDoc ''
-        Whether to open ports in the firewall needed for sakaya server to function.
-      '';
+      description = "Whether to open ports in the firewall needed for sakaya server to function.";
     };
 
     port = mkOption {
       type = types.port;
       default = 8080;
-      description = mdDoc ''
-        The port to listen on for HTTP requests.
-      '';
+      description = "The port to listen on for HTTP requests.";
     };
   };
 
