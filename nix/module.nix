@@ -29,6 +29,8 @@ in
       default = 8080;
       description = "The port to listen on for HTTP requests.";
     };
+
+    noJapanese = mkEnableOption "disable Japanese locale and timezone";
   };
 
   config = mkIf cfg.enable {
@@ -47,6 +49,11 @@ in
     };
 
     networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
+
+    environment.sessionVariables = mkIf (!cfg.noJapanese) {
+      LC_ALL = "ja_JP.UTF-8";
+      TZ = "Asia/Tokyo";
+    };
   };
 }
 
