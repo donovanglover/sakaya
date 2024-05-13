@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption mkPackageOption mkIf;
-  inherit (lib.types) port;
+  inherit (lib) mkEnableOption mkOption mkPackageOption mkIf singleton;
+  inherit (lib.types) port string;
 
   cfg = config.services.sakaya;
 in
@@ -14,6 +14,12 @@ in
     package = mkPackageOption pkgs "sakaya" { };
 
     openFirewall = mkEnableOption "open port in the firewall needed for sakaya server";
+
+    address = mkOption {
+      type = string;
+      default = "192.168.100.49";
+      description = "The interface sakaya server will listen on.";
+    };
 
     port = mkOption {
       type = port;
