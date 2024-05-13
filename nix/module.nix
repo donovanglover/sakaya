@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption mkIf literalExpression;
-  inherit (lib.types) package port;
+  inherit (lib) mkEnableOption mkOption mkPackageOption mkIf;
+  inherit (lib.types) port;
 
   cfg = config.services.sakaya;
 in
@@ -11,12 +11,7 @@ in
   options.services.sakaya = {
     enable = mkEnableOption "sakaya server";
 
-    package = mkOption {
-      type = package;
-      default = pkgs.sakaya;
-      defaultText = literalExpression "pkgs.sakaya";
-      description = "The sakaya package that should be used.";
-    };
+    package = mkPackageOption pkgs "sakaya" { };
 
     openFirewall = mkEnableOption "open port in the firewall needed for sakaya server";
 
