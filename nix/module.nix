@@ -2,7 +2,7 @@
 
 let
   inherit (lib) mkEnableOption mkOption mkIf literalExpression;
-  inherit (lib.types) package port bool;
+  inherit (lib.types) package port;
 
   cfg = config.services.sakaya;
 in
@@ -18,11 +18,7 @@ in
       description = "The sakaya package that should be used.";
     };
 
-    openFirewall = mkOption {
-      type = bool;
-      default = false;
-      description = "Whether to open ports in the firewall needed for sakaya server to function.";
-    };
+    openFirewall = mkEnableOption "open port in the firewall needed for sakaya server";
 
     port = mkOption {
       type = port;
