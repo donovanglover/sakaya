@@ -22,7 +22,7 @@ in
 
     port = mkOption {
       type = port;
-      default = 8080;
+      default = 39493;
       description = "The port to listen on for HTTP requests.";
     };
 
