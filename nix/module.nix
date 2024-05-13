@@ -31,17 +31,20 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.sakaya = {
+      enable = true;
       description = "sakaya server";
-      wantedBy = [ "multi-user.target" ];
       script = ''
         ${cfg.package}/bin/sakaya server \
           --port ${toString cfg.port}
       '';
+
       serviceConfig = {
         Type = "simple";
         DynamicUser = true;
         Restart = "on-failure";
       };
+
+      wantedBy = [ "multi-user.target" ];
     };
 
     networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
