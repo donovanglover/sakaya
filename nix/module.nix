@@ -48,6 +48,11 @@ in
       wantedBy = [ "multi-user.target" ];
     };
 
+    networking.nat.forwardPorts = singleton {
+      destination = "${cfg.address}:${cfg.port}";
+      sourcePort = cfg.port;
+    };
+
     networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
 
     environment.sessionVariables = mkIf (!cfg.noJapanese) {
