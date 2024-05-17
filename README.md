@@ -11,7 +11,7 @@ Run native wine applications inside declarative systemd-nspawn containers. `saka
 
 ## Installation
 
-### [NixOS](https://nixos.wiki/wiki/Overview_of_the_NixOS_Linux_distribution) (Recommended)
+### [NixOS](https://wiki.nixos.org/wiki/Overview_of_the_NixOS_Linux_distribution) (Recommended)
 
 Add [`sakaya`](https://search.nixos.org/packages?channel=unstable&query=sakaya) to your `systemPackages` and rebuild.
 
