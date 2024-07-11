@@ -8,7 +8,9 @@
   outputs =
     { nixpkgs, ... }:
     let
-      inherit (nixpkgs.legacyPackages.x86_64-linux) nixfmt-rfc-style callPackage;
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
+      inherit (pkgs) nixfmt-rfc-style callPackage;
     in
     {
       formatter.x86_64-linux = nixfmt-rfc-style;
@@ -18,5 +20,9 @@
         sakaya = callPackage ./nix/package.nix { };
         default = callPackage ./nix/package.nix { };
       };
+
+      devShells.x86_64-linux.default = pkgs.mkShell (import ./nix/shell.nix {
+        inherit pkgs;
+      });
     };
 }
