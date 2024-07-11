@@ -14,6 +14,7 @@
       formatter.x86_64-linux = nixfmt-rfc-style;
 
       packages.x86_64-linux = {
+        osu = callPackage ./nix/osu.nix { };
         sakaya = callPackage ./nix/package.nix { };
         default = callPackage ./nix/package.nix { };
       };
