@@ -2,7 +2,7 @@
 
 let
   inherit (lib) mkEnableOption mkOption mkPackageOption mkIf singleton;
-  inherit (lib.types) port string;
+  inherit (lib.types) port string bool;
 
   cfg = config.services.sakaya;
 in
@@ -12,7 +12,11 @@ in
 
     package = mkPackageOption pkgs "sakaya" { };
 
-    openFirewall = mkEnableOption "open port in the firewall needed for sakaya server";
+    openFirewall = mkOption {
+      type = bool;
+      default = true;
+      description = "Whether to automatically open the specified port in the firewall.";
+    };
 
     address = mkOption {
       type = string;
