@@ -55,6 +55,8 @@ in
 
     networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
 
+    services.xserver.enable = true;
+
     environment.systemPackages = with pkgs; [
       wineWowPackages.waylandFull
       winetricks
