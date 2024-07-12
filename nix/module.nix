@@ -6,7 +6,6 @@ let
 
   cfg = config.services.sakaya;
 in
-
 {
   options.services.sakaya = {
     enable = mkEnableOption "sakaya server";
@@ -34,6 +33,7 @@ in
     systemd.services.sakaya = {
       enable = true;
       description = "sakaya server";
+
       script = ''
         ${cfg.package}/bin/sakaya server \
           --port ${toString cfg.port}
@@ -54,6 +54,11 @@ in
     };
 
     networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
+
+    environment.systemPackages = with pkgs; [
+      wineWowPackages.waylandFull
+      winetricks
+    ];
 
     environment.sessionVariables = mkIf (!cfg.noJapanese) {
       LC_ALL = "ja_JP.UTF-8";
