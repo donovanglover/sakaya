@@ -21,6 +21,11 @@
         default = callPackage ./nix/package.nix { };
       };
 
+      nixosModules = {
+        sakaya = callPackage ./nix/module.nix { };
+        default = callPackage ./nix/module.nix { };
+      };
+
       devShells.x86_64-linux.default = pkgs.mkShell (import ./nix/shell.nix {
         inherit pkgs;
       });
