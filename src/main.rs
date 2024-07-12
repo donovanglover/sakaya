@@ -1,12 +1,12 @@
 use clap::Parser;
+use local_ip_address::local_ip;
 use sakaya::cli::Cli;
 use sakaya::cli::Commands;
-use local_ip_address::local_ip;
-use std::net::SocketAddrV4;
-use std::net::{IpAddr, Ipv4Addr};
 use sakaya::util::is_container;
 use sakaya::util::notify;
 use sakaya::{client, server};
+use std::net::SocketAddrV4;
+use std::net::{IpAddr, Ipv4Addr};
 
 /// The main function is in charge of either starting a `sakaya-server` or
 /// starting a `sakaya-client` that connects to a `sakaya-server`.
