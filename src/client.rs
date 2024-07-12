@@ -1,7 +1,7 @@
 use crate::cli::Cli;
+use crate::util::notify;
 use clap::Parser;
 use pelite::{FileMap, PeFile};
-use crate::util::notify;
 use std::fs;
 use std::io::Cursor;
 use std::net::SocketAddrV4;
