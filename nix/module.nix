@@ -4,10 +4,10 @@ let
   inherit (lib) mkEnableOption mkOption mkPackageOption mkIf singleton;
   inherit (lib.types) port string bool;
 
-  cfg = config.services.sakaya;
+  cfg = config.sakaya;
 in
 {
-  options.services.sakaya = {
+  options.sakaya = {
     enable = mkEnableOption "sakaya server";
 
     package = mkPackageOption pkgs "sakaya" { };
