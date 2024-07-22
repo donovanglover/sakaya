@@ -1,5 +1,5 @@
 use std::fs;
-use std::process::Command;
+use notify_rust::Notification;
 
 /// Checks if we're inside a container
 pub fn is_container() -> bool {
@@ -11,16 +11,12 @@ pub fn notify(body: &str, mut icon: Option<&str>) {
     println!("{body}");
 
     if !is_container() {
-        Command::new("dunstify")
-            .args([
-                "--icon",
-                icon.get_or_insert("sakaya"),
-                "--timeout",
-                "3000",
-                "酒屋",
-                body,
-            ])
-            .output()
+        Notification::new()
+            .summary("酒屋")
+            .body(body)
+            .icon(icon.get_or_insert("sakaya"))
+            .timeout(3000)
+            .show()
             .unwrap();
     }
 }
