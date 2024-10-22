@@ -1,5 +1,5 @@
-use std::fs;
 use notify_rust::Notification;
+use std::fs;
 
 /// Checks if we're inside a container
 pub fn is_container() -> bool {
