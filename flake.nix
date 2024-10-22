@@ -22,8 +22,8 @@
       };
 
       nixosModules = {
-        sakaya = callPackage ./nix/module.nix { };
-        default = callPackage ./nix/module.nix { };
+        sakaya = import ./nix/module.nix;
+        default = import ./nix/module.nix;
       };
 
       devShells.x86_64-linux.default = pkgs.mkShell (import ./nix/shell.nix {
