@@ -2,7 +2,7 @@
 
 let
   inherit (lib) mkEnableOption mkOption mkIf;
-  inherit (lib.types) port string bool;
+  inherit (lib.types) port str bool;
 
   package = pkgs.callPackage ./package.nix { };
 
@@ -19,7 +19,7 @@ in
     };
 
     username = mkOption {
-      type = string;
+      type = str;
       default = "user";
       description = "The user to run sakaya under.";
     };
