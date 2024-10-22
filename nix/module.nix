@@ -4,7 +4,7 @@ let
   inherit (lib) mkEnableOption mkOption mkPackageOption mkIf;
   inherit (lib.types) port string bool;
 
-  cfg = config.services.sakaya;
+  cfg = config.sakaya;
 in
 {
   options.sakaya = {
