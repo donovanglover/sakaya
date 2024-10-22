@@ -37,7 +37,7 @@ in
       description = "sakaya server";
       unitConfig.Type = "simple";
       path = with pkgs; [ su ];
-      serviceConfig.ExecStart = "/usr/bin/env su ${cfg.username} --command='${package}/bin/sakaya --port ${toString cfg.port}'";
+      serviceConfig.ExecStart = "/usr/bin/env su ${cfg.username} --command='${package}/bin/sakaya server --port ${toString cfg.port}'";
       wantedBy = [ "multi-user.target" ];
     };
 
