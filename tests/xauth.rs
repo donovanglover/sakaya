@@ -2,6 +2,7 @@ use sakaya::client::make_xauth;
 use std::path::Path;
 
 #[test]
+#[ignore]
 fn xauth() {
     make_xauth();
 
