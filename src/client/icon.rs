@@ -1,5 +1,5 @@
-use std::fs::File;
 use pelite::{FileMap, PeFile};
+use std::fs::File;
 use std::io::Cursor;
 
 /// Given an .exe file, return the first .ico file inside it

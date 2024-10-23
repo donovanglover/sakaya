@@ -1,10 +1,10 @@
-use std::net::SocketAddrV4;
-use std::process::{Command, Output};
 use axum::extract::Json;
 use axum::routing::post;
 use axum::Router;
-use serde::Serialize;
 use serde::Deserialize;
+use serde::Serialize;
+use std::net::SocketAddrV4;
+use std::process::{Command, Output};
 
 #[derive(Serialize, Deserialize)]
 pub struct Options {

@@ -1,5 +1,5 @@
-use std::fs::write;
 use home::home_dir;
+use std::fs::write;
 
 /// Makes a desktop file for the application
 pub fn make_desktop_file(file_name: &str, full_path: &str) {
