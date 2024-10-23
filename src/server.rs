@@ -1,62 +1,31 @@
-use std::io::prelude::*;
-use std::io::BufReader;
 use std::net::SocketAddrV4;
-use std::net::{TcpListener, TcpStream};
 use std::process::{Command, Output};
-use std::thread;
-use urlencoding::decode;
+use axum::extract::Json;
+use axum::routing::post;
+use axum::Router;
+use serde::Deserialize;
 
-/// Simple HTTP server that opens files based on GET requests
-pub fn start(address: SocketAddrV4) -> Result<(), std::io::Error> {
-    let listener = TcpListener::bind(address)?;
-
-    for stream in listener.incoming().flatten() {
-        thread::spawn(|| {
-            handle_connection(stream);
-        });
-    }
-
-    Ok(())
+#[derive(Deserialize)]
+struct Options {
+    wine_prefix: String,
+    path: String,
 }
 
-/// Opens the given file and returns 200, otherwise 404
-fn handle_connection(mut stream: TcpStream) {
-    let request_line = BufReader::new(&mut stream).lines().next().unwrap().unwrap();
-    let request_line: Vec<&str> = request_line.split(' ').collect();
+pub async fn start(address: SocketAddrV4) -> () {
+    let app = Router::new().route("/open", post(open_executable));
+    let listener = tokio::net::TcpListener::bind(address).await.unwrap();
 
-    if let Some(request) = request_line.get(1) {
-        if let Ok(response) = open(request) {
-            out(stream, "HTTP/1.1 200 OK", &response);
-        }
-    } else {
-        out(stream, "HTTP/1.1 404 NOT FOUND", "");
-    }
-}
-
-/// Handles outputting to the requester
-fn out(mut stream: TcpStream, status: &str, contents: &str) {
-    let length = contents.len();
-    let response = format!("{status}\r\nContent-Length: {length}\r\n\r\n{contents}");
-
-    stream.write_all(response.as_bytes()).unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
 
 /// Open an executable in wine
-fn open(request: &str) -> Result<String, &'static str> {
-    let Ok(request) = decode(request) else {
-        return Err("The request was invalid.");
-    };
-
-    println!("{}", request);
-
-    let split = request.split("//").collect::<Vec<_>>();
-
+async fn open_executable(Json(options): Json<Options>) -> Result<String, &'static str> {
     let Ok(Output { stdout, stderr, .. }) = Command::new("wine")
-        .env("WINEPREFIX", split[1])
+        .env("WINEPREFIX", options.wine_prefix)
         .env("WAYLAND_DISPLAY", "wayland-1")
         .env("XDG_RUNTIME_DIR", "/run/user/1000")
         .env("DISPLAY", ":0")
-        .arg(split[0])
+        .arg(options.path)
         .output()
     else {
         return Err("Error while trying to run the wine command.");
