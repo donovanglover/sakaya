@@ -65,9 +65,8 @@ pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str) -> Result<(
         wine_prefix: wine_prefix.to_string(),
     };
 
-    let url = format!("http://{address}/{path}");
-    let json = serde_json::to_string(&opts).unwrap();
-    let response = minreq::get(url).with_body(json).send()?;
+    let url = format!("http://{address}/open");
+    let response = minreq::post(url).with_json(&opts)?.send()?;
 
     print!("{}", response.as_str()?);
 

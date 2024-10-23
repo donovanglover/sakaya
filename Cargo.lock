@@ -1043,6 +1043,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "763d142cdff44aaadd9268bebddb156ef6c65a0e13486bb81673cf2d8739f9b0"
 dependencies = [
  "log",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -1498,7 +1500,6 @@ dependencies = [
  "pelite",
  "rustympkglib",
  "serde",
- "serde_json",
  "tokio",
  "toml",
  "urlencoding",
@@ -1781,7 +1782,7 @@ checksum = "693d596312e88961bc67d7f1f97af8a70227d9f90c31bba5806eec004978d752"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.66",
+ "syn 2.0.82",
 ]
 
 [[package]]
