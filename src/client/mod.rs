@@ -6,10 +6,12 @@ use pelite::{FileMap, PeFile};
 use std::net::SocketAddrV4;
 use std::path::Path;
 
-mod desktop;
-mod icon;
+pub mod desktop;
+pub mod icon;
+pub mod xauth;
 pub use desktop::*;
 pub use icon::*;
+pub use xauth::*;
 
 /// https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/Debug/pe-format.md#machine-types
 const IMAGE_FILE_MACHINE_I386: u16 = 0x14C;
@@ -21,6 +23,12 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
     if !path.exists() {
         notify("Exiting since not a valid file.", None);
         return;
+    }
+
+    if let Some(session) = std::env::var_os("XDG_SESSION_TYPE") {
+        if session == "x11" {
+            make_xauth();
+        }
     }
 
     let file_name = path.file_name().unwrap().to_str().unwrap();
