@@ -1,16 +1,10 @@
 use axum::extract::Json;
 use axum::routing::post;
 use axum::Router;
-use serde::Deserialize;
-use serde::Serialize;
 use std::net::SocketAddrV4;
 use std::process::{Command, Output};
 
-#[derive(Serialize, Deserialize)]
-pub struct Options {
-    pub wine_prefix: String,
-    pub path: String,
-}
+use crate::state::Options;
 
 pub async fn start(address: SocketAddrV4) {
     let app = Router::new().route("/open", post(open_executable));
