@@ -26,7 +26,7 @@ async fn open_executable(Json(options): Json<Options>) -> Result<String, &'stati
         .env("WAYLAND_DISPLAY", "wayland-1")
         .env("XDG_RUNTIME_DIR", "/run/user/1000")
         .env("DISPLAY", ":0")
-        .env("XAUTHORITY", "/tmp/container_xauth")
+        .env("XAUTHORITY", "/tmp/.X11-unix/Xauthority")
         .arg(options.path)
         .output()
     else {

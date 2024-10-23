@@ -2,7 +2,7 @@ use std::process::{Command, Stdio};
 
 pub fn make_xauth() {
     let display = ":0";
-    let xauth_file = "/tmp/container_xauth";
+    let xauth_file = "/tmp/.X11-unix/Xauthority";
 
     let xauth_child = Command::new("xauth")
         .arg("nextract")

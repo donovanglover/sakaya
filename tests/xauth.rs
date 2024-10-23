@@ -5,5 +5,5 @@ use std::path::Path;
 fn xauth() {
     make_xauth();
 
-    assert!(Path::new("/tmp/container_xauth").exists());
+    assert!(Path::new("/tmp/.X11-unix/Xauthority").exists());
 }
