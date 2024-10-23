@@ -35,9 +35,9 @@ cargo install --git https://github.com/donovanglover/sakaya --tag 0.1.0
 
 ### Setup
 
-In order to use sakaya, you must first create a nixos-container running the sakaya server.
+In order to use sakaya, you must first create a systemd-nspawn container running the sakaya server.
 
-See [`containers/default.nix`](https://github.com/donovanglover/nix-config/blob/master/containers/default.nix) in my nix-config for an example.
+See [`modules/containers.nix`](https://github.com/donovanglover/nix-config/blob/master/modules/containers.nix) in my nix-config for an example.
 
 ## Usage
 
@@ -73,6 +73,6 @@ sakaya should be bug free, however contributions are welcome. Although NixOS has
 - [x] Get .ico and convert to .png? Handle abrupt end of files?
 - [ ] Write tests
 - [x] Terminate sakaya if the server/container cannot be reached
-- [ ] Create NixOS module to automate systemd service setup for sakaya server
+- [x] Create NixOS module to automate systemd service setup for sakaya server
 - [x] Automatically register sakaya to executables
 - [x] Update format of README
