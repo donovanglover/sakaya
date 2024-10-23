@@ -1,4 +1,5 @@
 use crate::cli::Cli;
+use crate::server::Options;
 use crate::util::notify;
 use clap::Parser;
 use pelite::{FileMap, PeFile};
@@ -59,10 +60,14 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
 
 /// Sends a request to start an application inside a container
 pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str) -> Result<(), minreq::Error> {
-    let path = urlencoding::encode(path);
-    let wine_prefix = urlencoding::encode(wine_prefix);
+    let opts = Options {
+        path: path.to_string(),
+        wine_prefix: wine_prefix.to_string(),
+    };
 
-    let response = minreq::get(format!("http://{address}/{path}//{wine_prefix}")).send()?;
+    let url = format!("http://{address}/{path}");
+    let json = serde_json::to_string(&opts).unwrap();
+    let response = minreq::get(url).with_body(json).send()?;
 
     print!("{}", response.as_str()?);
 

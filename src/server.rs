@@ -3,12 +3,13 @@ use std::process::{Command, Output};
 use axum::extract::Json;
 use axum::routing::post;
 use axum::Router;
+use serde::Serialize;
 use serde::Deserialize;
 
-#[derive(Deserialize)]
-struct Options {
-    wine_prefix: String,
-    path: String,
+#[derive(Serialize, Deserialize)]
+pub struct Options {
+    pub wine_prefix: String,
+    pub path: String,
 }
 
 pub async fn start(address: SocketAddrV4) -> () {

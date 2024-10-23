@@ -1498,6 +1498,7 @@ dependencies = [
  "pelite",
  "rustympkglib",
  "serde",
+ "serde_json",
  "tokio",
  "toml",
  "urlencoding",
