@@ -53,6 +53,9 @@ fn open(request: &str) -> Result<String, &'static str> {
 
     let Ok(Output { stdout, stderr, .. }) = Command::new("wine")
         .env("WINEPREFIX", split[1])
+        .env("WAYLAND_DISPLAY", "wayland-1")
+        .env("XDG_RUNTIME_DIR", "/run/user/1000")
+        .env("DISPLAY", ":0")
         .arg(split[0])
         .output()
     else {
