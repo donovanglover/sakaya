@@ -2,11 +2,12 @@ use crate::cli::Cli;
 use crate::util::notify;
 use clap::Parser;
 use pelite::{FileMap, PeFile};
-use std::fs;
 use std::net::SocketAddrV4;
 use std::path::Path;
 
+mod desktop;
 mod icon;
+pub use desktop::*;
 pub use icon::*;
 
 /// https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/Debug/pe-format.md#machine-types
@@ -79,21 +80,4 @@ pub fn get_target_machine(input_bin: &str) -> u8 {
         IMAGE_FILE_MACHINE_AMD64 => 64,
         _ => 0,
     }
-}
-
-/// Makes a desktop file for the application
-pub fn make_desktop_file(file_name: &str, full_path: &str) {
-    let home = home::home_dir().unwrap();
-    let home = home.to_str().unwrap();
-
-    let output_location = &format!("{home}/.local/share/applications/{file_name}.desktop");
-
-    let mut output: String = "[Desktop Entry]".to_owned() + "\n";
-
-    output.push_str("Type=Application\n");
-    output.push_str(&("Name=".to_owned() + file_name + "\n"));
-    output.push_str(&("Icon=".to_owned() + file_name + "\n"));
-    output.push_str(&("Exec=sakaya \"".to_owned() + full_path + "\"\n"));
-
-    let _ = fs::write(output_location, output);
 }
