@@ -12,7 +12,7 @@ pub struct Options {
     pub path: String,
 }
 
-pub async fn start(address: SocketAddrV4) -> () {
+pub async fn start(address: SocketAddrV4) {
     let app = Router::new().route("/open", post(open_executable));
     let listener = tokio::net::TcpListener::bind(address).await.unwrap();
 
