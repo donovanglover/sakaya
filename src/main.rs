@@ -44,5 +44,5 @@ async fn start_server(ip: Ipv4Addr, port: u16) {
 
     notify(&format!("Starting server on {running_ip}..."), None);
 
-    let _ = server::start(running_ip).await;
+    server::serve(running_ip).await;
 }
