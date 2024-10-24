@@ -3,7 +3,9 @@ use clap::{Parser, Subcommand};
 use std::net::SocketAddrV4;
 use std::path::PathBuf;
 
-use crate::consts::{DEFAULT_ADDRESS, DEFAULT_DIRECTORY, DEFAULT_PORT, DEFAULT_WINE32_PREFIX, DEFAULT_WINE64_PREFIX};
+use crate::consts::{
+    DEFAULT_ADDRESS, DEFAULT_DIRECTORY, DEFAULT_PORT, DEFAULT_WINE32_PREFIX, DEFAULT_WINE64_PREFIX,
+};
 
 fn styles() -> Styles {
     Styles::styled()

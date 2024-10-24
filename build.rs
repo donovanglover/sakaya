@@ -6,10 +6,10 @@ mod consts;
 
 use clap::Command;
 use clap::CommandFactory;
-use cli::Cli;
 use clap_complete::generate_to;
 use clap_complete::Shell::{Bash, Fish, Zsh};
 use clap_mangen::Man;
+use cli::Cli;
 
 static NAME: &str = "sakaya";
 
