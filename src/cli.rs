@@ -3,6 +3,8 @@ use clap::{Parser, Subcommand};
 use std::net::SocketAddrV4;
 use std::path::PathBuf;
 
+use crate::consts::{DEFAULT_ADDRESS, DEFAULT_DIRECTORY, DEFAULT_PORT, DEFAULT_WINE32_PREFIX, DEFAULT_WINE64_PREFIX};
+
 fn styles() -> Styles {
     Styles::styled()
         .header(AnsiColor::Red.on_default() | Effects::BOLD)
@@ -18,19 +20,19 @@ pub struct Cli {
     pub file: Option<PathBuf>,
 
     /// Address of the server to request
-    #[arg(short, long, default_value = "192.168.100.49:39493")]
+    #[arg(short, long, default_value = DEFAULT_ADDRESS)]
     pub address: SocketAddrV4,
 
     /// Host directory mounted to /mnt inside the container
-    #[arg(short, long, default_value = "/home/user/containers/wine")]
+    #[arg(short, long, default_value = DEFAULT_DIRECTORY)]
     pub directory: PathBuf,
 
     /// $WINEPREFIX for 32-bit applications (i386)
-    #[arg(short, long, default_value = "/mnt/wine32")]
+    #[arg(short, long, default_value = DEFAULT_WINE32_PREFIX)]
     pub wine32: String,
 
     /// $WINEPREFIX for 64-bit applications (amd64)
-    #[arg(short = 'W', long, default_value = "/mnt/wine64")]
+    #[arg(short = 'W', long, default_value = DEFAULT_WINE64_PREFIX)]
     pub wine64: String,
 
     #[command(subcommand)]
@@ -45,7 +47,7 @@ pub enum Commands {
     /// of a systemd-nspawn container.
     Server {
         /// Port number to use for the sakaya server
-        #[arg(short, long, default_value_t = 39493)]
+        #[arg(short, long, default_value_t = DEFAULT_PORT)]
         port: u16,
     },
 }
