@@ -1,4 +1,4 @@
-#[path = "src/cli.rs"]
+#[path = "src/cli/mod.rs"]
 mod cli;
 
 #[path = "src/consts/mod.rs"]
