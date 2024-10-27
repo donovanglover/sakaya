@@ -8,7 +8,7 @@ pub async fn open(Json(options): Json<Options>) -> Result<String, &'static str> 
     let Ok(Output { stdout, stderr, .. }) = Command::new("wine")
         .env("WINEPREFIX", options.wine_prefix)
         .env("WAYLAND_DISPLAY", "wayland-1")
-        .env("XDG_RUNTIME_DIR", "/run/user/1000")
+        .env("XDG_RUNTIME_DIR", options.xdg_runtime_dir)
         .env("DISPLAY", options.display)
         .env("XAUTHORITY", "/tmp/.X11-unix/Xauthority")
         .arg(options.path)
