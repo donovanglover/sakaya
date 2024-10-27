@@ -1,7 +1,8 @@
 use std::process::{Command, Stdio};
+use std::env::var;
 
 pub fn make_xauth() {
-    let display = ":0";
+    let display = var("DISPLAY").unwrap();
     let xauth_file = "/tmp/.X11-unix/Xauthority";
 
     let xauth_child = Command::new("xauth")
