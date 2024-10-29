@@ -1,5 +1,6 @@
 use serde::Deserialize;
 use serde::Serialize;
+use std::collections::HashMap;
 use std::env::var;
 
 use crate::consts::DEFAULT_LOCALE;
@@ -24,6 +25,18 @@ impl Options {
             wine_prefix: wine_prefix.to_string(),
             ..Default::default()
         }
+    }
+
+    pub fn vars(&self) -> HashMap<&str, String> {
+        HashMap::from([
+            ("WINEPREFIX", self.wine_prefix.to_string()),
+            ("WAYLAND_DISPLAY", self.wayland_display.to_string()),
+            ("XDG_RUNTIME_DIR", self.xdg_runtime_dir.to_string()),
+            ("DISPLAY", self.display.to_string()),
+            ("XAUTHORITY", "/tmp/.X11-unix/Xauthority".to_string()),
+            ("LC_ALL", self.locale.to_string()),
+            ("TZ", self.timezone.to_string()),
+        ])
     }
 }
 

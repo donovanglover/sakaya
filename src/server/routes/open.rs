@@ -6,13 +6,7 @@ use crate::state::Options;
 /// Open an executable in wine
 pub async fn open(Json(options): Json<Options>) -> Result<String, &'static str> {
     let Ok(Output { stdout, stderr, .. }) = Command::new("wine")
-        .env("WINEPREFIX", options.wine_prefix)
-        .env("WAYLAND_DISPLAY", options.wayland_display)
-        .env("XDG_RUNTIME_DIR", options.xdg_runtime_dir)
-        .env("DISPLAY", options.display)
-        .env("XAUTHORITY", "/tmp/.X11-unix/Xauthority")
-        .env("LC_ALL", options.locale)
-        .env("TZ", options.timezone)
+        .envs(Options::vars(&options))
         .arg(options.path)
         .output()
     else {
