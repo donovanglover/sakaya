@@ -2,20 +2,17 @@ use crate::cli::Cli;
 use crate::state::Options;
 use crate::util::notify;
 use clap::Parser;
-use pelite::{FileMap, PeFile};
 use std::net::SocketAddrV4;
 use std::path::Path;
 
 pub mod desktop;
+pub mod get_target_machine;
 pub mod icon;
 pub mod xauth;
 pub use desktop::*;
+pub use get_target_machine::*;
 pub use icon::*;
 pub use xauth::*;
-
-/// https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/Debug/pe-format.md#machine-types
-const IMAGE_FILE_MACHINE_I386: u16 = 0x14C;
-const IMAGE_FILE_MACHINE_AMD64: u16 = 0x8664;
 
 /// Run an executable inside the container from the host by requesting
 /// the server on a given socket address
@@ -76,17 +73,4 @@ pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str) -> Result<(
     print!("{}", response.as_str()?);
 
     Ok(())
-}
-
-/// Gets whether the exe is 32 or 64-bit
-pub fn get_target_machine(input_bin: &str) -> u8 {
-    let map = FileMap::open(input_bin).expect("Error opening the binary");
-    let file = PeFile::from_bytes(&map).expect("Error parsing the binary");
-    let target_machine = file.file_header().Machine;
-
-    match target_machine {
-        IMAGE_FILE_MACHINE_I386 => 32,
-        IMAGE_FILE_MACHINE_AMD64 => 64,
-        _ => 0,
-    }
 }
