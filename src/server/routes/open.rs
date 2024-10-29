@@ -11,6 +11,8 @@ pub async fn open(Json(options): Json<Options>) -> Result<String, &'static str> 
         .env("XDG_RUNTIME_DIR", options.xdg_runtime_dir)
         .env("DISPLAY", options.display)
         .env("XAUTHORITY", "/tmp/.X11-unix/Xauthority")
+        .env("LC_ALL", options.locale)
+        .env("TZ", options.timezone)
         .arg(options.path)
         .output()
     else {

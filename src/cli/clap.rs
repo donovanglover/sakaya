@@ -4,7 +4,7 @@ use std::net::SocketAddrV4;
 use std::path::PathBuf;
 
 use crate::consts::{
-    DEFAULT_ADDRESS, DEFAULT_DIRECTORY, DEFAULT_PORT, DEFAULT_WINE32_PREFIX, DEFAULT_WINE64_PREFIX,
+    DEFAULT_ADDRESS, DEFAULT_DIRECTORY, DEFAULT_LOCALE, DEFAULT_PORT, DEFAULT_TIMEZONE, DEFAULT_WINE32_PREFIX, DEFAULT_WINE64_PREFIX
 };
 
 fn styles() -> Styles {
@@ -36,6 +36,14 @@ pub struct Cli {
     /// $WINEPREFIX for 64-bit applications (amd64)
     #[arg(short = 'W', long, default_value = DEFAULT_WINE64_PREFIX)]
     pub wine64: String,
+
+    /// Locale to run programs with
+    #[arg(short, long, default_value = DEFAULT_LOCALE)]
+    pub locale: String,
+
+    /// Timezone to run programs with
+    #[arg(short, long, default_value = DEFAULT_TIMEZONE)]
+    pub timezone: String,
 
     #[command(subcommand)]
     pub command: Option<Commands>,
