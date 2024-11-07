@@ -1,5 +1,5 @@
-use std::process::{Command, Stdio};
 use std::env::var;
+use std::process::{Command, Stdio};
 
 pub fn make_xauth() {
     let display = var("DISPLAY").unwrap();

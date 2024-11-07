@@ -1,4 +1,7 @@
-use pelite::{image::{IMAGE_FILE_MACHINE_AMD64, IMAGE_FILE_MACHINE_I386}, FileMap, PeFile};
+use pelite::{
+    image::{IMAGE_FILE_MACHINE_AMD64, IMAGE_FILE_MACHINE_I386},
+    FileMap, PeFile,
+};
 
 /// Gets whether the exe is 32 or 64-bit
 ///
