@@ -28,6 +28,11 @@ impl Options {
     }
 
     pub fn vars(&self) -> HashMap<&str, String> {
+        let wine_arch = match self.wine_prefix.contains("64") {
+            true => "win64",
+            false => "win32"
+        };
+
         HashMap::from([
             ("WINEPREFIX", self.wine_prefix.to_string()),
             ("WAYLAND_DISPLAY", self.wayland_display.to_string()),
@@ -36,6 +41,7 @@ impl Options {
             ("XAUTHORITY", "/tmp/.X11-unix/Xauthority".to_string()),
             ("LC_ALL", self.locale.to_string()),
             ("TZ", self.timezone.to_string()),
+            ("WINE_ARCH", wine_arch.to_string()),
         ])
     }
 }
