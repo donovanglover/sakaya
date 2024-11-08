@@ -30,7 +30,7 @@ impl Options {
     pub fn vars(&self) -> HashMap<&str, String> {
         let wine_arch = match self.wine_prefix.contains("64") {
             true => "win64",
-            false => "win32"
+            false => "win32",
         };
 
         HashMap::from([
