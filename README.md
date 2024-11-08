@@ -56,6 +56,8 @@ Options:
   -d, --directory <DIRECTORY>  Host directory mounted to /mnt inside the container [default: /home/user/containers/wine]
   -w, --wine32 <WINE32>        $WINEPREFIX for 32-bit applications (i386) [default: /mnt/wine32]
   -W, --wine64 <WINE64>        $WINEPREFIX for 64-bit applications (amd64) [default: /mnt/wine64]
+  -l, --locale <LOCALE>        Locale to run programs with [default: ja_JP.UTF-8]
+  -t, --timezone <TIMEZONE>    Timezone to run programs with [default: Asia/Tokyo]
   -h, --help                   Print help
   -V, --version                Print version
 ```
