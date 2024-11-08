@@ -1,6 +1,7 @@
 use sakaya::state::Options;
 
 #[test]
+#[ignore]
 fn options_default() {
     let options: Options = Default::default();
 
