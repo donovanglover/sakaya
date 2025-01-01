@@ -8,7 +8,7 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
-axum = "0.7.7"
+axum = "0.8.1"
 clap = { version = "4.5.20", features = ["derive"] }
 home = "0.5.9"
 ico = "0.3.0"
