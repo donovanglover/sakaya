@@ -41,7 +41,7 @@ impl Options {
             ("XAUTHORITY", "/tmp/.X11-unix/Xauthority".to_string()),
             ("LC_ALL", self.locale.to_string()),
             ("TZ", self.timezone.to_string()),
-            ("WINE_ARCH", wine_arch.to_string()),
+            ("WINEARCH", wine_arch.to_string()),
         ])
     }
 }
