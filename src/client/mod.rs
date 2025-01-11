@@ -51,11 +51,15 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
             return;
         }
 
+        if !Path::new(wine_prefix).exists() {
+            request(address, &container_path, wine_prefix, "init").unwrap();
+        }
+
         make_desktop_file(file_name, path);
 
         notify(&format!("Starting {file_name}..."), Some(&icon));
 
-        if request(address, &container_path, wine_prefix).is_ok() {
+        if request(address, &container_path, wine_prefix, "open").is_ok() {
             notify(&format!("Closed {file_name}."), Some(&icon));
         } else {
             notify("Error: sakaya server is not accessible.", None);
@@ -64,10 +68,10 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
 }
 
 /// Sends a request to start an application inside a container
-pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str) -> Result<(), minreq::Error> {
+pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str, command: &str) -> Result<(), minreq::Error> {
     let opts = Options::new(path, wine_prefix);
 
-    let url = format!("http://{address}/open");
+    let url = format!("http://{address}/{command}");
     let response = minreq::post(url).with_json(&opts)?.send()?;
 
     print!("{}", response.as_str()?);

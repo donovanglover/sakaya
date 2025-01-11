@@ -71,7 +71,7 @@ sakaya should be bug free, however contributions are welcome. Although NixOS has
 - [x] Reduce compile times
 - [x] Notify user if sakaya fails to start an executable
 - [x] Choose 32/64-bit automatically based on `IMAGE_FILE_32BIT_MACHINE` in the file headers
-- [ ] Automatically run winetricks with sane defaults if prefix does not exist already
+- [x] Automatically run winetricks with sane defaults if prefix does not exist already
 - [x] Get .ico and convert to .png? Handle abrupt end of files?
 - [ ] Write tests
 - [x] Terminate sakaya if the server/container cannot be reached
