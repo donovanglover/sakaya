@@ -5,7 +5,7 @@ use crate::state::Options;
 
 /// Open an executable in wine
 pub async fn open(Json(options): Json<Options>) -> Result<String, &'static str> {
-    let Ok(Output { stdout, stderr, .. }) = Command::new("wine")
+    let Ok(Output { stdout, stderr, .. }) = Command::new("wineconsole")
         .envs(Options::vars(&options))
         .arg(options.path)
         .output()
