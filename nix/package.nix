@@ -4,6 +4,7 @@
   makeDesktopItem,
   installShellFiles,
   copyDesktopItems,
+  sambaFull, # some windows programs require samba
 }:
 
 rustPlatform.buildRustPackage {
@@ -31,6 +32,13 @@ rustPlatform.buildRustPackage {
       --bash target/completions/sakaya.bash \
       --fish target/completions/sakaya.fish \
       --zsh target/completions/_sakaya
+
+    wrapProgram $out/bin/sakaya \
+      --prefix PATH ":" "${
+        lib.makeBinPath [
+          sambaFull
+        ]
+      }"
   '';
 
   desktopItems = [
