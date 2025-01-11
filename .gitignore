@@ -3,3 +3,6 @@ result
 
 *.exe
 *.ico
+*.png
+
+.direnv
