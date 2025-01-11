@@ -11,7 +11,7 @@ use std::net::{IpAddr, Ipv4Addr};
 /// The main function is in charge of either starting a `sakaya-server` or
 /// starting a `sakaya-client` that connects to a `sakaya-server`.
 ///
-/// It does this by checking if the --server flag was passed. It also defaults
+/// It does this by checking if the `server` command was passed. It also defaults
 /// to starting a `sakaya-server` if ran inside a systemd-nspawn container.
 #[tokio::main]
 async fn main() {
