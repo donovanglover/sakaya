@@ -22,6 +22,7 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
         .arg("-q")
         .args([
             "dotnet35",
+            "dotnet40",
             "vcrun2003",
             "vcrun2005",
             "vcrun2008",
