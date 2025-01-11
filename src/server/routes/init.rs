@@ -1,10 +1,12 @@
 use axum::extract::Json;
 use std::process::Command;
 
-use crate::state::Options;
+use crate::{state::Options, util::notify};
 
 /// Create a wine prefix
 pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> {
+    notify("Initializing wine prefix...", None);
+
     Command::new("wineboot")
         .envs(Options::vars(&options))
         .output()
