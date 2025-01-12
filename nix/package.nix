@@ -4,6 +4,7 @@
   makeDesktopItem,
   installShellFiles,
   copyDesktopItems,
+  makeWrapper,
   sambaFull, # some windows programs require samba
 }:
 
@@ -23,6 +24,7 @@ rustPlatform.buildRustPackage {
   nativeBuildInputs = [
     installShellFiles
     copyDesktopItems
+    makeWrapper
   ];
 
   postInstall = ''
