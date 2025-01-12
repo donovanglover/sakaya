@@ -9,10 +9,7 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
 
     notify("Initializing wine prefix...", None);
 
-    Command::new("wineboot")
-        .envs(&envs)
-        .output()
-        .unwrap();
+    Command::new("wineboot").envs(&envs).output().unwrap();
 
     let commands = [
         "fontsmooth=rgb",
@@ -43,7 +40,10 @@ fn winetricks(commands: &[&str], envs: HashMap<&str, String>) {
     let mut i = 1;
 
     for command in commands {
-        notify(&format!("Running winetricks {command}... ({i}/{len})"), None);
+        notify(
+            &format!("Running winetricks {command}... ({i}/{len})"),
+            None,
+        );
 
         Command::new("winetricks")
             .arg("-q")
