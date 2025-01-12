@@ -11,14 +11,18 @@ pub fn make_xauth() {
         .arg(display)
         .stdout(Stdio::piped())
         .spawn()
+        .unwrap()
+        .stdout
         .unwrap();
 
     let sed_child = Command::new("sed")
         .arg("-e")
         .arg("s/^..../ffff/")
-        .stdin(Stdio::from(xauth_child.stdout.unwrap()))
+        .stdin(Stdio::from(xauth_child))
         .stdout(Stdio::piped())
         .spawn()
+        .unwrap()
+        .stdout
         .unwrap();
 
     Command::new("xauth")
@@ -26,7 +30,7 @@ pub fn make_xauth() {
         .arg(xauth_file)
         .arg("nmerge")
         .arg("-")
-        .stdin(Stdio::from(sed_child.stdout.unwrap()))
+        .stdin(Stdio::from(sed_child))
         .stdout(Stdio::piped())
         .spawn()
         .unwrap()
