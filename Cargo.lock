@@ -1037,9 +1037,9 @@ dependencies = [
 
 [[package]]
 name = "minreq"
-version = "2.12.0"
+version = "2.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "763d142cdff44aaadd9268bebddb156ef6c65a0e13486bb81673cf2d8739f9b0"
+checksum = "36a8e50e917e18a37d500d27d40b7bc7d127e71c0c94fb2d83f43b4afd308390"
 dependencies = [
  "log",
  "serde",
