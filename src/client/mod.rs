@@ -64,9 +64,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
             return;
         }
 
-        if !Path::new(wine_prefix).exists() {
-            request(address, &container_path, wine_prefix, "init").unwrap();
-        }
+        request(address, &container_path, wine_prefix, "init").unwrap();
 
         make_desktop_file(file_name, path);
 

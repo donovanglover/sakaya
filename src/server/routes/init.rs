@@ -1,11 +1,15 @@
 use axum::extract::Json;
-use std::{collections::HashMap, process::Command};
+use std::{collections::HashMap, path::Path, process::Command};
 
 use crate::{state::Options, util::notify};
 
 /// Create a wine prefix
 pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> {
     let envs = Options::vars(&options);
+
+    if Path::new(&options.wine_prefix).exists() {
+        return Ok("Prefix already exists.".to_string());
+    }
 
     notify("Initializing wine prefix...", None);
 
