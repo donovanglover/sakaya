@@ -68,7 +68,12 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
 }
 
 /// Sends a request to start an application inside a container
-pub fn request(address: SocketAddrV4, path: &str, wine_prefix: &str, command: &str) -> Result<(), minreq::Error> {
+pub fn request(
+    address: SocketAddrV4,
+    path: &str,
+    wine_prefix: &str,
+    command: &str,
+) -> Result<(), minreq::Error> {
     let opts = Options::new(path, wine_prefix);
 
     let url = format!("http://{address}/{command}");
