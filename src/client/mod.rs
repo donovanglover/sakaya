@@ -22,6 +22,13 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
         return;
     }
 
+    let ping = minreq::get(format!("http://{address}/")).with_timeout(1).send().unwrap();
+
+    if ping.status_code != 200 {
+        notify(&format!("Error: sakaya server is not accessible on {address}."), None);
+        return;
+    }
+
     if let Some(session) = std::env::var_os("XDG_SESSION_TYPE") {
         if session == "x11" {
             make_xauth();
