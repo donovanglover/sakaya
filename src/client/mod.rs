@@ -24,14 +24,14 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
 
     let ping = minreq::get(format!("http://{address}/"))
         .with_timeout(1)
-        .send()
-        .unwrap();
+        .send();
 
-    if ping.status_code != 200 {
+    if ping.is_err() {
         notify(
             &format!("Error: sakaya server is not accessible on {address}."),
             None,
         );
+
         return;
     }
 
