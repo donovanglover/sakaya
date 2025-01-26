@@ -5,7 +5,7 @@
   installShellFiles,
   copyDesktopItems,
   makeWrapper,
-  sambaFull, # some windows programs require samba
+  samba, # some windows programs require samba
 }:
 
 rustPlatform.buildRustPackage {
@@ -38,7 +38,7 @@ rustPlatform.buildRustPackage {
     wrapProgram $out/bin/sakaya \
       --prefix PATH ":" "${
         lib.makeBinPath [
-          sambaFull
+          samba
         ]
       }"
   '';
