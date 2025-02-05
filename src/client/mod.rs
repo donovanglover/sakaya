@@ -1,5 +1,4 @@
 use crate::cli::Cli;
-use crate::state::Options;
 use crate::util::notify;
 use clap::Parser;
 use std::net::SocketAddrV4;
@@ -8,10 +7,12 @@ use std::path::Path;
 pub mod desktop;
 pub mod get_target_machine;
 pub mod icon;
+pub mod request;
 pub mod xauth;
 pub use desktop::*;
 pub use get_target_machine::*;
 pub use icon::*;
+pub use request::*;
 pub use xauth::*;
 
 /// Run an executable inside the container from the host by requesting
@@ -78,19 +79,3 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
     }
 }
 
-/// Sends a request to start an application inside a container
-pub fn request(
-    address: SocketAddrV4,
-    path: &str,
-    wine_prefix: &str,
-    command: &str,
-) -> Result<(), minreq::Error> {
-    let opts = Options::new(path, wine_prefix);
-
-    let url = format!("http://{address}/{command}");
-    let response = minreq::post(url).with_json(&opts)?.send()?;
-
-    print!("{}", response.as_str()?);
-
-    Ok(())
-}
