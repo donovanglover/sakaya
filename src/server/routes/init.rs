@@ -8,7 +8,7 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
     let envs = Options::vars(&options);
 
     if Path::new(&options.wine_prefix).exists() {
-        return Ok("Prefix already exists.".to_string());
+        return Ok("Prefix already exists.\n".to_string());
     }
 
     notify("Initializing wine prefix...", None);
@@ -36,7 +36,7 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
 
     winetricks(&commands, envs);
 
-    Ok("Created successfully.".to_string())
+    Ok("Created successfully.\n".to_string())
 }
 
 fn winetricks(commands: &[&str], envs: HashMap<&str, String>) {
