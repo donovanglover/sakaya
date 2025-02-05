@@ -68,7 +68,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
 
         make_desktop_file(file_name, path);
 
-        notify(&format!("Starting {file_name}..."), Some(&icon));
+        notify(&format!("Starting {file_name} with {wine_prefix}..."), Some(&icon));
 
         if request(address, &container_path, wine_prefix, "open").is_ok() {
             notify(&format!("Closed {file_name}."), Some(&icon));
