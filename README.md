@@ -64,7 +64,7 @@ Options:
 
 ## Contributing
 
-sakaya should be bug free, however contributions are welcome. Although NixOS has first-class support, it should be possible to use sakaya with other distributions as well.
+I have been using sakaya since 2023 and it works well for my use case, however suggestions and improvements are welcome. If you would like to contribute code, you can check your work with `cargo clippy`, `cargo fmt`, and `cargo test`.
 
 ## Todo
 
