@@ -14,7 +14,7 @@ home = "0.5.11"
 ico = "0.4.0"
 local-ip-address = "0.6.3"
 minreq = { version = "2.13.2", features = ["json-using-serde"] }
-notify-rust = "4.11.5"
+notify-rust = "4.11.6"
 pelite = "0.10.0"
 serde = "1.0.218"
 tokio = { version = "1.43.0", features = ["full"] }
