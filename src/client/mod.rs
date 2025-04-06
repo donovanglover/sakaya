@@ -46,11 +46,12 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
     let path = path.canonicalize().unwrap();
     let path = path.to_str().unwrap();
 
+    let Cli { wine32, wine64, .. } = Cli::parse();
+
     if path.contains(directory) {
         let container_path = path.replace(directory, "mnt");
         let icon = make_icon(path, file_name);
 
-        let Cli { wine32, wine64, .. } = Cli::parse();
         let wine_prefix = match get_target_machine(path) {
             32 => &wine32,
             64 => &wine64,
