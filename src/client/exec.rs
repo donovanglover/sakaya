@@ -38,7 +38,12 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &Vec<String>, directo
     let path = path.canonicalize().unwrap();
     let path = path.to_str().unwrap();
 
-    let Cli { wine32, wine64, force64, .. } = Cli::parse();
+    let Cli {
+        wine32,
+        wine64,
+        force64,
+        ..
+    } = Cli::parse();
 
     if path.contains(directory) {
         let container_path = path.replace(directory, "mnt");
@@ -64,7 +69,10 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &Vec<String>, directo
 
         make_desktop_file(file_name, path);
 
-        notify(&format!("Starting {file_name} with {wine_prefix}..."), Some(&icon));
+        notify(
+            &format!("Starting {file_name} with {wine_prefix}..."),
+            Some(&icon),
+        );
 
         if request(address, &container_path, wine_prefix, arguments, "open").is_ok() {
             notify(&format!("Closed {file_name}."), Some(&icon));
