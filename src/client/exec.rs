@@ -10,11 +10,6 @@ use super::{get_target_machine, make_desktop_file, make_icon, make_xauth, reques
 /// Run an executable inside the container from the host by requesting
 /// the server on a given socket address
 pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory: &str) {
-    if !path.exists() {
-        notify("Exiting since not a valid file.", None);
-        return;
-    }
-
     let ping = minreq::get(format!("http://{address}/"))
         .with_timeout(1)
         .send();
@@ -34,16 +29,34 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory:
         }
     }
 
-    let file_name = path.file_name().unwrap().to_str().unwrap();
-    let path = path.canonicalize().unwrap();
-    let path = path.to_str().unwrap();
-
     let Cli {
         wine32,
         wine64,
         force64,
         ..
     } = Cli::parse();
+
+    let maybe_command = path.to_string_lossy();
+    let wine_prefix = if force64 { &wine64 } else { &wine32 };
+
+    if maybe_command.contains("winecfg") {
+        request(address, "", wine_prefix, arguments, "winecfg").unwrap();
+        return;
+    }
+
+    if maybe_command.contains("winetricks") {
+        request(address, "", wine_prefix, arguments, "winetricks").unwrap();
+        return;
+    }
+
+    if !path.exists() {
+        notify("Exiting since not a valid file.", None);
+        return;
+    }
+
+    let file_name = path.file_name().unwrap().to_str().unwrap();
+    let path = path.canonicalize().unwrap();
+    let path = path.to_str().unwrap();
 
     if path.contains(directory) {
         let container_path = path.replace(directory, "mnt");
