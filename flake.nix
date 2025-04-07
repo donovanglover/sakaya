@@ -2,7 +2,7 @@
   description = "Run native wine applications inside declarative systemd-nspawn containers";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
   };
 
   outputs =
