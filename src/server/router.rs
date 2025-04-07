@@ -9,4 +9,5 @@ pub fn router() -> Router {
         .route("/open", post(routes::open))
         .route("/init", post(routes::init))
         .route("/winecfg", post(routes::winecfg))
+        .route("/winetricks", post(routes::winetricks))
 }
