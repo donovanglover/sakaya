@@ -17,7 +17,7 @@ pub use xauth::*;
 
 /// Run an executable inside the container from the host by requesting
 /// the server on a given socket address
-pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
+pub fn exec(address: SocketAddrV4, path: &Path, arguments: &Vec<String>, directory: &str) {
     if !path.exists() {
         notify("Exiting since not a valid file.", None);
         return;
@@ -66,13 +66,13 @@ pub fn exec(address: SocketAddrV4, path: &Path, directory: &str) {
             return;
         }
 
-        request(address, &container_path, wine_prefix, "init").unwrap();
+        request(address, &container_path, wine_prefix, arguments, "init").unwrap();
 
         make_desktop_file(file_name, path);
 
         notify(&format!("Starting {file_name} with {wine_prefix}..."), Some(&icon));
 
-        if request(address, &container_path, wine_prefix, "open").is_ok() {
+        if request(address, &container_path, wine_prefix, arguments, "open").is_ok() {
             notify(&format!("Closed {file_name}."), Some(&icon));
         } else {
             notify("Error: sakaya server is not accessible.", None);

@@ -15,7 +15,7 @@ use std::net::SocketAddrV4;
 #[tokio::main]
 async fn main() {
     #[rustfmt::skip]
-    let Cli { address, command, file, directory, .. } = Cli::parse();
+    let Cli { address, command, file, directory, arguments, .. } = Cli::parse();
     let ip = Ipv4Addr::new(0, 0, 0, 0);
 
     match &command {
@@ -26,7 +26,7 @@ async fn main() {
                 start_server(ip, 39493).await
             } else if let Some(file) = file {
                 if let Some(directory) = directory.to_str() {
-                    client::exec(address, &file, directory);
+                    client::exec(address, &file, &arguments, directory);
                 } else {
                     notify("Invalid directory was given.", None)
                 }

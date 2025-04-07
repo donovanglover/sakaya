@@ -8,6 +8,7 @@ pub async fn open(Json(options): Json<Options>) -> Result<String, &'static str> 
     let Ok(Output { stdout, stderr, .. }) = Command::new("wineconsole")
         .envs(Options::vars(&options))
         .arg(options.path)
+        .args(options.arguments)
         .output()
     else {
         return Err("Error while trying to run the wine command.");

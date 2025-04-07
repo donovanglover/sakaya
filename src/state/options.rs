@@ -16,13 +16,15 @@ pub struct Options {
     pub display: String,
     pub locale: String,
     pub timezone: String,
+    pub arguments: Vec<String>,
 }
 
 impl Options {
-    pub fn new(path: &str, wine_prefix: &str) -> Self {
+    pub fn new(path: &str, wine_prefix: &str, arguments: &Vec<String>) -> Self {
         Self {
             path: path.to_string(),
             wine_prefix: wine_prefix.to_string(),
+            arguments: arguments.to_vec(),
             ..Default::default()
         }
     }
@@ -56,6 +58,7 @@ impl Default for Options {
             display: var("DISPLAY").unwrap(),
             locale: DEFAULT_LOCALE.to_string(),
             timezone: DEFAULT_TIMEZONE.to_string(),
+            arguments: vec![],
         }
     }
 }

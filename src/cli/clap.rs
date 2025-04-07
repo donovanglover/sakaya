@@ -46,6 +46,10 @@ pub struct Cli {
     #[arg(short, long, default_value = DEFAULT_TIMEZONE)]
     pub timezone: String,
 
+    /// Arguments to pass to [FILE]
+    #[arg(trailing_var_arg = true)]
+    pub arguments: Vec<String>,
+
     #[command(subcommand)]
     pub command: Option<Commands>,
 }
