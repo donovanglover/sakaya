@@ -49,7 +49,10 @@ rustPlatform.buildRustPackage {
       desktopName = "sakaya";
       icon = "wine";
       exec = "sakaya %U";
-      mimeTypes = [ "application/x-ms-dos-executable" ];
+      mimeTypes = [
+        "application/x-ms-dos-executable"
+        "application/octet-stream"
+      ];
     })
   ];
 
