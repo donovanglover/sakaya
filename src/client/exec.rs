@@ -9,7 +9,7 @@ use super::{get_target_machine, make_desktop_file, make_icon, make_xauth, reques
 
 /// Run an executable inside the container from the host by requesting
 /// the server on a given socket address
-pub fn exec(address: SocketAddrV4, path: &Path, arguments: &Vec<String>, directory: &str) {
+pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory: &str) {
     if !path.exists() {
         notify("Exiting since not a valid file.", None);
         return;

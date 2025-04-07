@@ -7,7 +7,7 @@ pub fn request(
     address: SocketAddrV4,
     path: &str,
     wine_prefix: &str,
-    arguments: &Vec<String>,
+    arguments: &[String],
     command: &str,
 ) -> Result<(), minreq::Error> {
     let opts = Options::new(path, wine_prefix, arguments);

@@ -20,7 +20,7 @@ pub struct Options {
 }
 
 impl Options {
-    pub fn new(path: &str, wine_prefix: &str, arguments: &Vec<String>) -> Self {
+    pub fn new(path: &str, wine_prefix: &str, arguments: &[String]) -> Self {
         Self {
             path: path.to_string(),
             wine_prefix: wine_prefix.to_string(),
