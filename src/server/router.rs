@@ -8,4 +8,5 @@ pub fn router() -> Router {
         .route("/", get(routes::index))
         .route("/open", post(routes::open))
         .route("/init", post(routes::init))
+        .route("/winecfg", post(routes::winecfg))
 }
