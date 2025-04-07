@@ -46,6 +46,10 @@ pub struct Cli {
     #[arg(short, long, default_value = DEFAULT_TIMEZONE)]
     pub timezone: String,
 
+    /// Force using the 64-bit $WINEPREFIX for 32-bit applications
+    #[arg(short, long)]
+    pub force64: bool,
+
     /// Arguments to pass to [FILE]
     #[arg(trailing_var_arg = true)]
     pub arguments: Vec<String>,

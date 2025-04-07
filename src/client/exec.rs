@@ -38,7 +38,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &Vec<String>, directo
     let path = path.canonicalize().unwrap();
     let path = path.to_str().unwrap();
 
-    let Cli { wine32, wine64, .. } = Cli::parse();
+    let Cli { wine32, wine64, force64, .. } = Cli::parse();
 
     if path.contains(directory) {
         let container_path = path.replace(directory, "mnt");
@@ -57,6 +57,8 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &Vec<String>, directo
             );
             return;
         }
+
+        let wine_prefix = if force64 { &wine64 } else { wine_prefix };
 
         request(address, &container_path, wine_prefix, arguments, "init").unwrap();
 
