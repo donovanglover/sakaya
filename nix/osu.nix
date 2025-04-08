@@ -1,10 +1,10 @@
 {
-  stdenv,
+  stdenvNoCC,
   fetchzip,
 }:
 
-stdenv.mkDerivation {
-  name = "osu";
+stdenvNoCC.mkDerivation {
+  pname = "osu";
   version = "0-unstable-2023-12-19";
 
   src = fetchzip {
