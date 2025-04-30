@@ -54,7 +54,7 @@ Arguments:
 
 Options:
   -a, --address <ADDRESS>      Address of the server to request [default: 0.0.0.0:39493]
-  -d, --directory <DIRECTORY>  Host directory mounted to /mnt inside the container [default: /home/user/containers/wine]
+  -d, --directory <DIRECTORY>  Host directory mounted to /mnt inside the container (default 3 levels deep to file path)
   -w, --wine32 <WINE32>        $WINEPREFIX for 32-bit applications (i386) [default: /mnt/wine32]
   -W, --wine64 <WINE64>        $WINEPREFIX for 64-bit applications (amd64) [default: /mnt/wine64]
   -l, --locale <LOCALE>        Locale to run programs with [default: ja_JP.UTF-8]
