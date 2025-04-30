@@ -17,8 +17,7 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
 
     let commands = [
         "fontsmooth=rgb",
-        "dotnet35",
-        "dotnet40",
+        "dotnet461",
         "mfc42",
         "vcrun2022",
         "lavfilters",
