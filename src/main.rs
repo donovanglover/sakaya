@@ -6,6 +6,7 @@ use sakaya::util::notify;
 use sakaya::{client, server};
 use std::net::Ipv4Addr;
 use std::net::SocketAddrV4;
+use std::path::Component;
 
 /// The main function is in charge of either starting a `sakaya-server` or
 /// starting a `sakaya-client` that connects to a `sakaya-server`.
@@ -14,8 +15,15 @@ use std::net::SocketAddrV4;
 /// to starting a `sakaya-server` if ran inside a systemd-nspawn container.
 #[tokio::main]
 async fn main() {
-    #[rustfmt::skip]
-    let Cli { address, command, file, directory, arguments, .. } = Cli::parse();
+    let Cli {
+        address,
+        command,
+        file,
+        directory,
+        arguments,
+        ..
+    } = Cli::parse();
+
     let ip = Ipv4Addr::new(0, 0, 0, 0);
 
     match &command {
@@ -23,16 +31,40 @@ async fn main() {
 
         None => {
             if is_container() {
-                start_server(ip, 39493).await
-            } else if let Some(file) = file {
-                if let Some(directory) = directory.to_str() {
-                    client::exec(address, &file, &arguments, directory);
-                } else {
-                    notify("Invalid directory was given.", None)
-                }
-            } else {
-                notify("sakaya was called but no file was given.", None);
+                start_server(ip, 39493).await;
+
+                return;
             }
+
+            if let Some(file) = file {
+                let components = &mut file.components();
+                let mut i = 0;
+                let mut smart_directory = String::new();
+
+                while let Some(component) = components.next() {
+                    if component == Component::RootDir {
+                        continue;
+                    }
+
+                    smart_directory = format!("{}/{}",  smart_directory, component.as_os_str().to_str().unwrap());
+
+                    i = i + 1;
+
+                    if i == 3 {
+                        break;
+                    }
+                }
+
+                if let Some(directory) = directory {
+                    client::exec(address, &file, &arguments, directory.to_str().unwrap());
+                } else {
+                    client::exec(address, &file, &arguments, &smart_directory);
+                }
+
+                return;
+            }
+
+            notify("sakaya was called but no file was given.", None);
         }
     }
 }

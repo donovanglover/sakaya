@@ -4,8 +4,8 @@ use std::net::SocketAddrV4;
 use std::path::PathBuf;
 
 use crate::consts::{
-    DEFAULT_ADDRESS, DEFAULT_DIRECTORY, DEFAULT_LOCALE, DEFAULT_PORT, DEFAULT_TIMEZONE,
-    DEFAULT_WINE32_PREFIX, DEFAULT_WINE64_PREFIX,
+    DEFAULT_ADDRESS, DEFAULT_LOCALE, DEFAULT_PORT, DEFAULT_TIMEZONE, DEFAULT_WINE32_PREFIX,
+    DEFAULT_WINE64_PREFIX,
 };
 
 fn styles() -> Styles {
@@ -26,9 +26,9 @@ pub struct Cli {
     #[arg(short, long, default_value = DEFAULT_ADDRESS)]
     pub address: SocketAddrV4,
 
-    /// Host directory mounted to /mnt inside the container
-    #[arg(short, long, default_value = DEFAULT_DIRECTORY)]
-    pub directory: PathBuf,
+    /// Host directory mounted to /mnt inside the container (default 3 levels deep to file path)
+    #[arg(short, long)]
+    pub directory: Option<PathBuf>,
 
     /// $WINEPREFIX for 32-bit applications (i386)
     #[arg(short, long, default_value = DEFAULT_WINE32_PREFIX)]
