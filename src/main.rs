@@ -41,14 +41,18 @@ async fn main() {
                 let mut i = 0;
                 let mut smart_directory = String::new();
 
-                while let Some(component) = components.next() {
+                for component in components.by_ref() {
                     if component == Component::RootDir {
                         continue;
                     }
 
-                    smart_directory = format!("{}/{}",  smart_directory, component.as_os_str().to_str().unwrap());
+                    smart_directory = format!(
+                        "{}/{}",
+                        smart_directory,
+                        component.as_os_str().to_str().unwrap()
+                    );
 
-                    i = i + 1;
+                    i += 1;
 
                     if i == 3 {
                         break;

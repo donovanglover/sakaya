@@ -79,7 +79,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory:
 
         let wine_prefix = if force64 { &wine64 } else { wine_prefix };
 
-        request(address, &container_path, wine_prefix, arguments, "init").unwrap();
+        request(address, container_path, wine_prefix, arguments, "init").unwrap();
 
         make_desktop_file(file_name, path);
 
@@ -88,7 +88,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory:
             Some(&icon),
         );
 
-        if request(address, &container_path, wine_prefix, arguments, "open").is_ok() {
+        if request(address, container_path, wine_prefix, arguments, "open").is_ok() {
             notify(&format!("Closed {file_name}."), Some(&icon));
         } else {
             notify("Error: sakaya server is not accessible.", None);
