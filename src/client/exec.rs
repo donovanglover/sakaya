@@ -60,6 +60,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory:
 
     if path.contains(directory) {
         let container_path = path.replace(directory, "mnt");
+        let container_path = container_path.trim_end_matches('/');
         let icon = make_icon(path, file_name);
 
         let wine_prefix = match get_target_machine(path) {
