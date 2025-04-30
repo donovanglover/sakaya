@@ -21,7 +21,6 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
         "mfc42",
         "vcrun2022",
         "lavfilters",
-        "alldlls=default",
         "quartz",
         "dxvk",
         "wmp10",
