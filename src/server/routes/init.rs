@@ -19,6 +19,7 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
         "fontsmooth=rgb",
         "dotnet35",
         "dotnet40",
+        "mfc42",
         "vcrun2022",
         "lavfilters",
         "alldlls=default",
