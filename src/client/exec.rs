@@ -36,16 +36,14 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory:
         ..
     } = Cli::parse();
 
-    let maybe_command = path.to_string_lossy();
+    let commands = ["winecfg", "winetricks"];
+
+    let maybe_command = path.to_str().unwrap();
     let wine_prefix = if force64 { &wine64 } else { &wine32 };
 
-    if maybe_command.contains("winecfg") {
-        request(address, "", wine_prefix, arguments, "winecfg").unwrap();
-        return;
-    }
-
-    if maybe_command.contains("winetricks") {
-        request(address, "", wine_prefix, arguments, "winetricks").unwrap();
+    if commands.contains(&maybe_command) {
+        ctrlc(maybe_command.to_string() + ".exe");
+        request(address, "", wine_prefix, arguments, maybe_command).unwrap();
         return;
     }
 
