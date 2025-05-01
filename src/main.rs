@@ -37,33 +37,33 @@ async fn main() {
             }
 
             if let Some(file) = file {
-                let Ok(file) = file.canonicalize() else {
-                    notify(&format!("Invalid file {} was given.", file.to_string_lossy()), None);
-
-                    return;
-                };
-
-                let components = &mut file.components();
-                let mut i = 0;
                 let mut smart_directory = String::new();
 
-                for component in components.by_ref() {
-                    if component == Component::RootDir {
-                        continue;
+                if let Ok(file) = file.canonicalize() {
+                    let components = &mut file.components();
+                    let mut i = 0;
+
+                    for component in components.by_ref() {
+                        if component == Component::RootDir {
+                            continue;
+                        }
+
+                        smart_directory = format!(
+                            "{}/{}",
+                            smart_directory,
+                            component.as_os_str().to_str().unwrap()
+                        );
+
+                        i += 1;
+
+                        if i == 3 {
+                            break;
+                        }
                     }
-
-                    smart_directory = format!(
-                        "{}/{}",
-                        smart_directory,
-                        component.as_os_str().to_str().unwrap()
-                    );
-
-                    i += 1;
-
-                    if i == 3 {
-                        break;
-                    }
+                } else {
+                    smart_directory = file.to_str().unwrap().to_string();
                 }
+
 
                 if let Some(directory) = directory {
                     client::exec(address, &file, &arguments, directory.to_str().unwrap());
