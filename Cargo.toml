@@ -8,8 +8,10 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
+anyhow = "1.0.98"
 axum = "0.8.1"
 clap = { version = "4.5.31", features = ["derive"] }
+ctrlc = { version = "3.4.6", features = ["termination"] }
 home = "0.5.11"
 ico = "0.4.0"
 local-ip-address = "0.6.3"

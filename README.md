@@ -80,4 +80,4 @@ I have been using sakaya since 2023 and it works well for my use case, however s
 - [x] Create NixOS module to automate systemd service setup for sakaya server
 - [x] Automatically register sakaya to executables
 - [x] Update format of README
-- [ ] Close server connection when terminating client
+- [x] Kill program inside container when using ctrl+c from host

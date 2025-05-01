@@ -5,7 +5,7 @@ use clap::Parser;
 use std::net::SocketAddrV4;
 use std::path::Path;
 
-use super::{get_target_machine, make_desktop_file, make_icon, make_xauth, request};
+use super::{ctrlc, get_target_machine, make_desktop_file, make_icon, make_xauth, request};
 
 /// Run an executable inside the container from the host by requesting
 /// the server on a given socket address
@@ -88,6 +88,8 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory:
         request(address, container_path, wine_prefix, arguments, "init").unwrap();
 
         make_desktop_file(file_name, path);
+
+        ctrlc(file_name.to_string());
 
         notify(
             &format!("Starting {file_name} with {wine_prefix}..."),

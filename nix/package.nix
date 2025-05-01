@@ -6,6 +6,7 @@
   copyDesktopItems,
   makeWrapper,
   samba, # some windows programs require samba
+  killall,
 }:
 
 rustPlatform.buildRustPackage {
@@ -39,6 +40,7 @@ rustPlatform.buildRustPackage {
       --prefix PATH ":" "${
         lib.makeBinPath [
           samba
+          killall
         ]
       }"
   '';
