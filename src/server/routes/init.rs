@@ -16,7 +16,6 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
     Command::new("wineboot").envs(&envs).output().unwrap();
 
     let commands = [
-        "fontsmooth=rgb",
         "dotnet461",
         "mfc42",
         "vcrun2022",
