@@ -50,7 +50,7 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory:
     }
 
     if !path.exists() {
-        notify("Exiting since not a valid file.", None);
+        notify(&format!("Exiting since {} is not available in the path.", path.to_string_lossy()), None);
         return;
     }
 
