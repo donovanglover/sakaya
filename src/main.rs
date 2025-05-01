@@ -64,7 +64,6 @@ async fn main() {
                     smart_directory = file.to_str().unwrap().to_string();
                 }
 
-
                 if let Some(directory) = directory {
                     client::exec(address, &file, &arguments, directory.to_str().unwrap());
                 } else {
