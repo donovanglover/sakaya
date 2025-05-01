@@ -37,6 +37,12 @@ async fn main() {
             }
 
             if let Some(file) = file {
+                let Ok(file) = file.canonicalize() else {
+                    notify(&format!("Invalid file {} was given.", file.to_string_lossy()), None);
+
+                    return;
+                };
+
                 let components = &mut file.components();
                 let mut i = 0;
                 let mut smart_directory = String::new();
