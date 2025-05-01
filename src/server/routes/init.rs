@@ -22,6 +22,7 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
         "vcrun2022",
         "lavfilters",
         "dxvk",
+        "directshow",
         "wmp10",
         "renderer=gdi",
     ];
