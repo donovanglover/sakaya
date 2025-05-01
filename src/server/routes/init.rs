@@ -23,7 +23,6 @@ pub async fn init(Json(options): Json<Options>) -> Result<String, &'static str> 
         "dxvk",
         "directshow",
         "wmp10",
-        "renderer=gdi",
     ];
 
     winetricks(&commands, envs);
