@@ -42,6 +42,11 @@ pub fn exec(address: SocketAddrV4, path: &Path, arguments: &[String], directory:
     let wine_prefix = if force64 { &wine64 } else { &wine32 };
 
     if commands.contains(&maybe_command) {
+        notify(
+            &format!("Starting {maybe_command} with {wine_prefix}..."),
+            None,
+        );
+
         ctrlc(maybe_command.to_string() + ".exe");
         request(address, "", wine_prefix, arguments, maybe_command).unwrap();
         return;
