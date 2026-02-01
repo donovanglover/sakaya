@@ -28,7 +28,7 @@ clap_complete = "4.5.46"
 clap_mangen = "0.2.26"
 
 [dev-dependencies]
-assert_cmd = "2.0.16"
+assert_cmd = "2.1.2"
 rustympkglib = "0.1.1"
 serde = "1.0.218"
 toml = "0.8.15"
